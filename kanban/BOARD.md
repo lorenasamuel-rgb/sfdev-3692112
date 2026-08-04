@@ -1,6 +1,6 @@
-# Client Development Kanban Board
+# AI Film Discovery — Kanban Board
 
-Columns and starter cards for a typical client engagement. Edit this file freely, or prefer [`backlog.json`](backlog.json) as the source of truth for the static board.
+Aligned to [`PRODUCT_BRIEF.md`](PRODUCT_BRIEF.md). Prefer [`backlog.json`](backlog.json) as the source of truth for the static board.
 
 ## Backlog
 
@@ -8,38 +8,43 @@ Ideas and work not yet committed.
 
 | Title | Type | Priority | Tag |
 |-------|------|----------|-----|
-| Stakeholder map and decision owners | Discovery | Medium | client |
-| Current-state audit (process, tools, data) | Discovery | Medium | client |
-| Risks, assumptions, dependencies | Discovery | High | client |
-| Project timeline and milestones | Docs | High | client |
-| Access, credentials, and repo permissions | Build | High | setup |
-| Definition of Done and acceptance criteria template | Docs | Medium | process |
-| Information architecture / UX flows | Design | High | product |
-| UI / brand alignment with client | Design | Medium | product |
-| Core feature MVP build | Build | High | product |
-| Integrations (APIs, CRM, payments, etc.) | Build | Medium | product |
-| Data model / migrations | Build | High | product |
-| Auth and roles (if needed) | Build | Medium | product |
-| Error handling and empty states | Build | Medium | product |
-| QA checklist and test cases | Docs | High | qa |
-| Client UAT / review rounds | Client | High | qa |
-| Bug triage from UAT | Fix | High | qa |
-| Documentation / runbook | Docs | Medium | handoff |
-| Training / handoff session | Client | Medium | handoff |
-| Go-live checklist and rollback plan | Docs | High | launch |
-| Post-launch support window | Client | Medium | launch |
+| Semantic search UX for moods, themes, equipment, festivals | Design | High | search |
+| Film detail page with rich metadata and relationships | Design | Medium | film |
+| Filmmaker upload + review dashboard UX | Design | High | dashboard |
+| AI metadata extraction pipeline on film upload | Build | High | ai-metadata |
+| Theme / emotion / genre / audience classifiers | Build | High | ai-metadata |
+| Equipment and technical attribute detection | Build | Medium | ai-metadata |
+| People, crew, and festival entity extraction | Build | Medium | ai-metadata |
+| Film summary and auto-tag generation | Build | Medium | ai-metadata |
+| Semantic search index (meaning over keywords) | Build | High | search |
+| Query examples: grief, first love, shot on Canon, LGBTQ documentary | Build | Medium | search |
+| Dynamic homepage engine (categories, rotation, no daily manual edit) | Build | High | homepage |
+| Category rails: docs, animation, LGBTQ+, shorts, festivals | Build | Medium | homepage |
+| Recommendation engine (watch history, themes, festivals, directors) | Build | High | recs |
+| Film relationship graph (people, festivals, themes, gear) | Build | Medium | graph |
+| Festival assistant: ingest PDF/web programme | Build | High | festival |
+| Festival assistant: suggest articles, interviews, connections | Build | Medium | festival |
+| AI interview question generation from submission | Build | High | interview |
+| Interview pipeline: transcript, clips, quotes, social, article | Build | Medium | interview |
+| Sponsorship matching by equipment/software clusters | Build | Medium | sponsors |
+| Sponsor surfaces (Canon, Adobe, Blackmagic examples) | Design | Low | sponsors |
+| Submission flow and £47 packaging (no content paywall) | Client | Medium | business |
+| Filmmaker dashboard: tags review, promotion, interview status | Build | Medium | dashboard |
+| Architecture sketch: AI agents, metadata store, search index | Docs | High | architecture |
+| User journeys: discoverer, filmmaker, editor, sponsor | Docs | Medium | ux |
+| MVP scope cut for discovery + metadata + homepage | Discovery | High | scope |
 
 ## Todo
 
-Committed for the current cycle / sprint.
+Committed for the current cycle.
 
 | Title | Type | Priority | Tag |
 |-------|------|----------|-----|
-| Kickoff & success criteria with client | Discovery | High | client |
-| Environment setup (dev / staging / prod) | Build | High | setup |
-| Requirements workshop / user stories | Discovery | High | client |
-| Scope boundaries and out-of-scope list | Discovery | High | client |
-| Communication cadence (standup, demos, feedback) | Client | Medium | process |
+| Align on product brief from director notes | Discovery | High | vision |
+| Map discovery jobs-to-be-done (browse, mood, festival, equipment) | Discovery | High | ux |
+| Define no-paywall business constraints and value levers | Discovery | High | business |
+| Draft information architecture for film discovery | Design | High | ia |
+| Sketch dynamic homepage concept (auto-surface + rotating categories) | Design | High | homepage |
 
 ## In Progress
 
