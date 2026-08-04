@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Client Development Kanban</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,500;9..144,650&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1c2430;
+      --muted: #5c6b7a;
+      --line: rgba(28, 36, 48, 0.12);
+      --paper: #f3f6f4;
+      --panel: rgba(255, 255, 255, 0.72);
+      --card: #ffffff;
+      --accent: #0f6a5b;
+      --accent-soft: #d7ebe6;
+      --high: #b23a2f;
+      --high-soft: #f7e4e1;
+      --medium: #9a6b16;
+      --medium-soft: #f7efd8;
+      --low: #3d5a80;
+      --low-soft: #e4ebf4;
+      --shadow: 0 10px 30px rgba(28, 36, 48, 0.08);
+      --radius: 14px;
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body: "DM Sans", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: var(--font-body);
+      background:
+        radial-gradient(circle at 12% 10%, rgba(15, 106, 91, 0.16), transparent 34%),
+        radial-gradient(circle at 88% 0%, rgba(61, 90, 128, 0.14), transparent 28%),
+        linear-gradient(160deg, #eef3f1 0%, var(--paper) 45%, #e7eee9 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.35;
+      background-image:
+        linear-gradient(rgba(28, 36, 48, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(28, 36, 48, 0.03) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: min(1400px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 2rem 0 3rem;
+    }
+
+    header {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+      animation: rise 0.55s ease both;
+    }
+
+    .brand {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 650;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin: 0;
+    }
+
+    .lede {
+      margin: 0;
+      max-width: 42rem;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+
+    .status {
+      min-height: 1.25rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .status[data-state="error"] {
+      color: var(--high);
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(220px, 1fr));
+      gap: 1rem;
+      align-items: start;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .column {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      backdrop-filter: blur(8px);
+      box-shadow: var(--shadow);
+      min-height: 18rem;
+      animation: rise 0.6s ease both;
+    }
+
+    .column:nth-child(2) { animation-delay: 0.05s; }
+    .column:nth-child(3) { animation-delay: 0.1s; }
+    .column:nth-child(4) { animation-delay: 0.15s; }
+    .column:nth-child(5) { animation-delay: 0.2s; }
+
+    .column-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.95rem 1rem 0.7rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .column-title {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.5rem;
+      height: 1.5rem;
+      padding: 0 0.4rem;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .cards {
+      display: grid;
+      gap: 0.7rem;
+      padding: 0.85rem;
+    }
+
+    .empty {
+      margin: 0;
+      padding: 1rem 0.25rem 1.25rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.85rem 0.9rem;
+      box-shadow: 0 4px 14px rgba(28, 36, 48, 0.05);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      animation: cardIn 0.4s ease both;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(28, 36, 48, 0.1);
+    }
+
+    .card-title {
+      margin: 0 0 0.65rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.18rem 0.45rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      background: #eef2f0;
+      color: var(--muted);
+    }
+
+    .chip.type {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .chip.priority-high {
+      background: var(--high-soft);
+      color: var(--high);
+    }
+
+    .chip.priority-medium {
+      background: var(--medium-soft);
+      color: var(--medium);
+    }
+
+    .chip.priority-low {
+      background: var(--low-soft);
+      color: var(--low);
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .board {
+        grid-template-columns: repeat(5, minmax(240px, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        width: min(100% - 1.25rem, 1400px);
+        padding-top: 1.25rem;
+      }
+
+      .board {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1 class="brand">Client Development Kanban</h1>
+      <p class="lede">
+        Backlog topics and committed todos for a client engagement.
+        Pull only what you will finish this cycle into Todo.
+      </p>
+      <p class="status" id="status" data-state="loading">Loading board…</p>
+    </header>
+    <div class="board" id="board" aria-live="polite"></div>
+  </div>
+
+  <script>
+    const boardEl = document.getElementById("board");
+    const statusEl = document.getElementById("status");
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function priorityClass(priority) {
+      const key = String(priority || "").toLowerCase();
+      if (key === "high") return "priority-high";
+      if (key === "medium") return "priority-medium";
+      return "priority-low";
+    }
+
+    function renderCard(card, index) {
+      const owner = card.owner ? `<span class="chip">${escapeHtml(card.owner)}</span>` : "";
+      return `
+        <article class="card" style="animation-delay: ${Math.min(index * 0.03, 0.3)}s">
+          <h3 class="card-title">${escapeHtml(card.title)}</h3>
+          <div class="meta">
+            <span class="chip type">${escapeHtml(card.type)}</span>
+            <span class="chip ${priorityClass(card.priority)}">${escapeHtml(card.priority)}</span>
+            <span class="chip">${escapeHtml(card.tag)}</span>
+            ${owner}
+          </div>
+        </article>
+      `;
+    }
+
+    function renderBoard(data) {
+      const cardsByColumn = Object.fromEntries(
+        data.columns.map((column) => [column.id, []])
+      );
+
+      for (const card of data.cards) {
+        if (!cardsByColumn[card.column]) {
+          cardsByColumn[card.column] = [];
+        }
+        cardsByColumn[card.column].push(card);
+      }
+
+      boardEl.innerHTML = data.columns
+        .map((column) => {
+          const cards = cardsByColumn[column.id] || [];
+          const body = cards.length
+            ? cards.map(renderCard).join("")
+            : `<p class="empty">No cards yet</p>`;
+
+          return `
+            <section class="column" aria-labelledby="col-${escapeHtml(column.id)}">
+              <div class="column-header">
+                <h2 class="column-title" id="col-${escapeHtml(column.id)}">${escapeHtml(column.title)}</h2>
+                <span class="count">${cards.length}</span>
+              </div>
+              <div class="cards">${body}</div>
+            </section>
+          `;
+        })
+        .join("");
+
+      statusEl.dataset.state = "ready";
+      statusEl.textContent = `${data.cards.length} cards across ${data.columns.length} columns`;
+    }
+
+    async function loadBoard() {
+      try {
+        const response = await fetch("./backlog.json", { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`Could not load backlog.json (${response.status})`);
+        }
+        const data = await response.json();
+        renderBoard(data);
+      } catch (error) {
+        statusEl.dataset.state = "error";
+        statusEl.textContent =
+          "Could not load backlog.json. Serve this folder over HTTP (see README).";
+        boardEl.innerHTML = "";
+        console.error(error);
+      }
+    }
+
+    loadBoard();
+  </script>
+</body>
+</html>

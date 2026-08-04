@@ -1,0 +1,236 @@
+{
+  "columns": [
+    { "id": "backlog", "title": "Backlog" },
+    { "id": "todo", "title": "Todo" },
+    { "id": "in_progress", "title": "In Progress" },
+    { "id": "review", "title": "Review" },
+    { "id": "done", "title": "Done" }
+  ],
+  "cards": [
+    {
+      "id": "card-01",
+      "title": "Kickoff & success criteria with client",
+      "type": "Discovery",
+      "priority": "High",
+      "owner": "",
+      "tag": "client",
+      "column": "todo"
+    },
+    {
+      "id": "card-02",
+      "title": "Stakeholder map and decision owners",
+      "type": "Discovery",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "client",
+      "column": "backlog"
+    },
+    {
+      "id": "card-03",
+      "title": "Current-state audit (process, tools, data)",
+      "type": "Discovery",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "client",
+      "column": "backlog"
+    },
+    {
+      "id": "card-04",
+      "title": "Requirements workshop / user stories",
+      "type": "Discovery",
+      "priority": "High",
+      "owner": "",
+      "tag": "client",
+      "column": "todo"
+    },
+    {
+      "id": "card-05",
+      "title": "Scope boundaries and out-of-scope list",
+      "type": "Discovery",
+      "priority": "High",
+      "owner": "",
+      "tag": "client",
+      "column": "todo"
+    },
+    {
+      "id": "card-06",
+      "title": "Risks, assumptions, dependencies",
+      "type": "Discovery",
+      "priority": "High",
+      "owner": "",
+      "tag": "client",
+      "column": "backlog"
+    },
+    {
+      "id": "card-07",
+      "title": "Project timeline and milestones",
+      "type": "Docs",
+      "priority": "High",
+      "owner": "",
+      "tag": "client",
+      "column": "backlog"
+    },
+    {
+      "id": "card-08",
+      "title": "Environment setup (dev / staging / prod)",
+      "type": "Build",
+      "priority": "High",
+      "owner": "",
+      "tag": "setup",
+      "column": "todo"
+    },
+    {
+      "id": "card-09",
+      "title": "Access, credentials, and repo permissions",
+      "type": "Build",
+      "priority": "High",
+      "owner": "",
+      "tag": "setup",
+      "column": "backlog"
+    },
+    {
+      "id": "card-10",
+      "title": "Definition of Done and acceptance criteria template",
+      "type": "Docs",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "process",
+      "column": "backlog"
+    },
+    {
+      "id": "card-11",
+      "title": "Communication cadence (standup, demos, feedback)",
+      "type": "Client",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "process",
+      "column": "todo"
+    },
+    {
+      "id": "card-12",
+      "title": "Information architecture / UX flows",
+      "type": "Design",
+      "priority": "High",
+      "owner": "",
+      "tag": "product",
+      "column": "backlog"
+    },
+    {
+      "id": "card-13",
+      "title": "UI / brand alignment with client",
+      "type": "Design",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "product",
+      "column": "backlog"
+    },
+    {
+      "id": "card-14",
+      "title": "Core feature MVP build",
+      "type": "Build",
+      "priority": "High",
+      "owner": "",
+      "tag": "product",
+      "column": "backlog"
+    },
+    {
+      "id": "card-15",
+      "title": "Integrations (APIs, CRM, payments, etc.)",
+      "type": "Build",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "product",
+      "column": "backlog"
+    },
+    {
+      "id": "card-16",
+      "title": "Data model / migrations",
+      "type": "Build",
+      "priority": "High",
+      "owner": "",
+      "tag": "product",
+      "column": "backlog"
+    },
+    {
+      "id": "card-17",
+      "title": "Auth and roles (if needed)",
+      "type": "Build",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "product",
+      "column": "backlog"
+    },
+    {
+      "id": "card-18",
+      "title": "Error handling and empty states",
+      "type": "Build",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "product",
+      "column": "backlog"
+    },
+    {
+      "id": "card-19",
+      "title": "QA checklist and test cases",
+      "type": "Docs",
+      "priority": "High",
+      "owner": "",
+      "tag": "qa",
+      "column": "backlog"
+    },
+    {
+      "id": "card-20",
+      "title": "Client UAT / review rounds",
+      "type": "Client",
+      "priority": "High",
+      "owner": "",
+      "tag": "qa",
+      "column": "backlog"
+    },
+    {
+      "id": "card-21",
+      "title": "Bug triage from UAT",
+      "type": "Fix",
+      "priority": "High",
+      "owner": "",
+      "tag": "qa",
+      "column": "backlog"
+    },
+    {
+      "id": "card-22",
+      "title": "Documentation / runbook",
+      "type": "Docs",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "handoff",
+      "column": "backlog"
+    },
+    {
+      "id": "card-23",
+      "title": "Training / handoff session",
+      "type": "Client",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "handoff",
+      "column": "backlog"
+    },
+    {
+      "id": "card-24",
+      "title": "Go-live checklist and rollback plan",
+      "type": "Docs",
+      "priority": "High",
+      "owner": "",
+      "tag": "launch",
+      "column": "backlog"
+    },
+    {
+      "id": "card-25",
+      "title": "Post-launch support window",
+      "type": "Client",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "launch",
+      "column": "backlog"
+    }
+  ]
+}
