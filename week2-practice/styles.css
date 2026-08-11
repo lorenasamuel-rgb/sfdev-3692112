@@ -1,0 +1,26 @@
+/* We will build the visual system together. */
+Root {
+  --primary-color: #0a07c3;
+  --secondary-color: #f9f9fc;
+  --font-family: 'Arial', sans-serif;
+  --font-size: 10px;
+  --line-height: 1.5;
+  --text-color: #0a07c3;
+--button-hover-color: #0a07c3;
+}
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f9f9fc;
+  color: #0a07c3;
+  margin: 0;
+  padding: 0;
+  margin-top: 0;
+  margin-right: em;
+  margin-bottom: 0;
+  margin-left: 1em;
+  font-size: 10px;
+  font-family: 'Arial', sans-serif;
+}
+.add-button:hover   {
+  background-color: #0a07c3;
+  color: #f9f9fc;
