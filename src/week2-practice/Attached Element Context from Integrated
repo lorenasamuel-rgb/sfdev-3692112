@@ -1,0 +1,39 @@
+Attached Element Context from Integrated Browser
+
+Element: h1
+
+URL: file:///Users/lorenasamuel/Documents/sfdev-3692112/src/week2-practice/assessment.html
+
+HTML Path: h1
+
+Outer HTML:
+```html
+<h1>Film Assessment</h1>
+```
+
+Dimensions:
+- top: -13px
+- left: 10px
+- width: 1256px
+- height: 50px
+
+CSS:
+```css
+
+/* Inherited */
+body { font-family: 'Arial', sans-serif; color: #022248; font-size: 10px; font-family: 'Arial', sans-serif }
+
+/* Resolved values */
+color: rgb(2, 34, 72);
+display: block;
+font-family: Arial, sans-serif;
+font-size: 20px;
+font-weight: 700 /*UA*/;
+height: 23px;
+margin-block-end: 13.4px /*UA*/;
+margin-block-start: 13.4px /*UA*/;
+margin-inline-end: 0px /*UA*/;
+margin-inline-start: 0px /*UA*/;
+unicode-bidi: isolate /*UA*/;
+width: 1256px;
+```
