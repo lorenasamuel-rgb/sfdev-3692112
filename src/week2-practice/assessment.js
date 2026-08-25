@@ -28,14 +28,17 @@ form.addEventListener("submit", function (event) {
     score += 10;
   }
 
-  // Save information so results.html can use it
-  localStorage.setItem("filmTitle", filmTitle);
-  localStorage.setItem("genre", genre);
-  localStorage.setItem("runtime", runtime);
-  localStorage.setItem("premiere", premiere);
-  localStorage.setItem("pressKit", pressKit);
-  localStorage.setItem("trailer", trailer);
-  localStorage.setItem("festivalScore", score);
+  const assessment = {
+    filmTitle,
+    genre,
+    runtime,
+    premiere,
+    pressKit,
+    trailer,
+    score,
+  };
+
+  localStorage.setItem("festivalAssessment", JSON.stringify(assessment));
 
   // Go to results page
   window.location.href = "results.html";

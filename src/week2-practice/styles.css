@@ -63,6 +63,22 @@ button:hover {
   color: #f9f9fc;
 }
 
+.button {
+  display: inline-block;
+  background: #022248;
+  color: #f9f9fc;
+  border: 2px solid #022248;
+  border-radius: 5px;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: #c34907;
+  color: #f9f9fc;
+}
+
 section {
   margin-top: 1rem;
 }
