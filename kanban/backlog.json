@@ -1,0 +1,281 @@
+{
+  "columns": [
+    { "id": "backlog", "title": "Backlog" },
+    { "id": "todo", "title": "Todo" },
+    { "id": "in_progress", "title": "In Progress" },
+    { "id": "review", "title": "Review" },
+    { "id": "done", "title": "Done" }
+  ],
+  "cards": [
+    {
+      "id": "card-01",
+      "title": "Align on product brief from director notes",
+      "type": "Discovery",
+      "priority": "High",
+      "owner": "",
+      "tag": "vision",
+      "column": "todo"
+    },
+    {
+      "id": "card-02",
+      "title": "Map discovery jobs-to-be-done (browse, mood, festival, equipment)",
+      "type": "Discovery",
+      "priority": "High",
+      "owner": "",
+      "tag": "ux",
+      "column": "todo"
+    },
+    {
+      "id": "card-03",
+      "title": "Define no-paywall business constraints and value levers",
+      "type": "Discovery",
+      "priority": "High",
+      "owner": "",
+      "tag": "business",
+      "column": "todo"
+    },
+    {
+      "id": "card-04",
+      "title": "Draft information architecture for film discovery",
+      "type": "Design",
+      "priority": "High",
+      "owner": "",
+      "tag": "ia",
+      "column": "todo"
+    },
+    {
+      "id": "card-05",
+      "title": "Sketch dynamic homepage concept (auto-surface + rotating categories)",
+      "type": "Design",
+      "priority": "High",
+      "owner": "",
+      "tag": "homepage",
+      "column": "todo"
+    },
+    {
+      "id": "card-06",
+      "title": "Semantic search UX for moods, themes, equipment, festivals",
+      "type": "Design",
+      "priority": "High",
+      "owner": "",
+      "tag": "search",
+      "column": "backlog"
+    },
+    {
+      "id": "card-07",
+      "title": "Film detail page with rich metadata and relationships",
+      "type": "Design",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "film",
+      "column": "backlog"
+    },
+    {
+      "id": "card-08",
+      "title": "Filmmaker upload + review dashboard UX",
+      "type": "Design",
+      "priority": "High",
+      "owner": "",
+      "tag": "dashboard",
+      "column": "backlog"
+    },
+    {
+      "id": "card-09",
+      "title": "AI metadata extraction pipeline on film upload",
+      "type": "Build",
+      "priority": "High",
+      "owner": "",
+      "tag": "ai-metadata",
+      "column": "backlog"
+    },
+    {
+      "id": "card-10",
+      "title": "Theme / emotion / genre / audience classifiers",
+      "type": "Build",
+      "priority": "High",
+      "owner": "",
+      "tag": "ai-metadata",
+      "column": "backlog"
+    },
+    {
+      "id": "card-11",
+      "title": "Equipment and technical attribute detection",
+      "type": "Build",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "ai-metadata",
+      "column": "backlog"
+    },
+    {
+      "id": "card-12",
+      "title": "People, crew, and festival entity extraction",
+      "type": "Build",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "ai-metadata",
+      "column": "backlog"
+    },
+    {
+      "id": "card-13",
+      "title": "Film summary and auto-tag generation",
+      "type": "Build",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "ai-metadata",
+      "column": "backlog"
+    },
+    {
+      "id": "card-14",
+      "title": "Semantic search index (meaning over keywords)",
+      "type": "Build",
+      "priority": "High",
+      "owner": "",
+      "tag": "search",
+      "column": "backlog"
+    },
+    {
+      "id": "card-15",
+      "title": "Query examples: grief, first love, shot on Canon, LGBTQ documentary",
+      "type": "Build",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "search",
+      "column": "backlog"
+    },
+    {
+      "id": "card-16",
+      "title": "Dynamic homepage engine (categories, rotation, no daily manual edit)",
+      "type": "Build",
+      "priority": "High",
+      "owner": "",
+      "tag": "homepage",
+      "column": "backlog"
+    },
+    {
+      "id": "card-17",
+      "title": "Category rails: docs, animation, LGBTQ+, shorts, festivals",
+      "type": "Build",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "homepage",
+      "column": "backlog"
+    },
+    {
+      "id": "card-18",
+      "title": "Recommendation engine (watch history, themes, festivals, directors)",
+      "type": "Build",
+      "priority": "High",
+      "owner": "",
+      "tag": "recs",
+      "column": "backlog"
+    },
+    {
+      "id": "card-19",
+      "title": "Film relationship graph (people, festivals, themes, gear)",
+      "type": "Build",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "graph",
+      "column": "backlog"
+    },
+    {
+      "id": "card-20",
+      "title": "Festival assistant: ingest PDF/web programme",
+      "type": "Build",
+      "priority": "High",
+      "owner": "",
+      "tag": "festival",
+      "column": "backlog"
+    },
+    {
+      "id": "card-21",
+      "title": "Festival assistant: suggest articles, interviews, connections",
+      "type": "Build",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "festival",
+      "column": "backlog"
+    },
+    {
+      "id": "card-22",
+      "title": "AI interview question generation from submission",
+      "type": "Build",
+      "priority": "High",
+      "owner": "",
+      "tag": "interview",
+      "column": "backlog"
+    },
+    {
+      "id": "card-23",
+      "title": "Interview pipeline: transcript, clips, quotes, social, article",
+      "type": "Build",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "interview",
+      "column": "backlog"
+    },
+    {
+      "id": "card-24",
+      "title": "Sponsorship matching by equipment/software clusters",
+      "type": "Build",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "sponsors",
+      "column": "backlog"
+    },
+    {
+      "id": "card-25",
+      "title": "Sponsor surfaces (Canon, Adobe, Blackmagic examples)",
+      "type": "Design",
+      "priority": "Low",
+      "owner": "",
+      "tag": "sponsors",
+      "column": "backlog"
+    },
+    {
+      "id": "card-26",
+      "title": "Submission flow and £47 packaging (no content paywall)",
+      "type": "Client",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "business",
+      "column": "backlog"
+    },
+    {
+      "id": "card-27",
+      "title": "Filmmaker dashboard: tags review, promotion, interview status",
+      "type": "Build",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "dashboard",
+      "column": "backlog"
+    },
+    {
+      "id": "card-28",
+      "title": "Architecture sketch: AI agents, metadata store, search index",
+      "type": "Docs",
+      "priority": "High",
+      "owner": "",
+      "tag": "architecture",
+      "column": "backlog"
+    },
+    {
+      "id": "card-29",
+      "title": "User journeys: discoverer, filmmaker, editor, sponsor",
+      "type": "Docs",
+      "priority": "Medium",
+      "owner": "",
+      "tag": "ux",
+      "column": "backlog"
+    },
+    {
+      "id": "card-30",
+      "title": "MVP scope cut for discovery + metadata + homepage",
+      "type": "Discovery",
+      "priority": "High",
+      "owner": "",
+      "tag": "scope",
+      "column": "backlog"
+    }
+  ]
+}
