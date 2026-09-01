@@ -7,3 +7,5 @@ npm install
 npm test
 npm run dev
 ```
+
+Abre em `http://localhost:7363`.

@@ -23,7 +23,7 @@ npm test
 npm run dev
 ```
 
-Abre em `http://localhost:5173`. Os dados ficam no `localStorage` do navegador.
+Abre em `http://localhost:7363`. Os dados ficam no `localStorage` do navegador.
 
 ```bash
 npm run build
