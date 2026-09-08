@@ -8,6 +8,7 @@ export const strings = {
     brand: 'Rota Doc',
     nav: {
       language: 'Idioma',
+      sections: 'Seções',
       filme: 'Filme',
       arquivo: 'Arquivo',
       festivais: 'Festivais',
@@ -417,6 +418,7 @@ export const strings = {
     brand: 'Rota Doc',
     nav: {
       language: 'Language',
+      sections: 'Sections',
       filme: 'Film',
       arquivo: 'Archive',
       festivais: 'Festivals',
