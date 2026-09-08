@@ -108,12 +108,20 @@ function Header({ active }) {
         {t('brand')}
       </a>
       <LanguageSwitch />
-      <nav>
-        {NAV.map((item) => (
-          <a key={item.id} href={item.href} className={active === item.id ? 'is-active' : ''}>
-            {t(`nav.${item.id}`)}
-          </a>
-        ))}
+      <nav aria-label={t('nav.sections')}>
+        {NAV.map((item) => {
+          const isActive = active === item.id
+          return (
+            <a
+              key={item.id}
+              href={item.href}
+              className={isActive ? 'is-active' : ''}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              {t(`nav.${item.id}`)}
+            </a>
+          )
+        })}
       </nav>
       <p className="topbar-film">
         {film.originalTitle || t('nav.noFilm')}
