@@ -114,7 +114,7 @@ export const strings = {
     festivals: {
       eyebrow: 'Passo 1',
       title: 'Escolher os festivais adequados',
-      lede: '{count} festivais fictícios do arquivo. Cruze forma, duração, país e estágio. Os nomes são de ensino — não substituem um edital real.',
+      lede: 'Agora é hora de escolher os festivais que gostaria de aplicar.',
       search: 'Buscar festival, cidade ou foco',
       allRegions: 'Todas as regiões',
       allCountries: 'Todos os países',
@@ -522,7 +522,7 @@ export const strings = {
     festivals: {
       eyebrow: 'Step 1',
       title: 'Pick matching festivals',
-      lede: '{count} fictional festivals from the archive. Match form, running time, country and stage. Names are for teaching — they do not replace a real call for entries.',
+      lede: 'Now it is time to choose the festivals you would like to apply to.',
       search: 'Search festival, city or focus',
       allRegions: 'All regions',
       allCountries: 'All countries',
