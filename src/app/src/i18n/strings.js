@@ -48,7 +48,7 @@ export const strings = {
     },
     film: {
       eyebrow: 'Ficha do filme',
-      title: 'O filme que você vai inscrever',
+      title: 'O Chamado',
       lede: 'Duração, data de conclusão, estreia, forma e idioma definem a elegibilidade. Independentes e estreantes podem inscrever — desde que o filme caiba no regulamento de ensino do arquivo.',
       sample: 'Preencher com exemplo do arquivo',
       clear: 'Limpar formulário',
