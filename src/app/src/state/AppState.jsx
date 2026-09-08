@@ -142,6 +142,13 @@ export function AppStateProvider({ children }) {
     [persist],
   )
 
+  const clearFilm = useCallback(() => {
+    persist((current) => ({
+      ...current,
+      film: { ...emptyFilm },
+    }))
+  }, [persist])
+
   const value = useMemo(
     () => ({
       ...state,
@@ -154,6 +161,7 @@ export function AppStateProvider({ children }) {
       removeSubmission,
       loadSample,
       loadArchiveFilm,
+      clearFilm,
     }),
     [
       state,
@@ -166,6 +174,7 @@ export function AppStateProvider({ children }) {
       removeSubmission,
       loadSample,
       loadArchiveFilm,
+      clearFilm,
     ],
   )
 

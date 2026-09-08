@@ -3,7 +3,7 @@ import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
 
 export function FilmPage() {
-  const { film, updateFilm, loadSample } = useAppState()
+  const { film, updateFilm, loadSample, clearFilm } = useAppState()
   const { t } = useLanguage()
 
   function field(name, kind = 'text') {
@@ -34,9 +34,14 @@ export function FilmPage() {
         </div>
         <div className="page-head-aside">
           <ReadinessMeter />
-          <button type="button" className="btn-ghost" onClick={loadSample}>
-            {t('film.sample')}
-          </button>
+          <div className="btn-row">
+            <button type="button" className="btn-ghost" onClick={loadSample}>
+              {t('film.sample')}
+            </button>
+            <button type="button" className="btn-ghost" onClick={clearFilm}>
+              {t('film.clear')}
+            </button>
+          </div>
         </div>
       </header>
 
