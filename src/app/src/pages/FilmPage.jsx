@@ -52,7 +52,7 @@ export function FilmPage() {
           <TitleSearch />
           <label>
             {t('film.englishTitle')}
-            <input {...field('englishTitle')} placeholder="The Quiet Cartographer" />
+            <input {...field('englishTitle')} placeholder={t('film.englishTitlePlaceholder')} />
           </label>
           <label className="full">
             {t('film.logline')}
