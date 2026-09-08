@@ -129,6 +129,30 @@ p {
   color: var(--ink);
 }
 
+.lang-switch {
+  display: inline-flex;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.lang-switch button {
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  padding: 0.3rem 0.7rem;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  width: auto;
+}
+
+.lang-switch button.is-active {
+  background: var(--ink);
+  color: var(--paper);
+}
+
 .topbar-film {
   margin-left: auto;
   margin-bottom: 0;
@@ -304,6 +328,10 @@ footer {
   grid-template-columns: 1.4fr 1fr 1fr;
   gap: 0.75rem;
   margin: 1.25rem 0 1.5rem;
+}
+
+.filters-wide {
+  grid-template-columns: 1.3fr 0.9fr 0.9fr 0.9fr 1fr;
 }
 
 input,
@@ -604,6 +632,74 @@ label.check input {
   margin-bottom: 1.25rem;
 }
 
+.film-poster {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  background: var(--paper-2);
+}
+
+.film-poster.is-empty {
+  display: grid;
+  place-items: center;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+.honour-table {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.honour-head,
+.honour-row {
+  display: grid;
+  grid-template-columns: 4.5rem 1.4fr 1.3fr 1fr 8.5rem;
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.honour-head {
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  padding: 0 0.4rem;
+}
+
+.honour-row {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+}
+
+.honour-row em {
+  display: block;
+  font-style: normal;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+.honour-row .btn-text {
+  text-align: left;
+  font-weight: 600;
+}
+
+.badge.honour-winner {
+  background: #dce8df;
+  color: var(--good);
+}
+
+.badge.honour-nominated,
+.badge.honour-special-mention {
+  background: #f4e3b8;
+  color: var(--warn);
+}
+
 @media (max-width: 860px) {
   .topbar {
     flex-wrap: wrap;
@@ -617,11 +713,14 @@ label.check input {
 
   .split,
   .filters,
+  .filters-wide,
   fieldset,
   .req-table article,
   .spec div,
   .step-checks,
-  .page-head {
+  .page-head,
+  .honour-head,
+  .honour-row {
     grid-template-columns: 1fr;
   }
 

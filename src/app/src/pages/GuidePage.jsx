@@ -1,25 +1,28 @@
-import { commonRequirements } from '../data/checklists.js'
+import { requirementIds } from '../data/checklists.js'
+import { labFestivals } from '../data/festivals.js'
 import { PremiereCallout } from '../components/Widgets.jsx'
+import { labelCountry, labelFocus } from '../lib/labels.js'
+import { useLanguage } from '../i18n/context.js'
 
 export function GuidePage() {
+  const { t } = useLanguage()
+  const examples = labFestivals.slice(0, 2)
+
   return (
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">Regulamento</p>
-          <h1>Requisitos mais comuns</h1>
-          <p>
-            Cada festival possui regulamento próprio. Use esta lista como roteiro de leitura do
-            edital — nunca como substituto.
-          </p>
+          <p className="eyebrow">{t('guide.eyebrow')}</p>
+          <h1>{t('guide.title')}</h1>
+          <p>{t('guide.lede')}</p>
         </div>
       </header>
 
       <div className="req-table">
-        {commonRequirements.map((item) => (
-          <article key={item.id}>
-            <h2>{item.title}</h2>
-            <p>{item.meaning}</p>
+        {requirementIds.map((id) => (
+          <article key={id}>
+            <h2>{t(`requirements.${id}.title`)}</h2>
+            <p>{t(`requirements.${id}.meaning`)}</p>
           </article>
         ))}
       </div>
@@ -27,89 +30,64 @@ export function GuidePage() {
       <PremiereCallout />
 
       <section className="split">
-        <article className="panel">
-          <h2>Sheffield DocFest</h2>
-          <p>
-            Recebe documentários finalizados, de qualquer duração e de vários países. Em 2026,
-            considerava curta a produção com menos de 40 minutos e cobrava taxas diferentes
-            conforme a duração e o prazo de inscrição.
-          </p>
-          <a href="https://www.sheffdocfest.com/film-programme-entries" target="_blank" rel="noreferrer">
-            Film Programme Entries
-          </a>
-        </article>
-        <article className="panel">
-          <h2>IDFA 2026</h2>
-          <p>
-            Exigiu formulário completo, pagamento, screener com legendas em inglês e documentários
-            concluídos depois de uma data determinada. Algumas competições também exigiram estreia
-            mundial, internacional ou europeia.
-          </p>
-          <a
-            href="https://professionals.idfa.nl/program/festival-entries/festival-entry-regulations/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Festival Entry Regulations
-          </a>
-        </article>
+        {examples.map((festival) => (
+          <article key={festival.id} className="panel">
+            <h2>{festival.name}</h2>
+            <p>
+              {festival.city}, {labelCountry(festival.country, t)}. {festival.description}
+            </p>
+            <a href={`#/festivais/${festival.id}`}>{t('festivals.open')}</a>
+          </article>
+        ))}
       </section>
     </div>
   )
 }
 
 export function LabsPage() {
+  const { t } = useLanguage()
+
   return (
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">Desenvolvimento</p>
-          <h1>Laboratórios, mercados e pitching</h1>
-          <p>
-            Se o documentário ainda estiver em desenvolvimento, a rota é outra: apresenta-se o
-            projeto para buscar financiamento, coprodução ou distribuição — não uma cópia final
-            para seleção oficial.
-          </p>
+          <p className="eyebrow">{t('labs.eyebrow')}</p>
+          <h1>{t('labs.title')}</h1>
+          <p>{t('labs.lede')}</p>
         </div>
       </header>
 
       <section className="panel">
-        <h2>Quando usar esta rota</h2>
+        <h2>{t('labs.when')}</h2>
         <ul className="plain-list">
-          <li>Imagem e som ainda não estão fechados.</li>
-          <li>Você busca coprodutor, fundo ou agente de vendas.</li>
-          <li>É um primeiro filme e precisa de laboratório de desenvolvimento.</li>
+          <li>{t('labs.when1')}</li>
+          <li>{t('labs.when2')}</li>
+          <li>{t('labs.when3')}</li>
         </ul>
       </section>
 
-      <div className="card-grid">
-        <article className="festival-card">
-          <p className="eyebrow">Sheffield</p>
-          <h3>MeetMarket</h3>
-          <p>
-            Aceita projetos em diferentes estágios e também realizadores estreantes. Inscrição
-            distinta da seleção de filmes finalizados.
-          </p>
-          <a href="https://www.sheffdocfest.com/meetmarket-entries" target="_blank" rel="noreferrer">
-            MeetMarket Entries
-          </a>
-        </article>
-        <article className="festival-card">
-          <p className="eyebrow">Amsterdã</p>
-          <h3>IDFA Forum</h3>
-          <p>Mercado de coprodução ligado ao IDFA, para projetos e filmes em busca de parceiros.</p>
-        </article>
-        <article className="festival-card">
-          <p className="eyebrow">Copenhague</p>
-          <h3>CPH:FORUM</h3>
-          <p>Mercado do CPH:DOX para documentários em desenvolvimento.</p>
-        </article>
-        <article className="festival-card">
-          <p className="eyebrow">Toronto</p>
-          <h3>Hot Docs Forum</h3>
-          <p>Encontros de indústria e Deal Maker para financiamento e distribuição.</p>
-        </article>
-      </div>
+      {labFestivals.length === 0 ? (
+        <p className="muted">{t('labs.empty')}</p>
+      ) : (
+        <div className="card-grid">
+          {labFestivals.map((festival) => (
+            <article key={festival.id} className="festival-card">
+              <p className="eyebrow">
+                {festival.city} · {labelCountry(festival.country, t)}
+              </p>
+              <h3>
+                <a href={`#/festivais/${festival.id}`}>{festival.name}</a>
+              </h3>
+              <p>{festival.hasLabs ? t('labs.note') : festival.description}</p>
+              <ul className="chip-row">
+                {festival.focusTags.map((tag) => (
+                  <li key={tag}>{labelFocus(tag, t)}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

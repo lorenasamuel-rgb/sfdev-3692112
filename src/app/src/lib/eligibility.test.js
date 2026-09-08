@@ -107,3 +107,18 @@ test('readiness sobe com pacote e direitos marcados', () => {
   )
   assert.ok(high > low)
 })
+
+test('festival de curtas rejeita longa', () => {
+  const result = evaluateFestival(baseFilm, {
+    ...baseFestival,
+    duration: { shortMax: 40, shortOnly: true },
+  })
+  assert.equal(result.status, 'ineligible')
+  assert.ok(result.issues.some((issue) => issue.code === 'too-long'))
+})
+
+test('mensagens de elegibilidade respeitam o idioma', () => {
+  const result = evaluateFestival({ ...baseFilm, stage: 'wip' }, baseFestival, new Date(), 'en')
+  assert.equal(result.status, 'ineligible')
+  assert.match(result.issues[0].message, /finished films/i)
+})

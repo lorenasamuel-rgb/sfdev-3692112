@@ -1,10 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AppStateProvider } from './state/AppState.jsx'
 import { useAppState } from './state/context.js'
+import { LanguageProvider } from './i18n/LanguageContext.jsx'
+import { useLanguage } from './i18n/context.js'
 import { HomePage } from './pages/HomePage.jsx'
 import { FilmPage } from './pages/FilmPage.jsx'
+import { ArchivePage } from './pages/ArchivePage.jsx'
 import { FestivalsPage } from './pages/FestivalsPage.jsx'
 import { FestivalDetailPage } from './pages/FestivalDetailPage.jsx'
+import { AwardsPage } from './pages/AwardsPage.jsx'
 import { PackagePage } from './pages/PackagePage.jsx'
 import { RightsPage } from './pages/RightsPage.jsx'
 import { SubmissionsPage } from './pages/SubmissionsPage.jsx'
@@ -13,13 +17,15 @@ import { readinessScore } from './lib/eligibility.js'
 import { packageItems, rightsItems } from './data/checklists.js'
 
 const NAV = [
-  { href: '#/filme', id: 'filme', label: 'Filme' },
-  { href: '#/festivais', id: 'festivais', label: 'Festivais' },
-  { href: '#/pacote', id: 'pacote', label: 'Pacote' },
-  { href: '#/direitos', id: 'direitos', label: 'Direitos' },
-  { href: '#/inscricoes', id: 'inscricoes', label: 'Inscrições' },
-  { href: '#/guia', id: 'guia', label: 'Guia' },
-  { href: '#/laboratorios', id: 'laboratorios', label: 'Labs' },
+  { href: '#/filme', id: 'filme' },
+  { href: '#/arquivo', id: 'arquivo' },
+  { href: '#/festivais', id: 'festivais' },
+  { href: '#/premios', id: 'premios' },
+  { href: '#/pacote', id: 'pacote' },
+  { href: '#/direitos', id: 'direitos' },
+  { href: '#/inscricoes', id: 'inscricoes' },
+  { href: '#/guia', id: 'guia' },
+  { href: '#/laboratorios', id: 'laboratorios' },
 ]
 
 function parseHash() {
@@ -43,8 +49,10 @@ function Router() {
     const [section, id] = route.parts
     if (!section) return <HomePage />
     if (section === 'filme') return <FilmPage />
+    if (section === 'arquivo') return <ArchivePage />
     if (section === 'festivais' && id) return <FestivalDetailPage id={id} />
     if (section === 'festivais') return <FestivalsPage />
+    if (section === 'premios') return <AwardsPage />
     if (section === 'pacote') return <PackagePage />
     if (section === 'direitos') return <RightsPage />
     if (section === 'inscricoes') return <SubmissionsPage />
@@ -59,45 +67,77 @@ function Router() {
     <div className="shell">
       <Header active={active} />
       <main>{page}</main>
-      <footer>
-        <p>
-          Rota Doc organiza o processo de inscrição. A seleção é curatorial e cada festival tem
-          edital próprio — confirme prazos, taxas e estreia no site oficial.
-        </p>
-      </footer>
+      <Footer />
+    </div>
+  )
+}
+
+function LanguageSwitch() {
+  const { locale, setLocale, t } = useLanguage()
+  return (
+    <div className="lang-switch" role="group" aria-label={t('nav.language')}>
+      <button
+        type="button"
+        className={locale === 'pt' ? 'is-active' : ''}
+        aria-pressed={locale === 'pt'}
+        onClick={() => setLocale('pt')}
+      >
+        PT
+      </button>
+      <button
+        type="button"
+        className={locale === 'en' ? 'is-active' : ''}
+        aria-pressed={locale === 'en'}
+        onClick={() => setLocale('en')}
+      >
+        EN
+      </button>
     </div>
   )
 }
 
 function Header({ active }) {
   const { film, package: packageState, rights, submissions } = useAppState()
+  const { t } = useLanguage()
   const score = readinessScore(film, packageState, rights, packageItems, rightsItems)
 
   return (
     <header className="topbar">
       <a className="brand" href="#/">
         <span className="brand-mark" aria-hidden="true" />
-        Rota Doc
+        {t('brand')}
       </a>
+      <LanguageSwitch />
       <nav>
         {NAV.map((item) => (
           <a key={item.id} href={item.href} className={active === item.id ? 'is-active' : ''}>
-            {item.label}
+            {t(`nav.${item.id}`)}
           </a>
         ))}
       </nav>
       <p className="topbar-film">
-        {film.originalTitle || 'Sem filme cadastrado'}
-        <span>{score}/100 · {submissions.length} inscrições</span>
+        {film.originalTitle || t('nav.noFilm')}
+        <span>{t('nav.submissions', { score, count: submissions.length })}</span>
       </p>
     </header>
   )
 }
 
+function Footer() {
+  const { t } = useLanguage()
+  return (
+    <footer>
+      <p>{t('footer')}</p>
+    </footer>
+  )
+}
+
 export default function App() {
   return (
-    <AppStateProvider>
-      <Router />
-    </AppStateProvider>
+    <LanguageProvider>
+      <AppStateProvider>
+        <Router />
+      </AppStateProvider>
+    </LanguageProvider>
   )
 }
