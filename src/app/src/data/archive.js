@@ -187,6 +187,18 @@ export function getArchiveFilmById(id) {
   return archiveFilms.find((film) => film.id === id) ?? null
 }
 
+export function searchArchiveFilms(query, limit = 8) {
+  const needle = query.trim().toLowerCase()
+  const pool = needle
+    ? archiveFilms.filter((item) => {
+        const directors = item.directors.map((person) => person.name).join(' ')
+        const hay = `${item.title} ${directors} ${item.country} ${item.form}`.toLowerCase()
+        return hay.includes(needle)
+      })
+    : archiveFilms
+  return pool.slice(0, limit)
+}
+
 export const SAMPLE_FILM_ID = 'film-001'
 
 function premiereFromHonours(honours) {

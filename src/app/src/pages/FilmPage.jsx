@@ -1,4 +1,5 @@
 import { ReadinessMeter } from '../components/Widgets.jsx'
+import { TitleSearch } from '../components/TitleSearch.jsx'
 import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
 
@@ -48,10 +49,7 @@ export function FilmPage() {
       <form className="dossier" onSubmit={(event) => event.preventDefault()}>
         <fieldset>
           <legend>{t('film.identity')}</legend>
-          <label>
-            {t('film.originalTitle')}
-            <input required {...field('originalTitle')} placeholder="The Quiet Cartographer" />
-          </label>
+          <TitleSearch />
           <label>
             {t('film.englishTitle')}
             <input {...field('englishTitle')} placeholder="The Quiet Cartographer" />

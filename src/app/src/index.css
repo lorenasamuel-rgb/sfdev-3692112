@@ -406,6 +406,73 @@ label.check input {
   margin-top: 0.2rem;
 }
 
+.title-search {
+  position: relative;
+}
+
+.title-search-list {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin: 0;
+  padding: 0.35rem;
+  list-style: none;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  max-height: 22rem;
+  overflow: auto;
+}
+
+.title-search-list li.is-empty {
+  padding: 0.7rem 0.8rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.title-search-list button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2.6rem 1fr;
+  gap: 0.7rem;
+  align-items: center;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  border-radius: 10px;
+  padding: 0.45rem 0.5rem;
+  color: var(--ink);
+}
+
+.title-search-list button.is-active,
+.title-search-list button:hover {
+  background: var(--paper-2);
+}
+
+.title-search-list img,
+.title-search-fallback {
+  width: 2.6rem;
+  height: 2.6rem;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--paper-2);
+}
+
+.title-search-list strong,
+.title-search-list em {
+  display: block;
+}
+
+.title-search-list em {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
