@@ -57,7 +57,7 @@ export const strings = {
       titleSearchPlaceholder: 'Buscar título no arquivo…',
       titleSearchEmpty: 'Nenhum filme no arquivo com esse título.',
       englishTitle: 'Título em inglês',
-      englishTitlePlaceholder: 'Ex.: English title',
+      englishTitlePlaceholder: 'Ex.: título em inglês',
       logline: 'Logline',
       shortSynopsis: 'Sinopse curta',
       fullSynopsis: 'Sinopse completa',

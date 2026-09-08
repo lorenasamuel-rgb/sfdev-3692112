@@ -46,7 +46,7 @@ export function FilmPage() {
         </div>
       </header>
 
-      <form className="dossier" onSubmit={(event) => event.preventDefault()}>
+      <form className="dossier" key={film.archiveFilmId || 'blank'} onSubmit={(event) => event.preventDefault()}>
         <fieldset>
           <legend>{t('film.identity')}</legend>
           <TitleSearch />
