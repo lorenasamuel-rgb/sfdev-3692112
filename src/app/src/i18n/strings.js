@@ -32,7 +32,7 @@ export const strings = {
       how: 'Como funciona',
       twoRoutes: 'Duas rotas',
       twoRoutesBody:
-        'Filme {finished}: inscrição na seleção oficial. Filme em {dev}: laboratórios e mercados — festivais com foco em novas vozes no arquivo.',
+        'Filme {finished}: inscrição na seleção oficial. Filme em {dev}: laboratórios e mercados. Festivais com foco em novas vozes no arquivo.',
       finished: 'finalizado',
       dev: 'desenvolvimento',
       labsLink: 'Ir para laboratórios e mercados',
@@ -437,7 +437,7 @@ export const strings = {
       how: 'How it works',
       twoRoutes: 'Two routes',
       twoRoutesBody:
-        '{finished} film: official selection entry. Film in {dev}: labs and markets — look for New voices festivals in the archive.',
+        '{finished} film: official selection entry. Film in {dev}: labs and markets. Look for New voices festivals in the archive.',
       finished: 'Finished',
       dev: 'development',
       labsLink: 'Go to labs and markets',
