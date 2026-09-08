@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { festivals } from '../data/festivals.js'
 import { evaluateFestival } from '../lib/eligibility.js'
 import { EmptyFilmHint, FestivalCard } from '../components/Widgets.jsx'
@@ -14,6 +14,9 @@ export function FestivalsPage() {
   const [country, setCountry] = useState('all')
   const [focus, setFocus] = useState('all')
   const [filter, setFilter] = useState('all')
+  const [open, setOpen] = useState(false)
+  const [active, setActive] = useState(0)
+  const searchRef = useRef(null)
 
   const countries = useMemo(
     () => [...new Set(festivals.map((festival) => festival.country))].sort(),
@@ -24,24 +27,51 @@ export function FestivalsPage() {
     [],
   )
 
+  const byOptions = useMemo(() => {
+    return festivals.filter((festival) => {
+      if (region !== 'all' && festival.region !== region) return false
+      if (country !== 'all' && festival.country !== country) return false
+      if (focus !== 'all' && !festival.focusTags.includes(focus)) return false
+      return true
+    })
+  }, [region, country, focus])
+
+  const nameOptions = useMemo(() => {
+    const needle = query.trim().toLowerCase()
+    const pool = needle
+      ? byOptions.filter((festival) => festival.name.toLowerCase().includes(needle))
+      : byOptions
+    return pool.slice(0, 8)
+  }, [byOptions, query])
+
   const rows = useMemo(() => {
-    return festivals
+    const needle = query.trim().toLowerCase()
+    return byOptions
       .map((festival) => ({
         festival,
         result: evaluateFestival(film, festival, new Date(), locale),
       }))
       .filter(({ festival, result }) => {
-        const hay = `${festival.name} ${festival.city} ${festival.country} ${festival.focus}`.toLowerCase()
-        if (query && !hay.includes(query.toLowerCase())) return false
-        if (region !== 'all' && festival.region !== region) return false
-        if (country !== 'all' && festival.country !== country) return false
-        if (focus !== 'all' && !festival.focusTags.includes(focus)) return false
+        if (needle && !festival.name.toLowerCase().includes(needle)) return false
         if (filter === 'eligible' && result.status !== 'eligible') return false
         if (filter === 'labs' && !festival.hasLabs) return false
         return true
       })
       .sort((a, b) => b.result.score - a.result.score)
-  }, [film, query, region, country, focus, filter, locale])
+  }, [film, byOptions, query, filter, locale])
+
+  useEffect(() => {
+    function onPointer(event) {
+      if (!searchRef.current?.contains(event.target)) setOpen(false)
+    }
+    document.addEventListener('mousedown', onPointer)
+    return () => document.removeEventListener('mousedown', onPointer)
+  }, [])
+
+  function pickName(name) {
+    setQuery(name)
+    setOpen(false)
+  }
 
   return (
     <div className="page">
@@ -56,12 +86,68 @@ export function FestivalsPage() {
       <EmptyFilmHint />
 
       <div className="filters filters-wide">
-        <input
-          type="search"
-          placeholder={t('festivals.search')}
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-        />
+        <div className="festival-search" ref={searchRef}>
+          <input
+            type="search"
+            role="combobox"
+            aria-expanded={open}
+            aria-autocomplete="list"
+            aria-controls="festival-name-results"
+            autoComplete="off"
+            placeholder={t('festivals.search')}
+            value={query}
+            onChange={(event) => {
+              setQuery(event.target.value)
+              setActive(0)
+              setOpen(true)
+            }}
+            onFocus={() => setOpen(true)}
+            onKeyDown={(event) => {
+              if (event.key === 'ArrowDown') {
+                event.preventDefault()
+                setOpen(true)
+                setActive((index) => Math.min(index + 1, Math.max(nameOptions.length - 1, 0)))
+              }
+              if (event.key === 'ArrowUp') {
+                event.preventDefault()
+                setActive((index) => Math.max(index - 1, 0))
+              }
+              if (event.key === 'Enter' && open && nameOptions[active]) {
+                event.preventDefault()
+                pickName(nameOptions[active].name)
+              }
+              if (event.key === 'Escape') setOpen(false)
+            }}
+          />
+          {open ? (
+            <ul id="festival-name-results" className="title-search-list" role="listbox">
+              {nameOptions.length === 0 ? (
+                <li className="is-empty">{t('festivals.searchEmpty')}</li>
+              ) : (
+                nameOptions.map((festival, index) => (
+                  <li key={festival.id} role="option" aria-selected={index === active}>
+                    <button
+                      type="button"
+                      className={index === active ? 'is-active' : ''}
+                      onMouseEnter={() => setActive(index)}
+                      onMouseDown={(event) => {
+                        event.preventDefault()
+                        pickName(festival.name)
+                      }}
+                    >
+                      <span>
+                        <strong>{festival.name}</strong>
+                        <em>
+                          {festival.city} · {labelCountry(festival.country, t)}
+                        </em>
+                      </span>
+                    </button>
+                  </li>
+                ))
+              )}
+            </ul>
+          ) : null}
+        </div>
         <select value={region} onChange={(event) => setRegion(event.target.value)}>
           <option value="all">{t('festivals.allRegions')}</option>
           <option value="europe">{t('region.europe')}</option>

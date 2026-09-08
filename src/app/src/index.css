@@ -355,6 +355,15 @@ footer {
   grid-template-columns: 1.3fr 0.9fr 0.9fr 0.9fr 1fr;
 }
 
+.festival-search {
+  position: relative;
+  min-width: 0;
+}
+
+.festival-search .title-search-list button {
+  grid-template-columns: 1fr;
+}
+
 input,
 select,
 textarea,
