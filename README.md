@@ -14,6 +14,8 @@ Um documentário chega ao festival por uma inscrição e, depois, passa por sele
 
 Os resumos de regulamento são de referência. Confirme sempre o edital vigente.
 
+O [manual do usuário](MANUAL.md) descreve cada tela, os sete passos da inscrição, o cruzamento de elegibilidade e onde os dados ficam.
+
 ## Como rodar
 
 ```bash
