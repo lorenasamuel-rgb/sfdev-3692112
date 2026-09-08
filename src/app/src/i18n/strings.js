@@ -454,7 +454,7 @@ export const strings = {
     },
     film: {
       eyebrow: 'Film file',
-      title: 'The film you will submit',
+      title: 'O Chamado',
       lede: 'Running time, completion date, premiere, form and language drive eligibility. Independents and first-timers can enter — if the film fits the teaching rules in the archive.',
       sample: 'Fill with an archive example',
       clear: 'Clear form',
