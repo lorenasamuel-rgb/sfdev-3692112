@@ -25,7 +25,7 @@ export const strings = {
     home: {
       eyebrow: 'Arquivo fictício para independentes e estreantes',
       title: 'Inscrever o filme em festival começa pelo regulamento — e pelos dados do arquivo.',
-      lede: 'Rota Doc agora lê o Fictional Film Archive: 180 filmes, 40 festivais e a jornada de prêmios. Cadastre o documentário, cruze com o catálogo e acompanhe cada inscrição. A inscrição não garante participação.',
+      lede: 'Tenha o passo a passo para conquistar a sua tão sonhada premiação em festivais.',
       ctaFilm: 'Cadastrar meu filme',
       ctaFestivals: 'Ver festivais',
       ctaArchive: 'Abrir o arquivo',
@@ -430,7 +430,7 @@ export const strings = {
     home: {
       eyebrow: 'A fictional archive for independents and first-timers',
       title: 'Getting a film into a festival starts with the rules — and with the archive data.',
-      lede: 'Rota Doc now reads the Fictional Film Archive: 180 films, 40 festivals and an awards journey. File your film, match it to the catalogue and track each submission. Entering is not a guarantee of selection.',
+      lede: 'Get the step-by-step path to the festival award you have been dreaming of.',
       ctaFilm: 'File my film',
       ctaFestivals: 'Browse festivals',
       ctaArchive: 'Open the archive',
