@@ -10,7 +10,7 @@ export function HomePage() {
         <p className="lede">
           Um documentário participa de um festival por meio de uma inscrição e, depois, passa por
           uma seleção curatorial. Esta ferramenta ajuda a escolher festivais, montar o pacote,
-          checar direitos e acompanhar cada inscrição — sem tratar a inscrição como garantia de
+          checar direitos e acompanhar cada inscrição, sem tratar a inscrição como garantia de
           participação.
         </p>
         <div className="btn-row">
