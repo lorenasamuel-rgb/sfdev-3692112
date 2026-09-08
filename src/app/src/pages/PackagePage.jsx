@@ -1,39 +1,43 @@
-import { packageItems, selectedDeliveryItems } from '../data/checklists.js'
+import { packageItemIds, selectedDeliveryIds } from '../data/checklists.js'
 import { Checklist, ReadinessMeter } from '../components/Widgets.jsx'
 import { useAppState } from '../state/context.js'
+import { useLanguage } from '../i18n/context.js'
 
 export function PackagePage() {
   const { package: packageState, togglePackage, film } = useAppState()
-  const done = packageItems.filter((item) => packageState[item.id]).length
+  const { t } = useLanguage()
+  const items = packageItemIds.map((id) => ({
+    id,
+    group: t(`packageItems.${id}.group`),
+    label: t(`packageItems.${id}.label`),
+    hint: t(`packageItems.${id}.hint`),
+  }))
+  const done = packageItemIds.filter((id) => packageState[id]).length
 
   return (
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">Festival package</p>
-          <h1>Materiais que os festivais pedem</h1>
-          <p>
-            Prepare o pacote uma vez e reutilize nas inscrições. Se o documentário for selecionado,
-            o festival poderá pedir cópia de exibição em DCP ou ProRes, press kit, trailer limpo e
-            materiais de acessibilidade.
-          </p>
+          <p className="eyebrow">{t('package.eyebrow')}</p>
+          <h1>{t('package.title')}</h1>
+          <p>{t('package.lede')}</p>
         </div>
         <div className="page-head-aside">
           <ReadinessMeter />
           <p className="muted">
-            {done} de {packageItems.length} itens prontos
+            {t('package.done', { done, total: packageItemIds.length })}
             {film.originalTitle ? ` · ${film.originalTitle}` : ''}
           </p>
         </div>
       </header>
 
-      <Checklist items={packageItems} stateMap={packageState} onToggle={togglePackage} />
+      <Checklist items={items} stateMap={packageState} onToggle={togglePackage} />
 
       <section className="panel">
-        <h2>Se for selecionado</h2>
+        <h2>{t('package.selected')}</h2>
         <ul className="plain-list">
-          {selectedDeliveryItems.map((item) => (
-            <li key={item.id}>{item.label}</li>
+          {selectedDeliveryIds.map((id) => (
+            <li key={id}>{t(`deliveryItems.${id}`)}</li>
           ))}
         </ul>
       </section>

@@ -1,20 +1,14 @@
 # Rota Doc
 
-Aplicação para produtores independentes e estreantes inscreverem documentários em festivais.
+Aplicação para produtores independentes e estreantes inscreverem filmes em festivais, agora alimentada pelo **Fictional Film Archive** (180 filmes, 40 festivais, honrarias e prêmios fictícios).
 
-Um documentário chega ao festival por uma inscrição e, depois, passa por seleção curatorial. A inscrição não garante participação. Cada festival tem regulamento próprio — esta ferramenta cruza o filme com exigências típicas de duração, estreia, data de conclusão, screener e legendas, e organiza o pacote de materiais, os direitos e o acompanhamento das inscrições.
+A interface está em português e inglês — o seletor PT/EN fica no topo da página.
 
-## O que faz
-
-- Cadastra a ficha do documentário (títulos, logline, duração, conclusão, estreia, screener)
-- Cruza o filme com um catálogo de festivais (Sheffield DocFest, IDFA, É Tudo Verdade, Doclisboa e outros)
-- Monta o festival package e a lista de direitos (entrevistas, música, arquivo, E&O)
-- Acompanha os sete passos da inscrição até o termo de exibição
-- Separa a rota de filmes finalizados da rota de laboratórios e mercados (MeetMarket, fóruns)
-
-Os resumos de regulamento são de referência. Confirme sempre o edital vigente.
+Os resumos de regulamento são de ensino. O dataset é inteiramente fictício.
 
 ## Como rodar
+
+A partir da pasta do repositório (não da pasta pessoal `~`):
 
 ```bash
 cd src/app
@@ -23,7 +17,7 @@ npm test
 npm run dev
 ```
 
-Abre em `http://localhost:7363`. Os dados ficam no `localStorage` do navegador.
+Abre em `http://localhost:7363`. Os dados da ficha ficam no `localStorage` do navegador. Cartazes vêm de `datasets/fictional-film-archive/images`.
 
 ```bash
 npm run build

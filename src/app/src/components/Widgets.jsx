@@ -1,20 +1,24 @@
 import { evaluateFestival, readinessScore, statusLabel } from '../lib/eligibility.js'
 import { packageItems, rightsItems } from '../data/checklists.js'
+import { labelCountry, labelFocus } from '../lib/labels.js'
 import { useAppState } from '../state/context.js'
+import { useLanguage } from '../i18n/context.js'
 
 export function EligibilityBadge({ result }) {
+  const { locale } = useLanguage()
   return (
-    <span className={`badge badge-${result.status}`}>{statusLabel(result.status)}</span>
+    <span className={`badge badge-${result.status}`}>{statusLabel(result.status, locale)}</span>
   )
 }
 
 export function ReadinessMeter() {
   const { film, package: packageState, rights } = useAppState()
+  const { t } = useLanguage()
   const score = readinessScore(film, packageState, rights, packageItems, rightsItems)
   return (
-    <div className="meter" aria-label={`Preparação ${score} de 100`}>
+    <div className="meter" aria-label={t('widgets.readinessAria', { score })}>
       <div className="meter-head">
-        <span>Preparação para inscrever</span>
+        <span>{t('widgets.readiness')}</span>
         <strong>{score}/100</strong>
       </div>
       <div className="meter-track">
@@ -58,60 +62,61 @@ export function Checklist({ items, stateMap, onToggle, extra }) {
 }
 
 export function FestivalCard({ festival, film, onOpen }) {
-  const result = evaluateFestival(film, festival)
+  const { locale, t } = useLanguage()
+  const result = evaluateFestival(film, festival, new Date(), locale)
   return (
     <article className="festival-card">
       <header>
         <p className="eyebrow">
-          {festival.city} · {festival.country}
+          {festival.city} · {labelCountry(festival.country, t)}
         </p>
         <h3>
           <a href={`#/festivais/${festival.id}`}>{festival.name}</a>
         </h3>
         <EligibilityBadge result={result} />
       </header>
-      <p>{festival.focus}</p>
+      <p>{festival.focusTags.map((tag) => labelFocus(tag, t)).join(' · ')}</p>
       <ul className="chip-row">
-        {festival.openToIndependents ? <li>Independentes</li> : null}
-        {festival.openToFirstTimers ? <li>Estreantes</li> : null}
-        {festival.duration?.shortMax ? <li>Curta &lt; {festival.duration.shortMax} min</li> : null}
+        {festival.openToIndependents ? <li>{t('festivals.independents')}</li> : null}
+        {festival.openToFirstTimers ? <li>{t('festivals.firstTimers')}</li> : null}
+        {festival.duration?.shortMax ? (
+          <li>{t('festivals.shortMax', { max: festival.duration.shortMax })}</li>
+        ) : null}
         {festival.hasLabs ? <li>{festival.labsName}</li> : null}
       </ul>
       <button type="button" className="btn-ghost" onClick={onOpen}>
-        Ver regulamento resumido
+        {t('festivals.open')}
       </button>
     </article>
   )
 }
 
 export function PremiereCallout() {
+  const { t } = useLanguage()
   return (
     <aside className="callout callout-warn">
-      <h3>Cuidado com a estreia</h3>
-      <p>
-        Não publique o documentário integralmente no YouTube, Vimeo público ou plataformas de
-        streaming antes de definir a estratégia de festivais. Essa publicação pode eliminar o
-        status de estreia. Um link privado com senha para avaliação geralmente não é considerado
-        lançamento público.
-      </p>
+      <h3>{t('premiere.title')}</h3>
+      <p>{t('premiere.body')}</p>
     </aside>
   )
 }
 
 export function EmptyFilmHint() {
   const { film, loadSample } = useAppState()
+  const { t } = useLanguage()
   if (film.originalTitle) return null
   return (
     <div className="empty-film">
-      <p>Cadastre o documentário para cruzar duração, estreia e data de conclusão com cada festival.</p>
+      <p>{t('emptyFilm.body')}</p>
       <div className="btn-row">
         <a className="btn" href="#/filme">
-          Cadastrar filme
+          {t('emptyFilm.register')}
         </a>
         <button type="button" className="btn-ghost" onClick={loadSample}>
-          Carregar filme de exemplo
+          {t('emptyFilm.sample')}
         </button>
       </div>
     </div>
   )
 }
+

@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
-import { loadState, saveState, sampleFilm } from '../lib/storage.js'
+import { emptyFilm, loadState, saveState, sampleFilm } from '../lib/storage.js'
 import { packageItems, rightsItems } from '../data/checklists.js'
+import { filmToDossier, getArchiveFilmById } from '../data/archive.js'
 import { AppStateContext } from './context.js'
 
 export function AppStateProvider({ children }) {
@@ -127,7 +128,26 @@ export function AppStateProvider({ children }) {
         rightsItems.filter((item) => item.id !== 'eo').map((item) => [item.id, true]),
       ),
     }))
-  }, [persist],)
+  }, [persist])
+
+  const loadArchiveFilm = useCallback(
+    (filmId) => {
+      const archiveFilm = getArchiveFilmById(filmId)
+      if (!archiveFilm) return
+      persist((current) => ({
+        ...current,
+        film: { ...emptyFilm, ...filmToDossier(archiveFilm) },
+      }))
+    },
+    [persist],
+  )
+
+  const clearFilm = useCallback(() => {
+    persist((current) => ({
+      ...current,
+      film: { ...emptyFilm },
+    }))
+  }, [persist])
 
   const value = useMemo(
     () => ({
@@ -140,6 +160,8 @@ export function AppStateProvider({ children }) {
       toggleStep,
       removeSubmission,
       loadSample,
+      loadArchiveFilm,
+      clearFilm,
     }),
     [
       state,
@@ -151,6 +173,8 @@ export function AppStateProvider({ children }) {
       toggleStep,
       removeSubmission,
       loadSample,
+      loadArchiveFilm,
+      clearFilm,
     ],
   )
 

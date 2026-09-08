@@ -1,38 +1,38 @@
 import { stepDefinitions } from '../data/festivals.js'
 import { PremiereCallout } from '../components/Widgets.jsx'
+import { useLanguage } from '../i18n/context.js'
 
 export function HomePage() {
+  const { t } = useLanguage()
   return (
     <div className="page home">
       <section className="hero">
-        <p className="eyebrow">Para produtores independentes e estreantes</p>
-        <h1>Inscrever o documentário em festival não exige distribuidora. Exige regulamento.</h1>
-        <p className="lede">
-          Um documentário participa de um festival por meio de uma inscrição e, depois, passa por
-          uma seleção curatorial. Esta ferramenta ajuda a escolher festivais, montar o pacote,
-          checar direitos e acompanhar cada inscrição, sem tratar a inscrição como garantia de
-          participação.
-        </p>
+        <p className="eyebrow">{t('home.eyebrow')}</p>
+        <h1>{t('home.title')}</h1>
+        <p className="lede">{t('home.lede')}</p>
         <div className="btn-row">
           <a className="btn" href="#/filme">
-            Cadastrar meu filme
+            {t('home.ctaFilm')}
           </a>
           <a className="btn-ghost" href="#/festivais">
-            Ver festivais
+            {t('home.ctaFestivals')}
+          </a>
+          <a className="btn-ghost" href="#/arquivo">
+            {t('home.ctaArchive')}
           </a>
         </div>
       </section>
 
       <section className="split">
         <div>
-          <h2>Como funciona</h2>
+          <h2>{t('home.how')}</h2>
           <ol className="steps">
             {stepDefinitions.map((step) => (
               <li key={step.id}>
                 <span>{String(step.number).padStart(2, '0')}</span>
                 <div>
-                  <strong>{step.title}</strong>
-                  <p>{step.detail}</p>
+                  <strong>{t(`steps.${step.id}.title`)}</strong>
+                  <p>{t(`steps.${step.id}.detail`)}</p>
                 </div>
               </li>
             ))}
@@ -41,14 +41,14 @@ export function HomePage() {
         <div className="stack">
           <PremiereCallout />
           <aside className="callout">
-            <h3>Duas rotas</h3>
+            <h3>{t('home.twoRoutes')}</h3>
             <p>
-              Filme <strong>finalizado</strong>: inscrição na seleção oficial. Filme em{' '}
-              <strong>desenvolvimento</strong>: laboratórios, mercados e pitching — como o
-              MeetMarket do Sheffield DocFest, que aceita projetos em diferentes estágios e
-              realizadores estreantes.
+              {t('home.twoRoutesBody', {
+                finished: t('home.finished'),
+                dev: t('home.dev'),
+              })}
             </p>
-            <a href="#/laboratorios">Ir para laboratórios e mercados</a>
+            <a href="#/laboratorios">{t('home.labsLink')}</a>
           </aside>
         </div>
       </section>
