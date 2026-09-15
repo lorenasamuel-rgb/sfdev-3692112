@@ -17,13 +17,13 @@ import { readinessScore } from './lib/eligibility.js'
 import { packageItems, rightsItems } from './data/checklists.js'
 
 const NAV = [
+  { href: '#/guia', id: 'guia' },
   { href: '#/filme', id: 'filme' },
   { href: '#/festivais', id: 'festivais' },
   { href: '#/premios', id: 'premios' },
   { href: '#/pacote', id: 'pacote' },
   { href: '#/direitos', id: 'direitos' },
   { href: '#/inscricoes', id: 'inscricoes' },
-  { href: '#/guia', id: 'guia' },
   { href: '#/laboratorios', id: 'laboratorios' },
   { href: '#/arquivo', id: 'arquivo' },
 ]
