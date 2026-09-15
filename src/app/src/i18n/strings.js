@@ -9,7 +9,7 @@ export const strings = {
     nav: {
       language: 'Idioma',
       sections: 'Seções',
-      filme: 'Filme',
+      filme: 'Start',
       arquivo: 'Search',
       festivais: 'Festivais',
       premios: 'Prêmios',
@@ -421,7 +421,7 @@ export const strings = {
     nav: {
       language: 'Language',
       sections: 'Sections',
-      filme: 'Film',
+      filme: 'Start',
       arquivo: 'Search',
       festivais: 'Festivals',
       premios: 'Awards',

@@ -94,7 +94,7 @@ O seletor **PT | EN** fica ao lado da marca, no topo. A interface inteira troca 
 | --- | --- | --- |
 | (marca Rota Doc) | Início | Convite à jornada de premiação e os sete passos |
 | Guia | `#/guia` | Requisitos comuns de regulamento |
-| Filme | `#/filme` | Ficha do filme, com busca no arquivo |
+| Start | `#/filme` | Ficha do filme, com busca no arquivo |
 | Festivais | `#/festivais` | 40 festivais fictícios e cruzamento de elegibilidade |
 | Prêmios | `#/premios` | Jornada seleção → indicação → vitória |
 | Pacote | `#/pacote` | Materiais do festival package |
