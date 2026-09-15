@@ -31,9 +31,13 @@ function parseHash() {
 
 function Router() {
   const [route, setRoute] = useState(parseHash)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const onHash = () => setRoute(parseHash())
+    const onHash = () => {
+      setRoute(parseHash())
+      setMenuOpen(false)
+    }
     window.addEventListener('hashchange', onHash)
     if (!window.location.hash) window.location.hash = '#/'
     return () => window.removeEventListener('hashchange', onHash)
@@ -56,9 +60,35 @@ function Router() {
   const active = route.parts[0] || 'home'
   const isHome = active === 'home'
 
+  useEffect(() => {
+    document.body.classList.toggle('nav-open', menuOpen)
+    return () => document.body.classList.remove('nav-open')
+  }, [menuOpen])
+
+  useEffect(() => {
+    if (!menuOpen) return undefined
+    const onKey = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [menuOpen])
+
   return (
     <div className={`shell${isHome ? ' is-home' : ''}`}>
-      <Header active={active} />
+      <Header active={active} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      <div id="globalnav-menu" className={`nav-drawer${menuOpen ? ' is-open' : ''}`}>
+        {NAV.map((item) => (
+          <a
+            key={item.id}
+            href={item.href}
+            className={active === item.id ? 'is-active' : ''}
+            onClick={() => setMenuOpen(false)}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
       <p className="ribbon">
         A inscrição não garante participação. Confirme prazos, taxas e estreia no edital vigente.
       </p>
@@ -68,41 +98,30 @@ function Router() {
   )
 }
 
-function Header({ active }) {
+function Header({ active, menuOpen, setMenuOpen }) {
   const { film, package: packageState, rights, submissions } = useAppState()
   const score = readinessScore(film, packageState, rights, packageItems, rightsItems)
-  const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    document.body.classList.toggle('nav-open', open)
-    return () => document.body.classList.remove('nav-open')
-  }, [open])
 
   return (
     <header className="globalnav">
       <div className="globalnav-content">
-        <a className="brand" href="#/" aria-label="Rota Doc, início" onClick={() => setOpen(false)}>
+        <a className="brand" href="#/" aria-label="Rota Doc, início" onClick={() => setMenuOpen(false)}>
           <span className="brand-mark" aria-hidden="true" />
           <span>Rota Doc</span>
         </a>
         <button
           type="button"
-          className={`nav-toggle${open ? ' is-open' : ''}`}
-          aria-expanded={open}
+          className={`nav-toggle${menuOpen ? ' is-open' : ''}`}
+          aria-expanded={menuOpen}
           aria-controls="globalnav-menu"
-          onClick={() => setOpen((value) => !value)}
+          onClick={() => setMenuOpen((value) => !value)}
         >
-          <span className="visually-hidden">{open ? 'Fechar menu' : 'Abrir menu'}</span>
+          <span className="visually-hidden">{menuOpen ? 'Fechar menu' : 'Abrir menu'}</span>
           <span aria-hidden="true" />
         </button>
-        <nav id="globalnav-menu" className={open ? 'is-open' : undefined}>
+        <nav className="globalnav-links">
           {NAV.map((item) => (
-            <a
-              key={item.id}
-              href={item.href}
-              className={active === item.id ? 'is-active' : ''}
-              onClick={() => setOpen(false)}
-            >
+            <a key={item.id} href={item.href} className={active === item.id ? 'is-active' : ''}>
               {item.label}
             </a>
           ))}
