@@ -29,8 +29,8 @@ export function FestivalsPage() {
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">Passo 1</p>
-          <h1>Escolher os festivais adequados</h1>
+          <p className="eyebrow">Festivais</p>
+          <h1>Escolher a casa certa.</h1>
           <p>
             Cruze tema, duração, país e estágio com o regulamento de cada casa. Não é preciso ser
             cineasta conhecida: independentes e estreantes também podem inscrever. Cada festival,
@@ -63,14 +63,7 @@ export function FestivalsPage() {
 
       <div className="card-grid">
         {rows.map(({ festival }) => (
-          <FestivalCard
-            key={festival.id}
-            festival={festival}
-            film={film}
-            onOpen={() => {
-              window.location.hash = `#/festivais/${festival.id}`
-            }}
-          />
+          <FestivalCard key={festival.id} festival={festival} film={film} />
         ))}
       </div>
       {rows.length === 0 ? <p className="muted">Nenhum festival com esses filtros.</p> : null}

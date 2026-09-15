@@ -21,8 +21,8 @@ export function FilmPage() {
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">Ficha do documentário</p>
-          <h1>O filme que você vai inscrever</h1>
+          <p className="eyebrow">Filme</p>
+          <h1>O filme que você vai inscrever.</h1>
           <p>
             Duração, data de conclusão, estreia e idioma definem a elegibilidade. Independentes e
             estreantes podem inscrever — desde que o filme caiba no regulamento.

@@ -57,7 +57,7 @@ export function Checklist({ items, stateMap, onToggle, extra }) {
   )
 }
 
-export function FestivalCard({ festival, film, onOpen }) {
+export function FestivalCard({ festival, film }) {
   const result = evaluateFestival(film, festival)
   return (
     <article className="festival-card">
@@ -77,9 +77,9 @@ export function FestivalCard({ festival, film, onOpen }) {
         {festival.duration?.shortMax ? <li>Curta &lt; {festival.duration.shortMax} min</li> : null}
         {festival.hasLabs ? <li>{festival.labsName}</li> : null}
       </ul>
-      <button type="button" className="btn-ghost" onClick={onOpen}>
-        Ver regulamento resumido
-      </button>
+      <a className="btn-text" href={`#/festivais/${festival.id}`}>
+        Saiba mais <span aria-hidden="true">›</span>
+      </a>
     </article>
   )
 }
