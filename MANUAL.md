@@ -96,12 +96,12 @@ O seletor **PT | EN** fica ao lado da marca, no topo. A interface inteira troca 
 | Guia | `#/guia` | Requisitos comuns de regulamento |
 | Start | `#/filme` | Ficha do filme, com busca no arquivo |
 | Festivais | `#/festivais` | 40 festivais fictícios e cruzamento de elegibilidade |
-| Prêmios | `#/premios` | Jornada seleção → indicação → vitória |
 | Pacote | `#/pacote` | Materiais do festival package |
 | Direitos | `#/direitos` | Autorizações e licenças |
 | Inscrições | `#/inscricoes` | Acompanhamento de cada festival |
 | Labs | `#/laboratorios` | Laboratórios, mercados e pitching |
 | Search | `#/arquivo` | 180 filmes fictícios, cartaz e filtros |
+| Prêmios | `#/premios` | Jornada seleção → indicação → vitória |
 
 À direita do menu aparece o **título do filme**, a **nota de preparação** (0–100) e o **número de inscrições**. A seção em que você está fica destacada no menu.
 
@@ -198,7 +198,7 @@ Nesta versão o catálogo é o arquivo fictício de ensino. Use-o para praticar 
 
 | Quero… | Onde ir |
 | --- | --- |
-| Cadastrar o filme | Filme |
+| Cadastrar o filme | Start |
 | Ver cartazes e escolher um título do dataset | Search |
 | Ver se um festival cabe no meu filme | Festivais |
 | Ver seleção, indicação e vitória | Prêmios |

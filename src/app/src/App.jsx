@@ -20,12 +20,12 @@ const NAV = [
   { href: '#/guia', id: 'guia' },
   { href: '#/filme', id: 'filme' },
   { href: '#/festivais', id: 'festivais' },
-  { href: '#/premios', id: 'premios' },
   { href: '#/pacote', id: 'pacote' },
   { href: '#/direitos', id: 'direitos' },
   { href: '#/inscricoes', id: 'inscricoes' },
   { href: '#/laboratorios', id: 'laboratorios' },
   { href: '#/arquivo', id: 'arquivo' },
+  { href: '#/premios', id: 'premios' },
 ]
 
 function parseHash() {
