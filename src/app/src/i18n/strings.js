@@ -25,7 +25,7 @@ export const strings = {
       'Catálogo de ensino do Fictional Film Archive. Os festivais, filmes e prêmios são fictícios — use-os para praticar a rota de inscrição, não como edital real.',
     home: {
       eyebrow: 'Arquivo fictício para independentes e estreantes',
-      title: 'Inscrever o filme em festival começa pelo regulamento — e pelos dados do arquivo.',
+      title: 'Inscrever o filme em festival começa pelo regulamento e pelos dados do arquivo.',
       lede: 'Tenha o passo a passo para conquistar a sua tão sonhada premiação em festivais.',
       ctaFilm: 'Cadastrar meu filme',
       ctaFestivals: 'Ver festivais',
@@ -437,7 +437,7 @@ export const strings = {
       'Teaching catalogue from the Fictional Film Archive. Festivals, films and awards are invented — practise the submission route here; do not treat this as a real call for entries.',
     home: {
       eyebrow: 'A fictional archive for independents and first-timers',
-      title: 'Getting a film into a festival starts with the rules — and with the archive data.',
+      title: 'Getting a film into a festival starts with the rules and with the archive data.',
       lede: 'Get the step-by-step path to the festival award you have been dreaming of.',
       ctaFilm: 'File my film',
       ctaFestivals: 'Browse festivals',
