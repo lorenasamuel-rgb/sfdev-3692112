@@ -20,6 +20,12 @@ export function HomePage() {
           <a className="btn-ghost" href="#/festivais">
             Ver festivais
           </a>
+          <a className="btn-ghost" href="#/arquivo">
+            Arquivo do Git
+          </a>
+          <a className="btn-ghost" href="#/premios">
+            Jornada de prêmios
+          </a>
         </div>
       </section>
 
@@ -49,6 +55,8 @@ export function HomePage() {
               realizadores estreantes.
             </p>
             <a href="#/laboratorios">Ir para laboratórios e mercados</a>
+            {' · '}
+            <a href="#/avaliacao">Avaliar prontidão</a>
           </aside>
         </div>
       </section>
