@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "oxlint src",
     "preview": "vite preview --host",
-    "test": "node --test src/lib/eligibility.test.js"
+    "test": "node --test src/lib/*.test.js src/i18n/*.test.js"
   },
   "dependencies": {
     "react": "^19.2.8",

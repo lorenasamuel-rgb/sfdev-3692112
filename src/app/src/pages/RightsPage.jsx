@@ -1,29 +1,31 @@
-import { rightsItems } from '../data/checklists.js'
+import { rightsItemIds } from '../data/checklists.js'
 import { Checklist } from '../components/Widgets.jsx'
 import { useAppState } from '../state/context.js'
+import { useLanguage } from '../i18n/context.js'
 
 export function RightsPage() {
   const { rights, toggleRights } = useAppState()
-  const done = rightsItems.filter((item) => rights[item.id]).length
+  const { t } = useLanguage()
+  const items = rightsItemIds.map((id) => ({
+    id,
+    group: t(`rightsItems.${id}.group`),
+    label: t(`rightsItems.${id}.label`),
+    hint: t(`rightsItems.${id}.hint`),
+  }))
+  const done = rightsItemIds.filter((id) => rights[id]).length
 
   return (
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">Antes de inscrever</p>
-          <h1>Atenção especial aos direitos</h1>
-          <p>
-            Música, arquivo, entrevistas e locações precisam estar licenciados. Quem inscreve
-            precisa ter autoridade para exibir o filme. Para distribuição posterior, alguns
-            compradores também podem exigir seguro de Errors &amp; Omissions (E&amp;O).
-          </p>
+          <p className="eyebrow">{t('rights.eyebrow')}</p>
+          <h1>{t('rights.title')}</h1>
+          <p>{t('rights.lede')}</p>
         </div>
-        <p className="muted">
-          {done} de {rightsItems.length} conferidos
-        </p>
+        <p className="muted">{t('rights.done', { done, total: rightsItemIds.length })}</p>
       </header>
 
-      <Checklist items={rightsItems} stateMap={rights} onToggle={toggleRights} />
+      <Checklist items={items} stateMap={rights} onToggle={toggleRights} />
     </div>
   )
 }

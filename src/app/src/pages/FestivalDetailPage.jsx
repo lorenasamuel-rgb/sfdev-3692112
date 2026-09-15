@@ -1,45 +1,55 @@
-import { getFestivalById, premiereLabels, stepDefinitions } from '../data/festivals.js'
+import { getFestivalById, stepDefinitions } from '../data/festivals.js'
+import { honoursForFestival } from '../data/archive.js'
 import { evaluateFestival } from '../lib/eligibility.js'
 import { EligibilityBadge } from '../components/Widgets.jsx'
+import { labelCountry, labelHonour, labelMonth } from '../lib/labels.js'
 import { useAppState } from '../state/context.js'
+import { useLanguage } from '../i18n/context.js'
 
 export function FestivalDetailPage({ id }) {
   const festival = getFestivalById(id)
-  const { film, addSubmission, submissions } = useAppState()
+  const { film, addSubmission, submissions, loadArchiveFilm } = useAppState()
+  const { locale, t } = useLanguage()
 
   if (!festival) {
     return (
       <div className="page">
-        <h1>Festival não encontrado</h1>
-        <a href="#/festivais">Voltar à lista</a>
+        <h1>{t('festivalDetail.missing')}</h1>
+        <a href="#/festivais">{t('festivalDetail.back')}</a>
       </div>
     )
   }
 
-  const result = evaluateFestival(film, festival)
+  const result = evaluateFestival(film, festival, new Date(), locale)
   const already = submissions.some((item) => item.festivalId === festival.id)
+  const programme = honoursForFestival(festival.id)
 
   return (
     <div className="page festival-detail">
       <p className="eyebrow">
-        <a href="#/festivais">Festivais</a> · {festival.edition} · {festival.platform}
+        <a href="#/festivais">{t('nav.festivais')}</a> · {festival.platform} ·{' '}
+        {t('festivals.founded', { year: festival.foundedYear })}
       </p>
       <header className="page-head">
         <div>
           <h1>{festival.name}</h1>
           <p>
-            {festival.city}, {festival.country}. {festival.description}
+            {festival.city}, {labelCountry(festival.country, t)}. {festival.description}
+          </p>
+          <p className="muted">
+            {t('festivals.month', { month: labelMonth(festival.usualMonth, t) })} ·{' '}
+            {festival.focusTags.map((tag) => t(`focus.${tag}`)).join(' · ')}
           </p>
         </div>
         <div className="page-head-aside">
           <EligibilityBadge result={result} />
           {already ? (
             <a className="btn" href="#/inscricoes">
-              Ver na lista de inscrições
+              {t('festivalDetail.added')}
             </a>
           ) : (
             <button type="button" className="btn" onClick={() => addSubmission(festival.id)}>
-              Adicionar às inscrições
+              {t('festivalDetail.add')}
             </button>
           )}
         </div>
@@ -47,7 +57,7 @@ export function FestivalDetailPage({ id }) {
 
       <div className="split">
         <section className="panel">
-          <h2>Cruzamento com o seu filme</h2>
+          <h2>{t('festivalDetail.match')}</h2>
           <p className="muted">{result.category.label}</p>
           {result.matches.length ? (
             <ul className="plain-list yes">
@@ -69,15 +79,16 @@ export function FestivalDetailPage({ id }) {
         </section>
 
         <section className="panel">
-          <h2>Exigências típicas de estreia</h2>
+          <h2>{t('festivalDetail.premiereNeeds')}</h2>
           <ul className="plain-list">
             {festival.premierePrograms.map((program) => {
               const ok = result.eligiblePrograms.includes(program)
               return (
                 <li key={program.name}>
-                  <strong>{program.name}</strong> — {premiereLabels[program.required]}
-                  <span className={ok ? 'ok' : 'no'}>{ok ? ' possível' : ' bloqueada'}</span>
-                  <em>{program.note}</em>
+                  <strong>{program.name}</strong> — {t(`premiereNeed.${program.required}`)}
+                  <span className={ok ? 'ok' : 'no'}>
+                    {ok ? ` ${t('festivalDetail.possible')}` : ` ${t('festivalDetail.blocked')}`}
+                  </span>
                 </li>
               )
             })}
@@ -86,68 +97,96 @@ export function FestivalDetailPage({ id }) {
       </div>
 
       <section className="panel">
-        <h2>Regulamento em resumo</h2>
+        <h2>{t('festivalDetail.rules')}</h2>
         <dl className="spec">
           <div>
-            <dt>Finalizado / WIP</dt>
+            <dt>{t('festivalDetail.finishedWip')}</dt>
             <dd>
-              {festival.acceptsFinished ? 'Finalizados sim. ' : 'Finalizados não. '}
-              {festival.acceptsWip ? 'Aceita work in progress.' : 'Seleção oficial pede filme fechado.'}
+              {festival.acceptsFinished ? t('festivalDetail.finishedYes') : t('festivalDetail.finishedNo')}
+              {festival.acceptsWip ? t('festivalDetail.wipYes') : t('festivalDetail.wipNo')}
             </dd>
           </div>
           <div>
-            <dt>Duração</dt>
-            <dd>{festival.duration.notes}</dd>
+            <dt>{t('festivalDetail.duration')}</dt>
+            <dd>
+              {festival.duration.shortOnly
+                ? t('festivalDetail.durationShort')
+                : t('festivalDetail.durationMixed')}
+            </dd>
           </div>
           <div>
-            <dt>Conclusão</dt>
+            <dt>{t('festivalDetail.completion')}</dt>
             <dd>
               {festival.completionAfter
-                ? `Edição de referência pedia conclusão depois de ${festival.completionAfter}. `
+                ? t('festivalDetail.completionAfter', { date: festival.completionAfter })
                 : ''}
               {festival.completionMaxMonths
-                ? `Janela típica: últimos ${festival.completionMaxMonths} meses.`
-                : 'Confirme a data no edital.'}
+                ? t('festivalDetail.completionWindow', { months: festival.completionMaxMonths })
+                : t('festivalDetail.completionConfirm')}
             </dd>
           </div>
           <div>
-            <dt>Legendas</dt>
-            <dd>{festival.englishSubtitlesWhen}</dd>
+            <dt>{t('festivalDetail.subs')}</dt>
+            <dd>
+              {festival.englishSubtitlesRequired
+                ? t('festivalDetail.subsEn')
+                : t('festivalDetail.subsLocal')}
+            </dd>
           </div>
           <div>
-            <dt>Taxa</dt>
-            <dd>{festival.feeNote}</dd>
+            <dt>{t('festivalDetail.fee')}</dt>
+            <dd>{t('festivalDetail.feeNote')}</dd>
           </div>
           <div>
-            <dt>Screener</dt>
-            <dd>Link privado, válido até o fim da seleção, sem bloqueio geográfico.</dd>
+            <dt>{t('festivalDetail.screener')}</dt>
+            <dd>{t('festivalDetail.screenerNote')}</dd>
           </div>
         </dl>
-        <p className="muted">
-          Este resumo não substitui o edital. Sempre leia o regulamento vigente antes de divulgar o
-          filme ou pagar a taxa.
-        </p>
+        <p className="muted">{t('festivalDetail.disclaimer')}</p>
         <div className="btn-row">
           <a className="btn" href={festival.website} target="_blank" rel="noreferrer">
-            Abrir regulamento oficial
+            {t('festivalDetail.official')}
           </a>
-          {festival.labsUrl ? (
-            <a className="btn-ghost" href={festival.labsUrl} target="_blank" rel="noreferrer">
-              {festival.labsName || 'Labs'}
-            </a>
-          ) : null}
         </div>
       </section>
 
+      <section className="panel">
+        <h2>{t('festivalDetail.programme')}</h2>
+        {programme.length === 0 ? (
+          <p className="muted">{t('festivalDetail.noProgramme')}</p>
+        ) : (
+          <ul className="plain-list programme-list">
+            {programme.map((item) => (
+              <li key={`${item.filmId}-${item.year}-${item.section}`}>
+                <button
+                  type="button"
+                  className="btn-text"
+                  onClick={() => {
+                    loadArchiveFilm(item.filmId)
+                    window.location.hash = '#/filme'
+                  }}
+                >
+                  {item.film?.title ?? item.filmId}
+                </button>
+                <span className="muted">
+                  {' '}
+                  · {item.year} · {item.section} · {labelHonour(item.result, t)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
       <section>
-        <h2>Depois de escolher este festival</h2>
+        <h2>{t('festivalDetail.after')}</h2>
         <ol className="steps compact">
           {stepDefinitions.slice(1).map((step) => (
             <li key={step.id}>
               <span>{String(step.number).padStart(2, '0')}</span>
               <div>
-                <strong>{step.title}</strong>
-                <p>{step.detail}</p>
+                <strong>{t(`steps.${step.id}.title`)}</strong>
+                <p>{t(`steps.${step.id}.detail`)}</p>
               </div>
             </li>
           ))}

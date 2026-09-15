@@ -1,3 +1,6 @@
+import { defaultLocale, translate } from '../i18n/translate.js'
+import { formatDate as formatDateValue } from './dates.js'
+
 const MONTH_MS = 1000 * 60 * 60 * 24 * 30.4375
 
 /** O que o filme ainda pode oferecer, dado o maior status de estreia já usado. */
@@ -26,15 +29,19 @@ export function filmHasEnglishAudio(film) {
   )
 }
 
-export function durationCategory(minutes, festival) {
-  if (!minutes || minutes <= 0) return { id: 'unknown', label: 'Duração não informada' }
+export function durationCategory(minutes, festival, locale = defaultLocale) {
+  const t = (key, vars) => translate(locale, key, vars)
+  if (!minutes || minutes <= 0) return { id: 'unknown', label: t('elig.durationUnknown') }
   const shortMax = festival?.duration?.shortMax ?? 40
   const mediumMax = festival?.duration?.mediumMax ?? null
-  if (minutes < shortMax) return { id: 'short', label: `Curta (menos de ${shortMax} min)` }
+  if (minutes < shortMax) return { id: 'short', label: t('elig.durationShort', { max: shortMax }) }
   if (mediumMax && minutes < mediumMax) {
-    return { id: 'medium', label: `Média (${shortMax}–${mediumMax - 1} min)` }
+    return {
+      id: 'medium',
+      label: t('elig.durationMedium', { min: shortMax, max: mediumMax - 1 }),
+    }
   }
-  return { id: 'feature', label: `Longa (${minutes} min)` }
+  return { id: 'feature', label: t('elig.durationFeature', { minutes }) }
 }
 
 export function premiereCovers(filmStatus, required) {
@@ -44,78 +51,125 @@ export function premiereCovers(filmStatus, required) {
   return still.includes(need)
 }
 
-export function evaluateFestival(film, festival, now = new Date()) {
+function formOverlapsFestival(filmForm, festival) {
+  const form = (filmForm || '').toLowerCase()
+  if (!form) return null
+  const tags = (festival.focusTags ?? []).map((tag) => tag.toLowerCase())
+  if (!tags.length) return null
+  if (tags.includes(form)) return true
+  if (form === 'documentary' && tags.includes('social practice')) return true
+  if (form === 'animation' && tags.includes('music video')) return true
+  if (form === 'experimental' && tags.includes('visual culture')) return true
+  const generic = tags.includes('short film') || tags.includes('new voices') || tags.includes('place') || tags.includes('climate')
+  if (generic && !tags.some((tag) => ['documentary', 'animation', 'experimental', 'music video'].includes(tag))) {
+    return true
+  }
+  if (tags.some((tag) => ['documentary', 'animation', 'experimental', 'music video'].includes(tag))) {
+    return false
+  }
+  return true
+}
+
+export function evaluateFestival(film, festival, now = new Date(), locale = defaultLocale) {
+  const t = (key, vars) => translate(locale, key, vars)
   const issues = []
   const warnings = []
   const matches = []
 
   const stage = film.stage || 'finished'
   const minutes = Number(film.durationMinutes) || 0
-  const category = durationCategory(minutes, festival)
+  const category = durationCategory(minutes, festival, locale)
   const ageMonths = monthsSince(film.completionDate, now)
 
   if (stage === 'wip' && !festival.acceptsWip) {
     issues.push({
       code: 'wip',
-      message: `${festival.name} seleciona documentários finalizados. Para este estágio, veja ${festival.labsName || 'laboratórios e mercados'}.`,
+      message: t('elig.wip', {
+        name: festival.name,
+        labs: festival.labsName || t('elig.labsFallback'),
+      }),
     })
   } else if (stage === 'wip' && festival.acceptsWip) {
-    matches.push('Aceita work in progress.')
+    matches.push(t('elig.wipOk'))
   } else if (stage === 'finished' && festival.acceptsFinished) {
-    matches.push('Aceita documentário finalizado.')
+    matches.push(t('elig.finishedOk'))
   }
 
   if (festival.openToIndependents) {
-    matches.push('Aberto a produtores independentes.')
+    matches.push(t('elig.independents'))
   }
   if (festival.openToFirstTimers) {
-    matches.push('Estreantes podem inscrever.')
+    matches.push(t('elig.firstTimers'))
   }
 
   if (!minutes) {
     warnings.push({
       code: 'duration-missing',
-      message: 'Informe a duração para enquadrar curta, média ou longa.',
+      message: t('elig.durationMissing'),
+    })
+  } else if (festival.duration?.shortOnly && minutes >= (festival.duration.shortMax ?? 40)) {
+    issues.push({
+      code: 'too-long',
+      message: t('elig.tooLong', { max: festival.duration.shortMax ?? 40, minutes }),
     })
   } else {
-    matches.push(`Categoria provável: ${category.label}.`)
+    matches.push(t('elig.durationMatch', { label: category.label }))
+  }
+
+  const formFit = formOverlapsFestival(film.form, festival)
+  if (formFit === false) {
+    warnings.push({
+      code: 'form-mismatch',
+      message: t('elig.formMismatch', {
+        focus: festival.focus,
+        form: t(`form.${film.form}`) === `form.${film.form}` ? film.form : t(`form.${film.form}`),
+      }),
+    })
+  } else if (formFit === true && film.form) {
+    matches.push(
+      t('elig.formMatch', {
+        form: t(`form.${film.form}`) === `form.${film.form}` ? film.form : t(`form.${film.form}`),
+      }),
+    )
   }
 
   if (festival.completionAfter && film.completionDate) {
     if (film.completionDate < festival.completionAfter) {
       issues.push({
         code: 'too-old-date',
-        message: `O festival pediu filmes concluídos depois de ${formatDate(festival.completionAfter)}.`,
+        message: t('elig.tooOldDate', { date: formatDateValue(festival.completionAfter, locale) }),
       })
     } else {
-      matches.push(`Conclusão depois de ${formatDate(festival.completionAfter)}.`)
+      matches.push(t('elig.afterDate', { date: formatDateValue(festival.completionAfter, locale) }))
     }
   } else if (festival.completionMaxMonths && ageMonths != null) {
     if (ageMonths > festival.completionMaxMonths) {
       issues.push({
         code: 'too-old',
-        message: `Concluído há cerca de ${Math.floor(ageMonths)} meses. A janela típica deste festival é de ${festival.completionMaxMonths} meses.`,
+        message: t('elig.tooOld', {
+          age: Math.floor(ageMonths),
+          max: festival.completionMaxMonths,
+        }),
       })
     } else if (ageMonths < 0) {
       warnings.push({
         code: 'future-date',
-        message: 'A data de conclusão está no futuro. Confirme se o filme já pode ser inscrito como finalizado.',
+        message: t('elig.futureDate'),
       })
     } else {
-      matches.push(`Dentro da janela de conclusão (${festival.completionMaxMonths} meses).`)
+      matches.push(t('elig.inWindow', { max: festival.completionMaxMonths }))
     }
   } else if (festival.completionMaxMonths && !film.completionDate) {
     warnings.push({
       code: 'completion-missing',
-      message: `Informe a data de conclusão. Este festival costuma pedir os últimos ${festival.completionMaxMonths} meses.`,
+      message: t('elig.completionMissing', { max: festival.completionMaxMonths }),
     })
   }
 
   if (film.publishedPublicly) {
     issues.push({
       code: 'public-release',
-      message:
-        'O filme foi publicado integralmente em plataforma pública. Isso costuma eliminar o status de estreia e pode tornar o filme inelegível para competições importantes.',
+      message: t('elig.publicRelease'),
     })
   }
 
@@ -130,41 +184,38 @@ export function evaluateFestival(film, festival, now = new Date()) {
   if (blockedPrograms.length && eligiblePrograms.length) {
     warnings.push({
       code: 'premiere-partial',
-      message: `Com o status de estreia atual, algumas seções ficam indisponíveis (${blockedPrograms.map((p) => p.name).join(', ')}).`,
+      message: t('elig.premierePartial', { names: blockedPrograms.map((p) => p.name).join(', ') }),
     })
   } else if (blockedPrograms.length && !eligiblePrograms.length) {
     issues.push({
       code: 'premiere-blocked',
-      message: 'O status de estreia atual não atende às competições listadas deste festival.',
+      message: t('elig.premiereBlocked'),
     })
   } else if (eligiblePrograms.length) {
-    matches.push(
-      `Seções possíveis: ${eligiblePrograms.map((program) => program.name).join(', ')}.`,
-    )
+    matches.push(t('elig.sections', { names: eligiblePrograms.map((program) => program.name).join(', ') }))
   }
 
   const audioIsEnglish = filmHasEnglishAudio(film)
   if (festival.englishSubtitlesRequired && !audioIsEnglish && !film.hasEnglishSubtitles) {
-    const message =
-      'Screener com legendas em inglês costuma ser obrigatório quando o áudio não está em inglês.'
+    const message = t('elig.subs')
     if (!film.languages) {
-      warnings.push({ code: 'subs', message: `${message} Informe o idioma do filme.` })
+      warnings.push({ code: 'subs', message: t('elig.subsAsk', { message }) })
     } else {
       issues.push({ code: 'subs', message })
     }
   } else if (festival.englishSubtitlesRequired && film.hasEnglishSubtitles) {
-    matches.push('Legendas em inglês declaradas.')
+    matches.push(t('elig.subsOk'))
   } else if (festival.englishSubtitlesRequired && audioIsEnglish) {
-    matches.push('Áudio em inglês.')
+    matches.push(t('elig.audioEn'))
   }
 
   if (!film.screenerUrl) {
     warnings.push({
       code: 'screener',
-      message: 'Cadastre um link privado (Vimeo com senha) sem bloqueio geográfico.',
+      message: t('elig.screenerMissing'),
     })
   } else {
-    matches.push('Screener informado.')
+    matches.push(t('elig.screenerOk'))
   }
 
   let status = 'eligible'
@@ -212,16 +263,13 @@ export function readinessScore(film, packageState, rightsState, packageItems, ri
   return Math.max(0, Math.min(100, score))
 }
 
-export function formatDate(iso) {
-  if (!iso) return '—'
-  const [year, month, day] = iso.split('-')
-  if (!year || !month || !day) return iso
-  return `${day}/${month}/${year}`
+export function formatDate(iso, locale = defaultLocale) {
+  return formatDateValue(iso, locale)
 }
 
-export function statusLabel(status) {
-  if (status === 'eligible') return 'Elegível'
-  if (status === 'review') return 'Revisar regulamento'
-  if (status === 'ineligible') return 'Provavelmente inelegível'
+export function statusLabel(status, locale = defaultLocale) {
+  if (status === 'eligible') return translate(locale, 'status.eligible')
+  if (status === 'review') return translate(locale, 'status.review')
+  if (status === 'ineligible') return translate(locale, 'status.ineligible')
   return status
 }

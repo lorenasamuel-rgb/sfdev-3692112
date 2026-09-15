@@ -1,4 +1,6 @@
-const STORAGE_KEY = 'rota-doc-state-v1'
+import { filmToDossier, getArchiveFilmById, SAMPLE_FILM_ID } from '../data/archive.js'
+
+const STORAGE_KEY = 'rota-doc-state-v2'
 
 export const emptyFilm = {
   originalTitle: '',
@@ -10,6 +12,7 @@ export const emptyFilm = {
   completionDate: '',
   productionCountry: '',
   languages: '',
+  form: 'Documentary',
   stage: 'finished',
   premiereStatus: 'none',
   publishedPublicly: false,
@@ -23,6 +26,8 @@ export const emptyFilm = {
   producerName: '',
   producerEmail: '',
   producerPhone: '',
+  archiveFilmId: '',
+  archiveYear: '',
 }
 
 export const emptyState = {
@@ -34,7 +39,7 @@ export const emptyState = {
 
 export function loadState() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
+    const raw = localStorage.getItem(STORAGE_KEY) ?? localStorage.getItem('rota-doc-state-v1')
     if (!raw) return structuredClone(emptyState)
     const parsed = JSON.parse(raw)
     return {
@@ -53,30 +58,7 @@ export function saveState(state) {
 }
 
 export function sampleFilm() {
-  return {
-    ...emptyFilm,
-    originalTitle: 'A Casa do Rio',
-    englishTitle: 'The River House',
-    logline:
-      'Uma família ribeirinha luta para permanecer em sua casa enquanto o rio muda de curso e o mapa oficial diz que ela já não existe.',
-    shortSynopsis:
-      'Durante uma cheia histórica, uma diretora estreante acompanha três gerações que recusam deixar a beira do rio.',
-    durationMinutes: '78',
-    completionDate: '2025-11-02',
-    productionCountry: 'Brasil',
-    languages: 'português',
-    stage: 'finished',
-    premiereStatus: 'none',
-    publishedPublicly: false,
-    hasEnglishSubtitles: true,
-    hasSrt: true,
-    screenerUrl: 'https://vimeo.com/000000000',
-    screenerPassword: 'casa2026',
-    directorName: 'Helena Costa',
-    directorBio: 'Diretora estreante, formada em jornalismo, trabalha com arquivo familiar.',
-    directorStatement: 'Filmei a casa da minha mãe antes que o rio a levasse para o papel.',
-    producerName: 'Paulo Mendes',
-    producerEmail: 'paulo@exemplo.com',
-    producerPhone: '+55 11 90000-0000',
-  }
+  const film = getArchiveFilmById(SAMPLE_FILM_ID)
+  if (!film) return { ...emptyFilm }
+  return { ...emptyFilm, ...filmToDossier(film) }
 }
