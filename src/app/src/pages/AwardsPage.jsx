@@ -8,7 +8,7 @@ export function AwardsPage() {
   const visible = onlyComplete ? journeys.filter((journey) => journey.complete) : journeys
 
   return (
-    <section className="stack">
+    <section className="page">
       <h1>Jornada de prêmios</h1>
       <p className="lede">
         Cada filme do arquivo conectado tem honrarias ligadas a festivais e prêmios. A jornada

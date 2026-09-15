@@ -39,7 +39,7 @@ export function FilmCard({
         </p>
         <button
           type="button"
-          className="ghost"
+          className="btn-ghost"
           onClick={() => setShortlisted((current) => !current)}
         >
           {shortlisted ? 'Na shortlist' : 'Adicionar à shortlist'}

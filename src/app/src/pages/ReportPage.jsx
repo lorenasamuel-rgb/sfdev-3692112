@@ -8,10 +8,10 @@ import {
 export function ReportPage({ assessment, onRestart }) {
   if (!assessment) {
     return (
-      <section className="stack">
+      <section className="page">
         <h1>Relatório</h1>
         <p>Ainda não há avaliação salva.</p>
-        <button type="button" onClick={onRestart}>
+        <button className="btn" type="button" onClick={onRestart}>
           Fazer avaliação
         </button>
       </section>
@@ -23,7 +23,7 @@ export function ReportPage({ assessment, onRestart }) {
   const runtimeText = assessment.runtime ? `${assessment.runtime} minutos` : 'Duração não informada'
 
   return (
-    <section className="stack">
+    <section className="page">
       <h1>Relatório da jornada</h1>
       <h2>Pontuação de prontidão: {assessment.score}/100</h2>
       <section>
@@ -55,7 +55,7 @@ export function ReportPage({ assessment, onRestart }) {
         </div>
       </section>
 
-      <button type="button" className="ghost" onClick={onRestart}>
+      <button type="button" className="btn-ghost" onClick={onRestart}>
         Nova avaliação
       </button>
     </section>

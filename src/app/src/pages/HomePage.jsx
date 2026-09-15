@@ -1,28 +1,65 @@
-export function HomePage({ onNavigate }) {
-  return (
-    <section className="stack">
-      <h1>Festival Journey</h1>
-      <p className="lede">
-        Monte uma rota mais inteligente para o filme: leia o arquivo do Git, cruze festivais e
-        acompanhe a jornada de prêmios — da seleção oficial até a vitória.
-      </p>
+import { stepDefinitions } from '../data/festivals.js'
+import { PremiereCallout } from '../components/Widgets.jsx'
 
-      <section>
-        <h2>O filme está pronto para festival?</h2>
-        <p>
-          Festival Journey usa o <strong>Fictional Film Archive</strong> commitado no Git para
-          mostrar filmes, festivais e honrarias. Independentes podem avaliar o próprio filme,
-          ver lacunas e receber indicações práticas antes de inscrever.
+export function HomePage() {
+  return (
+    <div className="page home">
+      <section className="hero">
+        <p className="eyebrow">Para produtores independentes e estreantes</p>
+        <h1>Inscrever o documentário em festival não exige distribuidora. Exige regulamento.</h1>
+        <p className="lede">
+          Um documentário participa de um festival por meio de uma inscrição e, depois, passa por
+          uma seleção curatorial. Esta ferramenta ajuda a escolher festivais, montar o pacote,
+          checar direitos e acompanhar cada inscrição, sem tratar a inscrição como garantia de
+          participação.
         </p>
         <div className="btn-row">
-          <button type="button" onClick={() => onNavigate('assessment')}>
-            Começar avaliação
-          </button>
-          <button type="button" className="ghost" onClick={() => onNavigate('archive')}>
-            Ver arquivo de filmes
-          </button>
+          <a className="btn" href="#/filme">
+            Cadastrar meu filme
+          </a>
+          <a className="btn-ghost" href="#/festivais">
+            Ver festivais
+          </a>
+          <a className="btn-ghost" href="#/arquivo">
+            Arquivo do Git
+          </a>
+          <a className="btn-ghost" href="#/premios">
+            Jornada de prêmios
+          </a>
         </div>
       </section>
-    </section>
+
+      <section className="split">
+        <div>
+          <h2>Como funciona</h2>
+          <ol className="steps">
+            {stepDefinitions.map((step) => (
+              <li key={step.id}>
+                <span>{String(step.number).padStart(2, '0')}</span>
+                <div>
+                  <strong>{step.title}</strong>
+                  <p>{step.detail}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <div className="stack">
+          <PremiereCallout />
+          <aside className="callout">
+            <h3>Duas rotas</h3>
+            <p>
+              Filme <strong>finalizado</strong>: inscrição na seleção oficial. Filme em{' '}
+              <strong>desenvolvimento</strong>: laboratórios, mercados e pitching — como o
+              MeetMarket do Sheffield DocFest, que aceita projetos em diferentes estágios e
+              realizadores estreantes.
+            </p>
+            <a href="#/laboratorios">Ir para laboratórios e mercados</a>
+            {' · '}
+            <a href="#/avaliacao">Avaliar prontidão</a>
+          </aside>
+        </div>
+      </section>
+    </div>
   )
 }

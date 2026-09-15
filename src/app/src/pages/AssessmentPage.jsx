@@ -28,7 +28,7 @@ export function AssessmentPage({ onComplete }) {
   }
 
   return (
-    <section className="stack">
+    <section className="page">
       <h1>Avaliação do filme</h1>
       <p className="lede">
         Mesmo fluxo da Week 2, agora em React: título, forma, duração, estreia e materiais. A
@@ -108,7 +108,9 @@ export function AssessmentPage({ onComplete }) {
           <option value="no">Não</option>
         </select>
 
-        <button type="submit">Ver pontuação de prontidão</button>
+        <button className="btn" type="submit">
+          Ver pontuação de prontidão
+        </button>
       </form>
     </section>
   )

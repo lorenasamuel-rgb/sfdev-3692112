@@ -1,13 +1,16 @@
-# Festival Journey
+# Rota Doc
 
-React + Vite. Rode estes comandos a partir desta pasta (`src/app`), depois de já estar no clone do repositório (por exemplo `~/Documents/sfdev-3692112`).
+App React + Vite para inscrição de documentários em festivais. Os dados de inscrição ficam no navegador (`localStorage`). Arquivo e prêmios leem o dataset do Git.
+
+A partir do clone do repositório:
 
 ```bash
 cd ~/Documents/sfdev-3692112/src/app
 npm install
+npm test
 npm run dev
 ```
 
-Abra o endereço local que o Vite mostrar (em geral `http://localhost:5173`).
+Abre em `http://localhost:7363`.
 
-Se `npm` reclamar que não existe `package.json` em `/Users/seu-usuario/package.json`, o Terminal está na pasta pessoal. Use o `cd` completo acima.
+Se o `npm` procurar `package.json` em `/Users/seu-usuario/package.json`, o Terminal está na pasta pessoal. Use o `cd` completo acima.

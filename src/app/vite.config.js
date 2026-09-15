@@ -34,4 +34,14 @@ function archivePosters() {
 
 export default defineConfig({
   plugins: [react(), archivePosters()],
+  server: {
+    host: true,
+    port: 7363,
+    strictPort: true,
+  },
+  preview: {
+    host: true,
+    port: 7364,
+    strictPort: true,
+  },
 })

@@ -11,7 +11,7 @@ export function ArchivePage() {
   const visible = films.filter((film) => formFilter === 'all' || film.form === formFilter)
 
   return (
-    <section className="stack">
+    <section className="page">
       <h1>Arquivo de filmes</h1>
       <p className="lede">
         Doze filmes da coleção mais rica (Week 4) no Git. O mesmo componente <code>FilmCard</code>{' '}
