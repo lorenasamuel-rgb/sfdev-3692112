@@ -94,7 +94,6 @@ O seletor **PT | EN** fica ao lado da marca, no topo. A interface inteira troca 
 | --- | --- | --- |
 | (marca Rota Doc) | Início | Convite à jornada de premiação e os sete passos |
 | Filme | `#/filme` | Ficha do filme, com busca no arquivo |
-| Arquivo | `#/arquivo` | 180 filmes fictícios, cartaz e filtros |
 | Festivais | `#/festivais` | 40 festivais fictícios e cruzamento de elegibilidade |
 | Prêmios | `#/premios` | Jornada seleção → indicação → vitória |
 | Pacote | `#/pacote` | Materiais do festival package |
@@ -102,6 +101,7 @@ O seletor **PT | EN** fica ao lado da marca, no topo. A interface inteira troca 
 | Inscrições | `#/inscricoes` | Acompanhamento de cada festival |
 | Guia | `#/guia` | Requisitos comuns de regulamento |
 | Labs | `#/laboratorios` | Laboratórios, mercados e pitching |
+| Search | `#/arquivo` | 180 filmes fictícios, cartaz e filtros |
 
 À direita do menu aparece o **título do filme**, a **nota de preparação** (0–100) e o **número de inscrições**. A seção em que você está fica destacada no menu.
 
@@ -199,7 +199,7 @@ Nesta versão o catálogo é o arquivo fictício de ensino. Use-o para praticar 
 | Quero… | Onde ir |
 | --- | --- |
 | Cadastrar o filme | Filme |
-| Ver cartazes e escolher um título do dataset | Arquivo |
+| Ver cartazes e escolher um título do dataset | Search |
 | Ver se um festival cabe no meu filme | Festivais |
 | Ver seleção, indicação e vitória | Prêmios |
 | Trocar o idioma da interface | PT / EN no topo |

@@ -18,7 +18,6 @@ import { packageItems, rightsItems } from './data/checklists.js'
 
 const NAV = [
   { href: '#/filme', id: 'filme' },
-  { href: '#/arquivo', id: 'arquivo' },
   { href: '#/festivais', id: 'festivais' },
   { href: '#/premios', id: 'premios' },
   { href: '#/pacote', id: 'pacote' },
@@ -26,6 +25,7 @@ const NAV = [
   { href: '#/inscricoes', id: 'inscricoes' },
   { href: '#/guia', id: 'guia' },
   { href: '#/laboratorios', id: 'laboratorios' },
+  { href: '#/arquivo', id: 'arquivo' },
 ]
 
 function parseHash() {
