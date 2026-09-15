@@ -20,6 +20,9 @@ export function HomePage() {
           <a className="btn-ghost" href="#/arquivo">
             {t('home.ctaArchive')}
           </a>
+          <a className="btn-ghost" href="#/premios">
+            {t('home.ctaAwards')}
+          </a>
         </div>
       </section>
 

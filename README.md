@@ -4,7 +4,22 @@ Aplicação para produtores independentes e estreantes inscreverem filmes em fes
 
 A interface está em português e inglês — o seletor PT/EN fica no topo da página.
 
+As telas **Arquivo** e **Prêmios**, o seletor de idioma e o manual estão neste branch para Cursor e VS Code abrirem o mesmo material. Guia de uso: [MANUAL.md](MANUAL.md).
+
 Os resumos de regulamento são de ensino. O dataset é inteiramente fictício.
+
+## Como ter no VS Code (e no Cursor)
+
+Abra a **mesma pasta** do clone nos dois editores. Depois puxe este branch:
+
+```bash
+cd ~/Documents/sfdev-3692112
+git fetch origin
+git checkout cursor/visualizacoes-semana-passada-b80e
+git pull origin cursor/visualizacoes-semana-passada-b80e
+```
+
+No VS Code: **File → Open Folder** → a pasta `sfdev-3692112`.
 
 ## Como rodar
 

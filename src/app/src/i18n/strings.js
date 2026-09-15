@@ -30,6 +30,7 @@ export const strings = {
       ctaFilm: 'Cadastrar meu filme',
       ctaFestivals: 'Ver festivais',
       ctaArchive: 'Abrir o arquivo',
+      ctaAwards: 'Ver prêmios',
       how: 'Como funciona',
       twoRoutes: 'Duas rotas',
       twoRoutesBody:
@@ -441,6 +442,7 @@ export const strings = {
       ctaFilm: 'File my film',
       ctaFestivals: 'Browse festivals',
       ctaArchive: 'Open the archive',
+      ctaAwards: 'See awards',
       how: 'How it works',
       twoRoutes: 'Two routes',
       twoRoutesBody:
