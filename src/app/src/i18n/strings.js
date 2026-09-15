@@ -51,7 +51,7 @@ export const strings = {
     film: {
       eyebrow: 'Ficha do filme',
       title: 'O Chamado',
-      lede: 'Duração, data de conclusão, estreia, forma e idioma definem a elegibilidade. Independentes e estreantes podem inscrever — desde que o filme caiba no regulamento de ensino do arquivo.',
+      lede: 'Duração, data de conclusão, estreia, forma e idioma definem a elegibilidade. Independentes e estreantes podem inscrever, desde que o filme caiba no regulamento de ensino do arquivo.',
       sample: 'Preencher com exemplo do arquivo',
       clear: 'Limpar formulário',
       identity: 'Identidade',
@@ -463,7 +463,7 @@ export const strings = {
     film: {
       eyebrow: 'Film file',
       title: 'O Chamado',
-      lede: 'Running time, completion date, premiere, form and language drive eligibility. Independents and first-timers can enter — if the film fits the teaching rules in the archive.',
+      lede: 'Running time, completion date, premiere, form and language drive eligibility. Independents and first-timers can enter if the film fits the teaching rules in the archive.',
       sample: 'Fill with an archive example',
       clear: 'Clear form',
       identity: 'Identity',
