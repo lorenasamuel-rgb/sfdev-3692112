@@ -31,9 +31,13 @@ function parseHash() {
 
 function Router() {
   const [route, setRoute] = useState(parseHash)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const onHash = () => setRoute(parseHash())
+    const onHash = () => {
+      setRoute(parseHash())
+      setMenuOpen(false)
+    }
     window.addEventListener('hashchange', onHash)
     if (!window.location.hash) window.location.hash = '#/'
     return () => window.removeEventListener('hashchange', onHash)
@@ -54,43 +58,143 @@ function Router() {
   }, [route])
 
   const active = route.parts[0] || 'home'
+  const isHome = active === 'home'
+
+  useEffect(() => {
+    document.body.classList.toggle('nav-open', menuOpen)
+    return () => document.body.classList.remove('nav-open')
+  }, [menuOpen])
+
+  useEffect(() => {
+    if (!menuOpen) return undefined
+    const onKey = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [menuOpen])
 
   return (
-    <div className="shell">
-      <Header active={active} />
-      <main>{page}</main>
-      <footer>
-        <p>
-          Rota Doc organiza o processo de inscrição. A seleção é curatorial e cada festival tem
-          edital próprio — confirme prazos, taxas e estreia no site oficial.
-        </p>
-      </footer>
+    <div className={`shell${isHome ? ' is-home' : ''}`}>
+      <Header active={active} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      <div id="globalnav-menu" className={`nav-drawer${menuOpen ? ' is-open' : ''}`}>
+        {NAV.map((item) => (
+          <a
+            key={item.id}
+            href={item.href}
+            className={active === item.id ? 'is-active' : ''}
+            onClick={() => setMenuOpen(false)}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+      <p className="ribbon">
+        A inscrição não garante participação. Confirme prazos, taxas e estreia no edital vigente.
+      </p>
+      <main className={isHome ? 'main-home' : 'main-app'}>{page}</main>
+      <SiteFooter />
     </div>
   )
 }
 
-function Header({ active }) {
+function Header({ active, menuOpen, setMenuOpen }) {
   const { film, package: packageState, rights, submissions } = useAppState()
   const score = readinessScore(film, packageState, rights, packageItems, rightsItems)
 
   return (
-    <header className="topbar">
-      <a className="brand" href="#/">
-        <span className="brand-mark" aria-hidden="true" />
-        Rota Doc
-      </a>
-      <nav>
-        {NAV.map((item) => (
-          <a key={item.id} href={item.href} className={active === item.id ? 'is-active' : ''}>
-            {item.label}
-          </a>
-        ))}
-      </nav>
-      <p className="topbar-film">
-        {film.originalTitle || 'Sem filme cadastrado'}
-        <span>{score}/100 · {submissions.length} inscrições</span>
-      </p>
+    <header className="globalnav">
+      <div className="globalnav-content">
+        <a className="brand" href="#/" aria-label="Rota Doc, início" onClick={() => setMenuOpen(false)}>
+          <span className="brand-mark" aria-hidden="true" />
+          <span>Rota Doc</span>
+        </a>
+        <button
+          type="button"
+          className={`nav-toggle${menuOpen ? ' is-open' : ''}`}
+          aria-expanded={menuOpen}
+          aria-controls="globalnav-menu"
+          onClick={() => setMenuOpen((value) => !value)}
+        >
+          <span className="visually-hidden">{menuOpen ? 'Fechar menu' : 'Abrir menu'}</span>
+          <span aria-hidden="true" />
+        </button>
+        <nav className="globalnav-links">
+          {NAV.map((item) => (
+            <a key={item.id} href={item.href} className={active === item.id ? 'is-active' : ''}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <p className="topbar-film">
+          {film.originalTitle || 'Sem filme'}
+          <span>
+            {score}/100 · {submissions.length} {submissions.length === 1 ? 'inscrição' : 'inscrições'}
+          </span>
+        </p>
+      </div>
     </header>
+  )
+}
+
+function SiteFooter() {
+  return (
+    <footer className="site-footer">
+      <div className="footer-inner">
+        <p className="footer-lead">
+          Rota Doc organiza o processo de inscrição de documentários em festivais. A seleção é
+          curatorial e cada casa tem edital próprio.
+        </p>
+        <div className="footer-sitemap">
+          <div>
+            <h2>Rota</h2>
+            <ul>
+              <li>
+                <a href="#/filme">Filme</a>
+              </li>
+              <li>
+                <a href="#/festivais">Festivais</a>
+              </li>
+              <li>
+                <a href="#/pacote">Pacote</a>
+              </li>
+              <li>
+                <a href="#/direitos">Direitos</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h2>Acompanhar</h2>
+            <ul>
+              <li>
+                <a href="#/inscricoes">Inscrições</a>
+              </li>
+              <li>
+                <a href="#/guia">Guia</a>
+              </li>
+              <li>
+                <a href="#/laboratorios">Labs e mercados</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h2>Sobre</h2>
+            <ul>
+              <li>
+                <a href="#/guia">Requisitos comuns</a>
+              </li>
+              <li>
+                <a href="#/festivais">Catálogo de referência</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <p className="footer-copy">
+          Os resumos de regulamento são de referência. Confirme sempre o edital vigente antes de
+          divulgar o filme ou pagar a taxa.
+        </p>
+      </div>
+    </footer>
   )
 }
 

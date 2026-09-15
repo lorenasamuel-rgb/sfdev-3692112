@@ -10,8 +10,8 @@ export function RightsPage() {
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">Antes de inscrever</p>
-          <h1>Atenção especial aos direitos</h1>
+          <p className="eyebrow">Direitos</p>
+          <h1>Atenção especial aos direitos.</h1>
           <p>
             Música, arquivo, entrevistas e locações precisam estar licenciados. Quem inscreve
             precisa ter autoridade para exibir o filme. Para distribuição posterior, alguns

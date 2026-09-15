@@ -6,8 +6,8 @@ export function GuidePage() {
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">Regulamento</p>
-          <h1>Requisitos mais comuns</h1>
+          <p className="eyebrow">Guia</p>
+          <h1>Requisitos mais comuns.</h1>
           <p>
             Cada festival possui regulamento próprio. Use esta lista como roteiro de leitura do
             edital — nunca como substituto.
@@ -63,8 +63,8 @@ export function LabsPage() {
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">Desenvolvimento</p>
-          <h1>Laboratórios, mercados e pitching</h1>
+          <p className="eyebrow">Labs</p>
+          <h1>Laboratórios, mercados e pitching.</h1>
           <p>
             Se o documentário ainda estiver em desenvolvimento, a rota é outra: apresenta-se o
             projeto para buscar financiamento, coprodução ou distribuição — não uma cópia final

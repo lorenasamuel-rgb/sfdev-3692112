@@ -10,8 +10,8 @@ export function PackagePage() {
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">Festival package</p>
-          <h1>Materiais que os festivais pedem</h1>
+          <p className="eyebrow">Pacote</p>
+          <h1>Materiais que os festivais pedem.</h1>
           <p>
             Prepare o pacote uma vez e reutilize nas inscrições. Se o documentário for selecionado,
             o festival poderá pedir cópia de exibição em DCP ou ProRes, press kit, trailer limpo e

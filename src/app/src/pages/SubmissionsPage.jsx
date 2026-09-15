@@ -22,8 +22,8 @@ export function SubmissionsPage() {
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">Acompanhamento</p>
-          <h1>Inscrições em andamento</h1>
+          <p className="eyebrow">Inscrições</p>
+          <h1>Acompanhar cada envio.</h1>
           <p>
             A inscrição não garante participação. Use os sete passos para não pagar taxa antes de
             conferir estreia, data de conclusão e screener.
