@@ -1,10 +1,11 @@
 import { sectionNeighbors } from '../lib/sections.js'
+import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
 
 export function SectionPager({ current, wrap = true }) {
   const { t } = useLanguage()
+  const { clearFilm } = useAppState()
   const { prev, next } = sectionNeighbors(current)
-  if (!prev && !next) return null
 
   const buttons = (
     <>
@@ -18,9 +19,16 @@ export function SectionPager({ current, wrap = true }) {
           {t('chrome.next')} <span aria-hidden="true">›</span>
         </a>
       ) : null}
+      <button type="button" className="btn-ghost" onClick={clearFilm}>
+        {t('film.clear')}
+      </button>
     </>
   )
 
   if (!wrap) return buttons
-  return <nav className="btn-row" aria-label={t('nav.sections')}>{buttons}</nav>
+  return (
+    <nav className="btn-row" aria-label={t('nav.sections')}>
+      {buttons}
+    </nav>
+  )
 }

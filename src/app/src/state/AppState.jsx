@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react'
-import { emptyFilm, loadState, saveState, sampleFilm } from '../lib/storage.js'
+import { emptyFilm, emptyState, loadState, saveState, sampleFilm } from '../lib/storage.js'
 import { packageItems, rightsItems } from '../data/checklists.js'
 import { filmToDossier, getArchiveFilmById } from '../data/archive.js'
 import { AppStateContext } from './context.js'
@@ -143,10 +143,7 @@ export function AppStateProvider({ children }) {
   )
 
   const clearFilm = useCallback(() => {
-    persist((current) => ({
-      ...current,
-      film: { ...emptyFilm },
-    }))
+    persist(structuredClone(emptyState))
   }, [persist])
 
   const value = useMemo(

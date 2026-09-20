@@ -214,9 +214,17 @@ p {
   letter-spacing: -0.01em;
 }
 
-.globalnav-links a.is-active,
+.globalnav-links a.is-active {
+  color: var(--go);
+  font-weight: 700;
+}
+
 .globalnav-links a:hover {
   color: #fff;
+}
+
+.globalnav-links a.is-active:hover {
+  color: var(--go);
 }
 
 .topbar-film {
@@ -335,8 +343,8 @@ p {
 }
 
 .footer-sitemap a.is-active {
-  color: var(--ink);
-  font-weight: 600;
+  color: var(--go);
+  font-weight: 700;
 }
 
 .site-footer {
@@ -456,7 +464,7 @@ p {
 
 .btn {
   background: var(--go);
-  color: var(--go-ink);
+  color: #000;
 }
 
 .btn:hover {
@@ -465,7 +473,7 @@ p {
 
 .btn-ghost {
   background: transparent;
-  color: var(--go);
+  color: #000;
   border: 1px solid var(--go);
 }
 
@@ -647,6 +655,10 @@ label.check input {
   margin-top: 0.25rem;
 }
 
+input[type='checkbox'] {
+  accent-color: var(--go);
+}
+
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -815,7 +827,7 @@ label.check input {
 .checklist input {
   width: auto;
   margin-top: 0.3rem;
-  accent-color: var(--blue-focus);
+  accent-color: var(--go);
 }
 
 .checklist em,
@@ -850,6 +862,22 @@ label.check input {
 .plain-list.yes li::before {
   content: '• ';
   color: var(--good);
+}
+
+.plain-list.bullets li {
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+.plain-list.bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: var(--go);
 }
 
 .spec {
@@ -929,7 +957,7 @@ label.check input {
 
 .step-checks input {
   width: auto;
-  accent-color: var(--blue-focus);
+  accent-color: var(--go);
 }
 
 .muted {
@@ -1366,9 +1394,17 @@ label.check input {
     text-decoration: none;
   }
 
-  .nav-drawer a.is-active,
+  .nav-drawer a.is-active {
+    color: var(--go);
+    font-weight: 700;
+  }
+
   .nav-drawer a:hover {
     color: #fff;
+  }
+
+  .nav-drawer a.is-active:hover {
+    color: var(--go);
   }
 }
 

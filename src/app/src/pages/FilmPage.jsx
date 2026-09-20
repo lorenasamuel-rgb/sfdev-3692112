@@ -6,7 +6,7 @@ import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
 
 export function FilmPage() {
-  const { film, package: packageState, rights, submissions, updateFilm, loadSample, clearFilm } =
+  const { film, package: packageState, rights, submissions, updateFilm, loadSample } =
     useAppState()
   const { locale, t } = useLanguage()
 
@@ -41,9 +41,6 @@ export function FilmPage() {
           <div className="btn-row">
             <button type="button" className="btn-ghost" onClick={loadSample}>
               {t('film.sample')}
-            </button>
-            <button type="button" className="btn-ghost" onClick={clearFilm}>
-              {t('film.clear')}
             </button>
             <button
               type="button"

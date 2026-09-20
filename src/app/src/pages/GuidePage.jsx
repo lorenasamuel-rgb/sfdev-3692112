@@ -67,7 +67,7 @@ export function LabsPage() {
 
       <section className="panel">
         <h2>{t('labs.when')}</h2>
-        <ul className="plain-list">
+        <ul className="plain-list bullets">
           <li>{t('labs.when1')}</li>
           <li>{t('labs.when2')}</li>
           <li>{t('labs.when3')}</li>
