@@ -1027,8 +1027,19 @@ label.check input {
 }
 
 .unit-festivals {
-  background-image: url('/images/festivals.png');
+  background-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.18) 34%,
+      transparent 54%
+    ),
+    url('/images/festivals.png');
+  background-position: center 38%;
   color: #fff;
+}
+
+.unit-festivals .unit-copy {
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.72);
 }
 
 .unit-festivals .unit-subhead {
@@ -1392,6 +1403,10 @@ label.check input {
 
   .unit-hero .unit-links {
     justify-content: center;
+  }
+
+  .unit-festivals .unit-copy {
+    padding-top: 3rem;
   }
 }
 
