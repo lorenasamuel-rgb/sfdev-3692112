@@ -122,6 +122,7 @@ export const strings = {
       directorBio: 'Biografia da direção',
       directorStatement: 'Declaração da direção',
       archiveHint: 'Este filme veio do arquivo: {title} ({year}).',
+      next: 'Seguinte',
     },
     archive: {
       eyebrow: 'Fictional Film Archive',
@@ -559,6 +560,7 @@ export const strings = {
       directorBio: 'Director biography',
       directorStatement: 'Director statement',
       archiveHint: 'This film came from the archive: {title} ({year}).',
+      next: 'Next',
     },
     archive: {
       eyebrow: 'Fictional Film Archive',

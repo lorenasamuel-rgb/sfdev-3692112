@@ -42,6 +42,9 @@ export function FilmPage() {
             <button type="button" className="btn-ghost" onClick={clearFilm}>
               {t('film.clear')}
             </button>
+            <a className="btn" href="#/festivais">
+              {t('film.next')} <span aria-hidden="true">›</span>
+            </a>
           </div>
         </div>
       </header>
@@ -169,6 +172,11 @@ export function FilmPage() {
             <textarea rows="3" {...field('directorStatement')} />
           </label>
         </fieldset>
+        <div className="btn-row">
+          <a className="btn" href="#/festivais">
+            {t('film.next')} <span aria-hidden="true">›</span>
+          </a>
+        </div>
       </form>
     </div>
   )
