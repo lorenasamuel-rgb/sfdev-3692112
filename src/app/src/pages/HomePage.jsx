@@ -25,6 +25,24 @@ export function HomePage() {
         </div>
       </section>
 
+      <section className="unit unit-steps">
+        <div className="unit-copy">
+          <h2>{t('home.how')}</h2>
+          <p className="unit-subhead">{t('home.unitHowSub')}</p>
+          <div className="unit-links">
+            <More href="#/guia">{t('home.learnMore')}</More>
+          </div>
+        </div>
+        <ol className="home-steps">
+          {stepDefinitions.map((step) => (
+            <li key={step.id}>
+              <span>{String(step.number).padStart(2, '0')}</span>
+              {t(`steps.${step.id}.title`)}
+            </li>
+          ))}
+        </ol>
+      </section>
+
       <section className="unit unit-festivals">
         <div className="unit-copy">
           <h2>{t('home.unitFestivals')}</h2>
@@ -74,20 +92,6 @@ export function HomePage() {
               <More href="#/laboratorios">{t('home.learnMore')}</More>
             </div>
           </div>
-        </article>
-        <article className="tile tile-steps">
-          <div className="unit-copy">
-            <h2>{t('home.how')}</h2>
-            <p className="unit-subhead">{t('home.unitHowSub')}</p>
-          </div>
-          <ol className="home-steps">
-            {stepDefinitions.map((step) => (
-              <li key={step.id}>
-                <span>{String(step.number).padStart(2, '0')}</span>
-                {t(`steps.${step.id}.title`)}
-              </li>
-            ))}
-          </ol>
         </article>
       </div>
 
