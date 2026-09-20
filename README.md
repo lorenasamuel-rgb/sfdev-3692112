@@ -14,6 +14,8 @@ Um documentário chega ao festival por uma inscrição e, depois, passa por sele
 
 Os resumos de regulamento são de referência. Confirme sempre o edital vigente.
 
+O [PRD](PRD.md) descreve o produto completo no branch `cursor/apple-on-visualizacoes-3ed7` ([PR #12](https://github.com/lorenasamuel-rgb/sfdev-3692112/pull/12)): Take Action, arquivo, prêmios, PT/EN, PDF e visual Apple. O `main` é o recorte anterior (festivais reais de documentário, sem essas telas).
+
 ## Como rodar
 
 ```bash
