@@ -1,58 +1,109 @@
 import { stepDefinitions } from '../data/festivals.js'
-import { PremiereCallout } from '../components/Widgets.jsx'
 import { useLanguage } from '../i18n/context.js'
+
+function More({ href, children }) {
+  return (
+    <a href={href}>
+      {children} <span aria-hidden="true">›</span>
+    </a>
+  )
+}
 
 export function HomePage() {
   const { t } = useLanguage()
   return (
     <div className="page home">
-      <section className="hero">
-        <p className="eyebrow">{t('home.eyebrow')}</p>
-        <h1>{t('home.title')}</h1>
-        <p className="lede">{t('home.lede')}</p>
-        <div className="btn-row">
-          <a className="btn" href="#/filme">
-            {t('home.ctaFilm')}
-          </a>
-          <a className="btn-ghost" href="#/festivais">
-            {t('home.ctaFestivals')}
-          </a>
-          <a className="btn-ghost" href="#/arquivo">
-            {t('home.ctaArchive')}
-          </a>
-          <a className="btn-ghost" href="#/premios">
-            {t('home.ctaAwards')}
-          </a>
+      <section className="unit unit-hero">
+        <div className="unit-copy">
+          <p className="unit-kicker">{t('brand')}</p>
+          <h1>{t('home.heroTitle')}</h1>
+          <p className="unit-subhead">{t('home.lede')}</p>
+          <div className="unit-links">
+            <More href="#/filme">{t('home.ctaFilm')}</More>
+            <More href="#/arquivo">{t('home.ctaArchive')}</More>
+          </div>
         </div>
       </section>
 
-      <section className="split">
-        <div>
-          <h2>{t('home.how')}</h2>
-          <ol className="steps">
+      <section className="unit unit-festivals">
+        <div className="unit-copy">
+          <h2>{t('home.unitFestivals')}</h2>
+          <p className="unit-subhead">{t('home.unitFestivalsSub')}</p>
+          <div className="unit-links">
+            <More href="#/festivais">{t('home.learnMore')}</More>
+            <More href="#/guia">{t('nav.guia')}</More>
+          </div>
+        </div>
+      </section>
+
+      <section className="unit unit-package">
+        <div className="unit-copy">
+          <h2>{t('home.unitPackage')}</h2>
+          <p className="unit-subhead">{t('home.unitPackageSub')}</p>
+          <div className="unit-links">
+            <More href="#/pacote">{t('home.learnMore')}</More>
+            <More href="#/direitos">{t('nav.direitos')}</More>
+          </div>
+        </div>
+      </section>
+
+      <div className="tile-grid">
+        <article className="tile tile-archive">
+          <div className="unit-copy">
+            <h2>{t('home.unitArchive')}</h2>
+            <p className="unit-subhead">{t('home.unitArchiveSub')}</p>
+            <div className="unit-links">
+              <More href="#/arquivo">{t('home.ctaArchive')}</More>
+            </div>
+          </div>
+        </article>
+        <article className="tile tile-awards">
+          <div className="unit-copy">
+            <h2>{t('home.unitAwards')}</h2>
+            <p className="unit-subhead">{t('home.unitAwardsSub')}</p>
+            <div className="unit-links">
+              <More href="#/premios">{t('home.ctaAwards')}</More>
+            </div>
+          </div>
+        </article>
+        <article className="tile tile-labs">
+          <div className="unit-copy">
+            <h2>{t('home.unitLabs')}</h2>
+            <p className="unit-subhead">{t('home.unitLabsSub')}</p>
+            <div className="unit-links">
+              <More href="#/laboratorios">{t('home.learnMore')}</More>
+            </div>
+          </div>
+        </article>
+        <article className="tile tile-steps">
+          <div className="unit-copy">
+            <h2>{t('home.how')}</h2>
+            <p className="unit-subhead">{t('home.unitHowSub')}</p>
+          </div>
+          <ol className="home-steps">
             {stepDefinitions.map((step) => (
               <li key={step.id}>
                 <span>{String(step.number).padStart(2, '0')}</span>
-                <div>
-                  <strong>{t(`steps.${step.id}.title`)}</strong>
-                  <p>{t(`steps.${step.id}.detail`)}</p>
-                </div>
+                {t(`steps.${step.id}.title`)}
               </li>
             ))}
           </ol>
-        </div>
-        <div className="stack">
-          <PremiereCallout />
-          <aside className="callout">
-            <h3>{t('home.twoRoutes')}</h3>
-            <p>
-              {t('home.twoRoutesBody', {
-                finished: t('home.finished'),
-                dev: t('home.dev'),
-              })}
-            </p>
-            <a href="#/laboratorios">{t('home.labsLink')}</a>
-          </aside>
+        </article>
+      </div>
+
+      <section className="unit unit-finale">
+        <div className="unit-copy">
+          <h2>{t('home.unitFinale')}</h2>
+          <p className="unit-subhead">
+            {t('home.twoRoutesBody', {
+              finished: t('home.finished'),
+              dev: t('home.dev'),
+            })}
+          </p>
+          <div className="unit-links">
+            <More href="#/filme">{t('home.ctaFilm')}</More>
+            <More href="#/premios">{t('home.ctaAwards')}</More>
+          </div>
         </div>
       </section>
     </div>

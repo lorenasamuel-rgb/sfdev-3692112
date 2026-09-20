@@ -23,6 +23,17 @@ export const strings = {
     },
     footer:
       'Catálogo de ensino do Fictional Film Archive. Os festivais, filmes e prêmios são fictícios — use-os para praticar a rota de inscrição, não como edital real.',
+    chrome: {
+      ribbon:
+        'A inscrição não garante participação. Confirme prazos, taxas e estreia no edital vigente.',
+      openMenu: 'Abrir menu',
+      closeMenu: 'Fechar menu',
+      footerLead:
+        'Rota Doc organiza o processo de inscrição com o Fictional Film Archive. A seleção é curatorial e cada casa tem edital próprio.',
+      footerRota: 'Rota',
+      footerTrack: 'Acompanhar',
+      footerArchive: 'Arquivo',
+    },
     home: {
       eyebrow: 'Arquivo fictício para independentes e estreantes',
       title: 'Inscrever o filme em festival começa pelo regulamento e pelos dados do arquivo.',
@@ -38,6 +49,20 @@ export const strings = {
       finished: 'finalizado',
       dev: 'desenvolvimento',
       labsLink: 'Ir para laboratórios e mercados',
+      heroTitle: 'Inscrever o filme.',
+      learnMore: 'Saiba mais',
+      unitFestivals: 'Festivais.',
+      unitFestivalsSub: 'Cruze duração, estreia e país com cada casa do arquivo.',
+      unitPackage: 'Festival package.',
+      unitPackageSub: 'Prepare uma vez. Reutilize em cada inscrição.',
+      unitArchive: 'Arquivo.',
+      unitArchiveSub: '180 filmes fictícios para praticar a ficha.',
+      unitAwards: 'Prêmios.',
+      unitAwardsSub: 'Da seleção oficial à vitória.',
+      unitLabs: 'Labs.',
+      unitLabsSub: 'Mercados e pitching para filmes em desenvolvimento.',
+      unitHowSub: 'A inscrição não é garantia de seleção.',
+      unitFinale: 'Duas rotas. Um processo.',
     },
     premiere: {
       title: 'Cuidado com a estreia',
@@ -435,6 +460,17 @@ export const strings = {
     },
     footer:
       'Teaching catalogue from the Fictional Film Archive. Festivals, films and awards are invented — practise the submission route here; do not treat this as a real call for entries.',
+    chrome: {
+      ribbon:
+        'Entering does not guarantee a place. Always check deadlines, fees and premiere rules on the official call.',
+      openMenu: 'Open menu',
+      closeMenu: 'Close menu',
+      footerLead:
+        'Rota Doc organises the submission process with the Fictional Film Archive. Selection is curatorial and each festival has its own rules.',
+      footerRota: 'Route',
+      footerTrack: 'Track',
+      footerArchive: 'Archive',
+    },
     home: {
       eyebrow: 'A fictional archive for independents and first-timers',
       title: 'Getting a film into a festival starts with the rules and with the archive data.',
@@ -450,6 +486,20 @@ export const strings = {
       finished: 'Finished',
       dev: 'development',
       labsLink: 'Go to labs and markets',
+      heroTitle: 'Submit the film.',
+      learnMore: 'Learn more',
+      unitFestivals: 'Festivals.',
+      unitFestivalsSub: 'Match running time, premiere and country with each house in the archive.',
+      unitPackage: 'Festival package.',
+      unitPackageSub: 'Prepare once. Reuse it on every submission.',
+      unitArchive: 'Archive.',
+      unitArchiveSub: '180 fictional films to practise the submission file.',
+      unitAwards: 'Awards.',
+      unitAwardsSub: 'From official selection to a win.',
+      unitLabs: 'Labs.',
+      unitLabsSub: 'Markets and pitching for films in development.',
+      unitHowSub: 'Entering is not a guarantee of selection.',
+      unitFinale: 'Two routes. One process.',
     },
     premiere: {
       title: 'Protect the premiere',
