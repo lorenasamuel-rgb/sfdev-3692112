@@ -1,0 +1,11 @@
+{
+  "name": "rota-doc",
+  "private": true,
+  "scripts": {
+    "start": "npm install --prefix src/app && npm run dev --prefix src/app",
+    "dev": "npm run dev --prefix src/app",
+    "build": "npm run build --prefix src/app",
+    "test": "npm test --prefix src/app",
+    "preview": "npm run preview --prefix src/app"
+  }
+}

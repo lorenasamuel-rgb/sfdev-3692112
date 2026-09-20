@@ -15,18 +15,17 @@ Os dois editores precisam abrir **a mesma pasta** do clone. Depois, puxe este br
 ```bash
 cd ~/Documents/sfdev-3692112
 git fetch origin
-git checkout cursor/visualizacoes-semana-passada-b80e
-git pull origin cursor/visualizacoes-semana-passada-b80e
+git checkout cursor/apple-on-visualizacoes-3ed7
+git pull origin cursor/apple-on-visualizacoes-3ed7
 ```
 
 No VS Code e no Cursor: **File → Open Folder** → `sfdev-3692112`.
 
-Para abrir o app:
+Para abrir o app, na pasta do repositório:
 
 ```bash
-cd src/app
-npm install
-npm run dev
+npm install --prefix src/app
+npm start
 ```
 
 Abre em [http://localhost:7363](http://localhost:7363).
