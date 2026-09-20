@@ -33,6 +33,8 @@ export const strings = {
       footerRota: 'Rota',
       footerTrack: 'Acompanhar',
       footerArchive: 'Arquivo',
+      back: 'Anterior',
+      next: 'Seguinte',
     },
     home: {
       eyebrow: 'Arquivo fictício para independentes e estreantes',
@@ -471,6 +473,8 @@ export const strings = {
       footerRota: 'Route',
       footerTrack: 'Track',
       footerArchive: 'Archive',
+      back: 'Back',
+      next: 'Next',
     },
     home: {
       eyebrow: 'A fictional archive for independents and first-timers',

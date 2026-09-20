@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { festivals } from '../data/festivals.js'
 import { evaluateFestival } from '../lib/eligibility.js'
 import { EmptyFilmHint, FestivalCard } from '../components/Widgets.jsx'
+import { SectionPager } from '../components/SectionPager.jsx'
 import { labelCountry, labelFocus } from '../lib/labels.js'
 import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
@@ -80,6 +81,9 @@ export function FestivalsPage() {
           <p className="eyebrow">{t('festivals.eyebrow')}</p>
           <h1>{t('festivals.title')}</h1>
           <p>{t('festivals.lede', { count: festivals.length })}</p>
+        </div>
+        <div className="page-head-aside">
+          <SectionPager current="festivais" />
         </div>
       </header>
 
@@ -190,6 +194,7 @@ export function FestivalsPage() {
         ))}
       </div>
       {rows.length === 0 ? <p className="muted">{t('festivals.empty')}</p> : null}
+      <SectionPager current="festivais" />
     </div>
   )
 }

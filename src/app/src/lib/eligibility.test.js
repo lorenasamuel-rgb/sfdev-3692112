@@ -5,6 +5,7 @@ import {
   evaluateFestival,
   filmHasEnglishAudio,
   premiereCovers,
+  readinessBand,
   readinessScore,
 } from './eligibility.js'
 
@@ -106,6 +107,15 @@ test('readiness sobe com pacote e direitos marcados', () => {
     rightsItems,
   )
   assert.ok(high > low)
+})
+
+test('faixa de prontidão: vermelho abaixo de 50, amarelo até 70, verde acima', () => {
+  assert.equal(readinessBand(0), 'low')
+  assert.equal(readinessBand(49), 'low')
+  assert.equal(readinessBand(50), 'mid')
+  assert.equal(readinessBand(70), 'mid')
+  assert.equal(readinessBand(71), 'high')
+  assert.equal(readinessBand(100), 'high')
 })
 
 test('festival de curtas rejeita longa', () => {

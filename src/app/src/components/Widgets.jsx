@@ -1,4 +1,4 @@
-import { evaluateFestival, readinessScore, statusLabel } from '../lib/eligibility.js'
+import { evaluateFestival, readinessBand, readinessScore, statusLabel } from '../lib/eligibility.js'
 import { packageItems, rightsItems } from '../data/checklists.js'
 import { labelCountry, labelFocus } from '../lib/labels.js'
 import { useAppState } from '../state/context.js'
@@ -15,8 +15,9 @@ export function ReadinessMeter() {
   const { film, package: packageState, rights } = useAppState()
   const { t } = useLanguage()
   const score = readinessScore(film, packageState, rights, packageItems, rightsItems)
+  const band = readinessBand(score)
   return (
-    <div className="meter" aria-label={t('widgets.readinessAria', { score })}>
+    <div className={`meter is-${band}`} aria-label={t('widgets.readinessAria', { score })}>
       <div className="meter-head">
         <span>{t('widgets.readiness')}</span>
         <strong>{score}/100</strong>

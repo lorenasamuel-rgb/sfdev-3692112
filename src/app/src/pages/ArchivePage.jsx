@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { archiveFilms } from '../data/archive.js'
 import { labelCountry, labelForm } from '../lib/labels.js'
+import { SectionPager } from '../components/SectionPager.jsx'
 import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
 
@@ -42,6 +43,9 @@ export function ArchivePage() {
           <p className="eyebrow">{t('archive.eyebrow')}</p>
           <h1>{t('archive.title')}</h1>
           <p>{t('archive.lede', { count: archiveFilms.length })}</p>
+        </div>
+        <div className="page-head-aside">
+          <SectionPager current="arquivo" />
         </div>
       </header>
 
@@ -131,6 +135,7 @@ export function ArchivePage() {
         </div>
       ) : null}
       {rows.length === 0 ? <p className="muted">{t('archive.empty')}</p> : null}
+      <SectionPager current="arquivo" />
     </div>
   )
 }

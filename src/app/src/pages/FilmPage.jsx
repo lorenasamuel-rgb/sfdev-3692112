@@ -1,5 +1,6 @@
 import { ReadinessMeter } from '../components/Widgets.jsx'
 import { TitleSearch } from '../components/TitleSearch.jsx'
+import { SectionPager } from '../components/SectionPager.jsx'
 import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
 
@@ -42,9 +43,7 @@ export function FilmPage() {
             <button type="button" className="btn-ghost" onClick={clearFilm}>
               {t('film.clear')}
             </button>
-            <a className="btn" href="#/festivais">
-              {t('film.next')} <span aria-hidden="true">›</span>
-            </a>
+            <SectionPager current="filme" wrap={false} />
           </div>
         </div>
       </header>
@@ -172,11 +171,7 @@ export function FilmPage() {
             <textarea rows="3" {...field('directorStatement')} />
           </label>
         </fieldset>
-        <div className="btn-row">
-          <a className="btn" href="#/festivais">
-            {t('film.next')} <span aria-hidden="true">›</span>
-          </a>
-        </div>
+        <SectionPager current="filme" />
       </form>
     </div>
   )

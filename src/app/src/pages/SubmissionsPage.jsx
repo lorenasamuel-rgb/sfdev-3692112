@@ -1,6 +1,7 @@
 import { festivals, getFestivalById, stepDefinitions } from '../data/festivals.js'
 import { evaluateFestival } from '../lib/eligibility.js'
 import { EligibilityBadge } from '../components/Widgets.jsx'
+import { SectionPager } from '../components/SectionPager.jsx'
 import { labelCountry } from '../lib/labels.js'
 import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
@@ -22,27 +23,30 @@ export function SubmissionsPage() {
           <h1>{t('submissions.title')}</h1>
           <p>{t('submissions.lede')}</p>
         </div>
-        {available.length ? (
-          <label className="inline-add">
-            {t('submissions.add')}
-            <select
-              defaultValue=""
-              onChange={(event) => {
-                if (event.target.value) addSubmission(event.target.value)
-                event.target.value = ''
-              }}
-            >
-              <option value="" disabled>
-                {t('submissions.choose')}
-              </option>
-              {available.map((festival) => (
-                <option key={festival.id} value={festival.id}>
-                  {festival.name}
+        <div className="page-head-aside">
+          {available.length ? (
+            <label className="inline-add">
+              {t('submissions.add')}
+              <select
+                defaultValue=""
+                onChange={(event) => {
+                  if (event.target.value) addSubmission(event.target.value)
+                  event.target.value = ''
+                }}
+              >
+                <option value="" disabled>
+                  {t('submissions.choose')}
                 </option>
-              ))}
-            </select>
-          </label>
-        ) : null}
+                {available.map((festival) => (
+                  <option key={festival.id} value={festival.id}>
+                    {festival.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          ) : null}
+          <SectionPager current="inscricoes" />
+        </div>
       </header>
 
       {submissions.length === 0 ? (
@@ -125,6 +129,7 @@ export function SubmissionsPage() {
           })}
         </div>
       )}
+      <SectionPager current="inscricoes" />
     </div>
   )
 }

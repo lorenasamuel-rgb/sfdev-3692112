@@ -6,6 +6,7 @@ import {
   decorateHonour,
 } from '../data/archive.js'
 import { labelHonour } from '../lib/labels.js'
+import { SectionPager } from '../components/SectionPager.jsx'
 import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
 
@@ -55,6 +56,9 @@ export function AwardsPage() {
               awards: archiveAwards.length,
             })}
           </p>
+        </div>
+        <div className="page-head-aside">
+          <SectionPager current="premios" />
         </div>
       </header>
 
@@ -135,6 +139,7 @@ export function AwardsPage() {
         </div>
       ) : null}
       {rows.length === 0 ? <p className="muted">{t('awards.empty')}</p> : null}
+      <SectionPager current="premios" />
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { packageItemIds, selectedDeliveryIds } from '../data/checklists.js'
 import { Checklist, ReadinessMeter } from '../components/Widgets.jsx'
+import { SectionPager } from '../components/SectionPager.jsx'
 import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
 
@@ -28,6 +29,7 @@ export function PackagePage() {
             {t('package.done', { done, total: packageItemIds.length })}
             {film.originalTitle ? ` · ${film.originalTitle}` : ''}
           </p>
+          <SectionPager current="pacote" />
         </div>
       </header>
 
@@ -41,6 +43,7 @@ export function PackagePage() {
           ))}
         </ul>
       </section>
+      <SectionPager current="pacote" />
     </div>
   )
 }

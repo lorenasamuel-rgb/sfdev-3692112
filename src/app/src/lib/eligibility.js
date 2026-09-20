@@ -263,6 +263,12 @@ export function readinessScore(film, packageState, rightsState, packageItems, ri
   return Math.max(0, Math.min(100, score))
 }
 
+export function readinessBand(score) {
+  if (score < 50) return 'low'
+  if (score <= 70) return 'mid'
+  return 'high'
+}
+
 export function formatDate(iso, locale = defaultLocale) {
   return formatDateValue(iso, locale)
 }

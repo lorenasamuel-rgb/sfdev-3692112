@@ -1,6 +1,7 @@
 import { requirementIds } from '../data/checklists.js'
 import { labFestivals } from '../data/festivals.js'
 import { PremiereCallout } from '../components/Widgets.jsx'
+import { SectionPager } from '../components/SectionPager.jsx'
 import { labelCountry, labelFocus } from '../lib/labels.js'
 import { useLanguage } from '../i18n/context.js'
 
@@ -15,6 +16,9 @@ export function GuidePage() {
           <p className="eyebrow">{t('guide.eyebrow')}</p>
           <h1>{t('guide.title')}</h1>
           <p>{t('guide.lede')}</p>
+        </div>
+        <div className="page-head-aside">
+          <SectionPager current="guia" />
         </div>
       </header>
 
@@ -40,6 +44,7 @@ export function GuidePage() {
           </article>
         ))}
       </section>
+      <SectionPager current="guia" />
     </div>
   )
 }
@@ -54,6 +59,9 @@ export function LabsPage() {
           <p className="eyebrow">{t('labs.eyebrow')}</p>
           <h1>{t('labs.title')}</h1>
           <p>{t('labs.lede')}</p>
+        </div>
+        <div className="page-head-aside">
+          <SectionPager current="laboratorios" />
         </div>
       </header>
 
@@ -88,6 +96,7 @@ export function LabsPage() {
           ))}
         </div>
       )}
+      <SectionPager current="laboratorios" />
     </div>
   )
 }

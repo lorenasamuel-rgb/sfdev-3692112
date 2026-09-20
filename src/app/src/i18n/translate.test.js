@@ -14,6 +14,9 @@ test('traduz a mesma chave em inglês', () => {
   assert.equal(translate('en', 'nav.submissions', { score: 80, count: 2 }), '80/100 · 2 submissions')
 })
 
-test('cai para português se a chave faltar no locale', () => {
-  assert.equal(translate('en', 'brand'), 'Rota Doc')
+test('traduz avançar e voltar nas secções', () => {
+  assert.equal(translate('pt', 'chrome.next'), 'Seguinte')
+  assert.equal(translate('pt', 'chrome.back'), 'Anterior')
+  assert.equal(translate('en', 'chrome.next'), 'Next')
+  assert.equal(translate('en', 'chrome.back'), 'Back')
 })

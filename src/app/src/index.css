@@ -11,6 +11,8 @@
   --blue: #06c;
   --blue-dark: #2997ff;
   --blue-focus: #0071e3;
+  --go: #00ff7d;
+  --go-ink: #00351a;
   --good: #248a3d;
   --good-bg: #e4f5e9;
   --warn: #b25e09;
@@ -453,22 +455,22 @@ p {
 }
 
 .btn {
-  background: var(--blue-focus);
-  color: #fff;
+  background: var(--go);
+  color: var(--go-ink);
 }
 
 .btn:hover {
-  background: #0077ed;
+  background: #00e872;
 }
 
 .btn-ghost {
   background: transparent;
-  color: var(--blue);
-  border: 1px solid var(--blue);
+  color: var(--go);
+  border: 1px solid var(--go);
 }
 
 .btn-ghost:hover {
-  background: rgba(0, 113, 227, 0.06);
+  background: rgba(0, 255, 125, 0.12);
 }
 
 .btn-text {
@@ -742,7 +744,6 @@ label.check input {
 }
 
 .meter-head strong {
-  color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
 
@@ -756,6 +757,30 @@ label.check input {
 .meter-fill {
   height: 100%;
   background: var(--ink);
+}
+
+.meter.is-low .meter-fill {
+  background: #ff3b30;
+}
+
+.meter.is-low .meter-head strong {
+  color: #ff3b30;
+}
+
+.meter.is-mid .meter-fill {
+  background: #ffd60a;
+}
+
+.meter.is-mid .meter-head strong {
+  color: #c79200;
+}
+
+.meter.is-high .meter-fill {
+  background: var(--go);
+}
+
+.meter.is-high .meter-head strong {
+  color: var(--go);
 }
 
 .checklist {

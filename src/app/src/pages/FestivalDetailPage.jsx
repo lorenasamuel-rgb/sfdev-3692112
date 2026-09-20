@@ -2,6 +2,7 @@ import { getFestivalById, stepDefinitions } from '../data/festivals.js'
 import { honoursForFestival } from '../data/archive.js'
 import { evaluateFestival } from '../lib/eligibility.js'
 import { EligibilityBadge } from '../components/Widgets.jsx'
+import { SectionPager } from '../components/SectionPager.jsx'
 import { labelCountry, labelHonour, labelMonth } from '../lib/labels.js'
 import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
@@ -192,6 +193,7 @@ export function FestivalDetailPage({ id }) {
           ))}
         </ol>
       </section>
+      <SectionPager current="festivais" />
     </div>
   )
 }

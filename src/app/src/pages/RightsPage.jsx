@@ -1,5 +1,6 @@
 import { rightsItemIds } from '../data/checklists.js'
 import { Checklist } from '../components/Widgets.jsx'
+import { SectionPager } from '../components/SectionPager.jsx'
 import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
 
@@ -22,10 +23,14 @@ export function RightsPage() {
           <h1>{t('rights.title')}</h1>
           <p>{t('rights.lede')}</p>
         </div>
-        <p className="muted">{t('rights.done', { done, total: rightsItemIds.length })}</p>
+        <div className="page-head-aside">
+          <p className="muted">{t('rights.done', { done, total: rightsItemIds.length })}</p>
+          <SectionPager current="direitos" />
+        </div>
       </header>
 
       <Checklist items={items} stateMap={rights} onToggle={toggleRights} />
+      <SectionPager current="direitos" />
     </div>
   )
 }
