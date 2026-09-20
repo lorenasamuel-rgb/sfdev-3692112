@@ -1,12 +1,14 @@
 import { ReadinessMeter } from '../components/Widgets.jsx'
 import { TitleSearch } from '../components/TitleSearch.jsx'
 import { SectionPager } from '../components/SectionPager.jsx'
+import { downloadRouteReport } from '../lib/downloadReport.js'
 import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
 
 export function FilmPage() {
-  const { film, updateFilm, loadSample, clearFilm } = useAppState()
-  const { t } = useLanguage()
+  const { film, package: packageState, rights, submissions, updateFilm, loadSample, clearFilm } =
+    useAppState()
+  const { locale, t } = useLanguage()
 
   function field(name, kind = 'text') {
     if (kind === 'checkbox') {
@@ -42,6 +44,24 @@ export function FilmPage() {
             </button>
             <button type="button" className="btn-ghost" onClick={clearFilm}>
               {t('film.clear')}
+            </button>
+            <button
+              type="button"
+              className="btn"
+              onClick={() => {
+                downloadRouteReport({
+                  film,
+                  packageState,
+                  rights,
+                  submissions,
+                  t,
+                  locale,
+                }).catch((error) => {
+                  console.error(error)
+                })
+              }}
+            >
+              {t('chrome.pdf')}
             </button>
             <SectionPager current="filme" wrap={false} />
           </div>

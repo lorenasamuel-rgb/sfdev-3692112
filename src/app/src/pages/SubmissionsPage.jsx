@@ -2,6 +2,7 @@ import { festivals, getFestivalById, stepDefinitions } from '../data/festivals.j
 import { evaluateFestival } from '../lib/eligibility.js'
 import { EligibilityBadge } from '../components/Widgets.jsx'
 import { SectionPager } from '../components/SectionPager.jsx'
+import { downloadRouteReport } from '../lib/downloadReport.js'
 import { labelCountry } from '../lib/labels.js'
 import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
@@ -9,8 +10,16 @@ import { useLanguage } from '../i18n/context.js'
 const STATUS_VALUES = ['considering', 'submitted', 'awaiting', 'selected', 'not_selected', 'withdrawn']
 
 export function SubmissionsPage() {
-  const { film, submissions, addSubmission, updateSubmission, toggleStep, removeSubmission } =
-    useAppState()
+  const {
+    film,
+    package: packageState,
+    rights,
+    submissions,
+    addSubmission,
+    updateSubmission,
+    toggleStep,
+    removeSubmission,
+  } = useAppState()
   const { locale, t } = useLanguage()
   const tracked = new Set(submissions.map((item) => item.festivalId))
   const available = festivals.filter((festival) => !tracked.has(festival.id))
@@ -45,6 +54,24 @@ export function SubmissionsPage() {
               </select>
             </label>
           ) : null}
+          <button
+            type="button"
+            className="btn"
+            onClick={() => {
+              downloadRouteReport({
+                film,
+                packageState,
+                rights,
+                submissions,
+                t,
+                locale,
+              }).catch((error) => {
+                console.error(error)
+              })
+            }}
+          >
+            {t('chrome.pdf')}
+          </button>
           <SectionPager current="inscricoes" />
         </div>
       </header>
