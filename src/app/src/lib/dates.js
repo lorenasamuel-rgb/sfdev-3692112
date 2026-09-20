@@ -1,7 +1,7 @@
 import { defaultLocale } from '../i18n/translate.js'
 
 export function formatDate(iso, locale = defaultLocale) {
-  if (!iso) return '—'
+  if (!iso) return '-'
   const [year, month, day] = iso.split('-')
   if (!year || !month || !day) return iso
   if (locale === 'en') return `${day} ${monthName(month, 'en')} ${year}`

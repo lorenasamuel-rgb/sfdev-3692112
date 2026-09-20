@@ -127,7 +127,7 @@ Há um alerta sobre **estreia**: não publique o filme inteiro no YouTube, Vimeo
 
 ---
 
-## 6. Filme — ficha
+## 6. Filme: ficha
 
 É o cadastro que alimenta o cruzamento com os festivais. Os campos salvam automaticamente ao digitar.
 
@@ -169,11 +169,11 @@ Filtros por resultado e tipo de órgão. Ao abrir um filme a partir da honraria,
 
 ## 10. Pacote, Direitos, Inscrições, Guia e Labs
 
-- **Pacote** — textos, direção, imagens, screener e contato (15 itens).
-- **Direitos** — entrevistas, menores, música, arquivo, locações, autoridade do produtor, E&O.
-- **Inscrições** — status (em análise, inscrito, aguardando, selecionado, não selecionado, retirado) e os sete passos por festival.
-- **Guia** — leitura típica de edital (conclusão, duração, estreia, screener, legendas, taxa).
-- **Labs** — rota de desenvolvimento (MeetMarket, fóruns). A inscrição em lab é distinta da seleção oficial.
+- **Pacote:** textos, direção, imagens, screener e contato (15 itens).
+- **Direitos:** entrevistas, menores, música, arquivo, locações, autoridade do produtor, E&O.
+- **Inscrições:** status (em análise, inscrito, aguardando, selecionado, não selecionado, retirado) e os sete passos por festival.
+- **Guia:** leitura típica de edital (conclusão, duração, estreia, screener, legendas, taxa).
+- **Labs:** rota de desenvolvimento (MeetMarket, fóruns). A inscrição em lab é distinta da seleção oficial.
 
 ---
 

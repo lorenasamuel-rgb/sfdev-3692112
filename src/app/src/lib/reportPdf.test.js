@@ -7,7 +7,7 @@ import { createRoutePdfBytes, pdfSafe, reportFilename } from './reportPdf.js'
 const t = (key, vars) => translate('en', key, vars)
 
 test('mostra travessao quando o campo da ficha esta vazio', () => {
-  assert.equal(displayValue(''), '—')
+  assert.equal(displayValue(''), '-')
   assert.equal(displayValue('The Quiet Cartographer'), 'The Quiet Cartographer')
 })
 

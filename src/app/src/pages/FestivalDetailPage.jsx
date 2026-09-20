@@ -86,7 +86,7 @@ export function FestivalDetailPage({ id }) {
               const ok = result.eligiblePrograms.includes(program)
               return (
                 <li key={program.name}>
-                  <strong>{program.name}</strong> — {t(`premiereNeed.${program.required}`)}
+                  <strong>{program.name}</strong>: {t(`premiereNeed.${program.required}`)}
                   <span className={ok ? 'ok' : 'no'}>
                     {ok ? ` ${t('festivalDetail.possible')}` : ` ${t('festivalDetail.blocked')}`}
                   </span>

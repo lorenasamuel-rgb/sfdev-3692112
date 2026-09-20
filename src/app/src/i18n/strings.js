@@ -1,7 +1,7 @@
 export const strings = {
   pt: {
     meta: {
-      title: 'Rota Doc — inscrição em festivais',
+      title: 'Rota Doc: inscrição em festivais',
       description:
         'Escolha festivais do arquivo fictício, confira o regulamento, monte o pacote e acompanhe inscrições.',
     },
@@ -22,7 +22,7 @@ export const strings = {
       submissions: '{score}/100 · {count} inscrições',
     },
     footer:
-      'Catálogo de ensino do Fictional Film Archive. Os festivais, filmes e prêmios são fictícios — use-os para praticar a rota de inscrição, não como edital real.',
+      'Catálogo de ensino do Fictional Film Archive. Os festivais, filmes e prêmios são fictícios. Use-os para praticar a rota de inscrição, não como edital real.',
     chrome: {
       ribbon:
         'A inscrição não garante participação. Confirme prazos, taxas e estreia no edital vigente.',
@@ -275,19 +275,19 @@ export const strings = {
     guide: {
       eyebrow: 'Regulamento',
       title: 'Requisitos mais comuns',
-      lede: 'Cada festival (mesmo fictício) tem regras próprias. Use esta lista como roteiro — nunca como substituto de um edital real.',
+      lede: 'Cada festival (mesmo fictício) tem regras próprias. Use esta lista como roteiro, nunca como substituto de um edital real.',
       examples: 'Exemplos do arquivo',
     },
     labs: {
       eyebrow: 'Desenvolvimento',
       title: 'Laboratórios, mercados e pitching',
-      lede: 'Se o filme ainda estiver em desenvolvimento, a rota é outra: apresenta-se o projeto para buscar financiamento ou coprodução — não uma cópia final para seleção oficial.',
+      lede: 'Se o filme ainda estiver em desenvolvimento, a rota é outra: apresenta-se o projeto para buscar financiamento ou coprodução, não uma cópia final para seleção oficial.',
       when: 'Quando usar esta rota',
       when1: 'Imagem e som ainda não estão fechados.',
       when2: 'Você busca coprodutor, fundo ou agente de vendas.',
       when3: 'É um primeiro filme e precisa de laboratório de desenvolvimento.',
       empty: 'Nenhum festival do arquivo está marcado como laboratório / novas vozes.',
-      note: 'Faixa New voices no arquivo de ensino — um equivalente a laboratórios e rotas para estreantes.',
+      note: 'Faixa New voices no arquivo de ensino, um equivalente a laboratórios e rotas para estreantes.',
     },
     widgets: {
       readiness: 'Preparação para inscrever',
@@ -347,10 +347,10 @@ export const strings = {
       'archive-video': { group: 'Arquivo', label: 'Permissão para vídeos, TV e redes sociais', hint: 'Noticiários, YouTube, Instagram, CCTV e semelhantes.' },
       locations: { group: 'Locações', label: 'Autorização das locações privadas', hint: 'Quando a filmagem ocorre em espaço particular.' },
       authority: { group: 'Produtor', label: 'Autoridade para inscrever e exibir o filme', hint: 'O produtor precisa poder assinar pelo filme.' },
-      eo: { group: 'Distribuição', label: 'Seguro Errors & Omissions (E&O) — quando for o caso', hint: 'Alguns compradores exigem na distribuição posterior, não na inscrição.' },
+      eo: { group: 'Distribuição', label: 'Seguro Errors & Omissions (E&O), quando for o caso', hint: 'Alguns compradores exigem na distribuição posterior, não na inscrição.' },
     },
     requirements: {
-      finished: { title: 'Filme finalizado', meaning: 'Normalmente deve estar com imagem e som fechados. Alguns festivais aceitam work in progress — e laboratórios existem para o estágio anterior.' },
+      finished: { title: 'Filme finalizado', meaning: 'Normalmente deve estar com imagem e som fechados. Alguns festivais aceitam work in progress, e laboratórios existem para o estágio anterior.' },
       completion: { title: 'Data de conclusão', meaning: 'Pode ser exigido que o filme tenha sido concluído nos últimos 12–24 meses.' },
       duration: { title: 'Duração', meaning: 'O festival define categorias como curta, média ou longa. No arquivo, a maior parte dos títulos é curta.' },
       premiere: { title: 'Status de estreia', meaning: 'Algumas competições exigem estreia mundial, internacional, europeia ou nacional. Publicar o filme inteiro no YouTube pode queimar essa janela.' },
@@ -463,7 +463,7 @@ export const strings = {
   },
   en: {
     meta: {
-      title: 'Rota Doc — festival submissions',
+      title: 'Rota Doc: festival submissions',
       description:
         'Pick festivals from the fictional archive, check typical rules, build a package and track submissions.',
     },
@@ -484,7 +484,7 @@ export const strings = {
       submissions: '{score}/100 · {count} submissions',
     },
     footer:
-      'Teaching catalogue from the Fictional Film Archive. Festivals, films and awards are invented — practise the submission route here; do not treat this as a real call for entries.',
+      'Teaching catalogue from the Fictional Film Archive. Festivals, films and awards are invented. Practise the submission route here; do not treat this as a real call for entries.',
     chrome: {
       ribbon:
         'Entering does not guarantee a place. Always check deadlines, fees and premiere rules on the official call.',
@@ -735,19 +735,19 @@ export const strings = {
     guide: {
       eyebrow: 'Rules',
       title: 'Most common requirements',
-      lede: 'Every festival (even a fictional one) has its own rules. Use this list as a reading guide — never as a substitute for a real call.',
+      lede: 'Every festival (even a fictional one) has its own rules. Use this list as a reading guide, never as a substitute for a real call.',
       examples: 'Examples from the archive',
     },
     labs: {
       eyebrow: 'Development',
       title: 'Labs, markets and pitching',
-      lede: 'If the film is still in development, the route is different: you present a project to find finance or coproduction — not a locked copy for official selection.',
+      lede: 'If the film is still in development, the route is different: you present a project to find finance or coproduction, not a locked copy for official selection.',
       when: 'When to use this route',
       when1: 'Picture and sound are not locked yet.',
       when2: 'You are looking for a coproducer, fund or sales agent.',
       when3: 'It is a first film and you need a development lab.',
       empty: 'No festival in the archive is marked as a lab / new voices strand.',
-      note: 'New voices strand in the teaching archive — a stand-in for labs and first-timer routes.',
+      note: 'New voices strand in the teaching archive, a stand-in for labs and first-timer routes.',
     },
     widgets: {
       readiness: 'Ready to submit',
@@ -807,10 +807,10 @@ export const strings = {
       'archive-video': { group: 'Archive', label: 'Permission for video, TV and social clips', hint: 'News, YouTube, Instagram, CCTV and similar.' },
       locations: { group: 'Locations', label: 'Private location agreements', hint: 'When filming takes place on private property.' },
       authority: { group: 'Producer', label: 'Authority to submit and exhibit', hint: 'The producer must be able to sign for the film.' },
-      eo: { group: 'Distribution', label: 'Errors & Omissions (E&O) insurance — when needed', hint: 'Some buyers ask for this later, not at submission.' },
+      eo: { group: 'Distribution', label: 'Errors & Omissions (E&O) insurance, when needed', hint: 'Some buyers ask for this later, not at submission.' },
     },
     requirements: {
-      finished: { title: 'Finished film', meaning: 'Picture and sound are usually locked. Some festivals take work in progress — labs exist for the earlier stage.' },
+      finished: { title: 'Finished film', meaning: 'Picture and sound are usually locked. Some festivals take work in progress. Labs exist for the earlier stage.' },
       completion: { title: 'Completion date', meaning: 'The film may need to have been completed in the last 12–24 months.' },
       duration: { title: 'Running time', meaning: 'Festivals define short, medium and feature categories. In this archive most titles are shorts.' },
       premiere: { title: 'Premiere status', meaning: 'Some competitions want a world, international, European or national premiere. Publishing the whole film on YouTube can burn that window.' },

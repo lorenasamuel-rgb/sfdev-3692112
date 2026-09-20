@@ -48,6 +48,6 @@ export const requirementIds = [
   'deadline',
 ]
 
-/** @deprecated use packageItemIds — kept for readiness math */
+/** @deprecated use packageItemIds. Kept for readiness math */
 export const packageItems = packageItemIds.map((id) => ({ id }))
 export const rightsItems = rightsItemIds.map((id) => ({ id }))

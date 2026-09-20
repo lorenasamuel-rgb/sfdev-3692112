@@ -1,6 +1,6 @@
 import { packageItemIds, rightsItemIds } from '../data/checklists.js'
 
-export function displayValue(value, empty = '—') {
+export function displayValue(value, empty = '-') {
   if (value === true) return 'yes'
   if (value === false) return 'no'
   const text = String(value ?? '').trim()

@@ -101,7 +101,7 @@ export function mapFestival(festival, honours = honoursRaw) {
     hasLabs: newVoices,
     labsName: newVoices ? 'New Voices' : null,
     labsNote: newVoices
-      ? 'New voices strand in the teaching archive — a stand-in for labs and first-timer routes.'
+      ? 'New voices strand in the teaching archive, a stand-in for labs and first-timer routes.'
       : null,
     duration: {
       shortMax: 40,
