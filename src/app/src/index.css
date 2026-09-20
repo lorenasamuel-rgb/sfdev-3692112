@@ -309,6 +309,34 @@ p {
   margin: 0 auto;
 }
 
+.directory {
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--ink);
+}
+
+.directory-inner {
+  width: min(980px, calc(100% - 2.5rem));
+  margin: 0 auto;
+  padding: 1.15rem 0 1.25rem;
+}
+
+.directory-lead {
+  margin: 0 0 0.9rem;
+  font-size: 0.75rem;
+  line-height: 1.333;
+  color: var(--ink-faint);
+}
+
+.directory .footer-sitemap {
+  margin-bottom: 0;
+}
+
+.footer-sitemap a.is-active {
+  color: var(--ink);
+  font-weight: 600;
+}
+
 .site-footer {
   background: var(--paper-2);
   border-top: 1px solid var(--line-soft);
@@ -320,14 +348,14 @@ p {
 .footer-inner {
   width: min(980px, calc(100% - 2.5rem));
   margin: 0 auto;
-  padding: 1.5rem 0 2.5rem;
+  padding: 1.25rem 0 1.75rem;
 }
 
-.footer-lead {
+.footer-copy {
+  margin: 0;
+  padding: 0;
+  border: 0;
   color: var(--ink-faint);
-  margin-bottom: 1.25rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--line);
 }
 
 .footer-sitemap {
@@ -360,13 +388,6 @@ p {
 
 .footer-sitemap a:hover {
   text-decoration: underline;
-}
-
-.footer-copy {
-  margin: 0;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--line);
-  color: var(--ink-faint);
 }
 
 .page-head {
@@ -1329,6 +1350,11 @@ label.check input {
   .tile-grid,
   .footer-sitemap {
     grid-template-columns: 1fr;
+  }
+
+  .directory .footer-sitemap {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.85rem;
   }
 
   .tile-grid {

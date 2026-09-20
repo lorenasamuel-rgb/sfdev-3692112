@@ -102,6 +102,7 @@ function Router() {
       <p className="ribbon">
         <RibbonText />
       </p>
+      <Directory active={active} />
       <main className={isHome ? 'main-home' : 'main-app'}>{page}</main>
       <SiteFooter />
     </div>
@@ -194,56 +195,76 @@ function Header({ active, menuOpen, setMenuOpen }) {
   )
 }
 
+function Directory({ active }) {
+  const { t } = useLanguage()
+  return (
+    <nav className="directory" aria-label={t('nav.sections')}>
+      <div className="directory-inner">
+        <p className="directory-lead">{t('chrome.footerLead')}</p>
+        <Sitemap active={active} />
+      </div>
+    </nav>
+  )
+}
+
+function Sitemap({ active }) {
+  const { t } = useLanguage()
+  const groups = [
+    {
+      title: t('chrome.footerRota'),
+      items: [
+        { href: '#/filme', id: 'filme' },
+        { href: '#/festivais', id: 'festivais' },
+        { href: '#/pacote', id: 'pacote' },
+        { href: '#/direitos', id: 'direitos' },
+      ],
+    },
+    {
+      title: t('chrome.footerTrack'),
+      items: [
+        { href: '#/inscricoes', id: 'inscricoes' },
+        { href: '#/guia', id: 'guia' },
+        { href: '#/laboratorios', id: 'laboratorios' },
+      ],
+    },
+    {
+      title: t('chrome.footerArchive'),
+      items: [
+        { href: '#/arquivo', id: 'arquivo' },
+        { href: '#/premios', id: 'premios' },
+      ],
+    },
+  ]
+
+  return (
+    <div className="footer-sitemap">
+      {groups.map((group) => (
+        <div key={group.title}>
+          <h2>{group.title}</h2>
+          <ul>
+            {group.items.map((item) => (
+              <li key={item.id}>
+                <a
+                  href={item.href}
+                  className={active === item.id ? 'is-active' : ''}
+                  aria-current={active === item.id ? 'page' : undefined}
+                >
+                  {t(`nav.${item.id}`)}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 function SiteFooter() {
   const { t } = useLanguage()
   return (
     <footer className="site-footer">
       <div className="footer-inner">
-        <p className="footer-lead">{t('chrome.footerLead')}</p>
-        <div className="footer-sitemap">
-          <div>
-            <h2>{t('chrome.footerRota')}</h2>
-            <ul>
-              <li>
-                <a href="#/filme">{t('nav.filme')}</a>
-              </li>
-              <li>
-                <a href="#/festivais">{t('nav.festivais')}</a>
-              </li>
-              <li>
-                <a href="#/pacote">{t('nav.pacote')}</a>
-              </li>
-              <li>
-                <a href="#/direitos">{t('nav.direitos')}</a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h2>{t('chrome.footerTrack')}</h2>
-            <ul>
-              <li>
-                <a href="#/inscricoes">{t('nav.inscricoes')}</a>
-              </li>
-              <li>
-                <a href="#/guia">{t('nav.guia')}</a>
-              </li>
-              <li>
-                <a href="#/laboratorios">{t('nav.laboratorios')}</a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h2>{t('chrome.footerArchive')}</h2>
-            <ul>
-              <li>
-                <a href="#/arquivo">{t('nav.arquivo')}</a>
-              </li>
-              <li>
-                <a href="#/premios">{t('nav.premios')}</a>
-              </li>
-            </ul>
-          </div>
-        </div>
         <p className="footer-copy">{t('footer')}</p>
       </div>
     </footer>
