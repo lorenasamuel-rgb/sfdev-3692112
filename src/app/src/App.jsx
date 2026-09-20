@@ -213,6 +213,7 @@ function Sitemap({ active }) {
     {
       title: t('chrome.footerRota'),
       items: [
+        { href: '#/guia', id: 'guia' },
         { href: '#/filme', id: 'filme' },
         { href: '#/festivais', id: 'festivais' },
         { href: '#/pacote', id: 'pacote' },
@@ -223,7 +224,6 @@ function Sitemap({ active }) {
       title: t('chrome.footerTrack'),
       items: [
         { href: '#/inscricoes', id: 'inscricoes' },
-        { href: '#/guia', id: 'guia' },
         { href: '#/laboratorios', id: 'laboratorios' },
       ],
     },
