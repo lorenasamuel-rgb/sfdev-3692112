@@ -14,6 +14,8 @@ Um documentário chega ao festival por uma inscrição e, depois, passa por sele
 
 Os resumos de regulamento são de referência. Confirme sempre o edital vigente.
 
+O [PRD](PRD.md) descreve problema, público, requisitos, o que fica de fora e o próximo corte do produto.
+
 ## Como rodar
 
 ```bash
