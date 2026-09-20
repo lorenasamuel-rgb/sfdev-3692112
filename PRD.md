@@ -1,55 +1,64 @@
 # PRD — Rota Doc
 
 **Produto:** Rota Doc  
-**Tipo:** workspace de inscrição de documentários em festivais  
+**Tipo:** workspace de inscrição em festivais + arquivo de ensino  
 **Status do documento:** rascunho para alinhamento  
-**Versão:** 1.0  
+**Versão:** 1.1  
 **Data:** 20 de setembro de 2026  
-**Idioma do produto:** português (Brasil)  
+**Fonte de verdade desta versão:** branch `cursor/apple-on-visualizacoes-3ed7` ([PR #12](https://github.com/lorenasamuel-rgb/sfdev-3692112/pull/12))  
+**Idiomas da UI:** português e inglês (seletor PT / EN)  
 **Código:** `src/app`  
-**Protótipo anterior:** `src/week2-practice`
+**Dados de ensino:** `datasets/fictional-film-archive`
 
-Este documento descreve o produto que está em `main`: o que ele resolve, para quem, o que já existe, o que é obrigatório, o que fica de fora e o que vem depois. Não substitui o [README](README.md) (como rodar) nem um manual de uso.
+O `main` hoje tem só o recorte anterior (ficha + festivais reais de documentário, sem arquivo, sem Prêmios, sem PT/EN, sem visual Apple). Este PRD descreve o produto **completo** que está no branch acima.
+
+Guia de uso nesse branch: `MANUAL.md`. Como rodar: [README](README.md).
 
 ---
 
 ## 1. Resumo
 
-Rota Doc ajuda **produtores independentes e realizadores estreantes** a inscrever um documentário em festivais **sem distribuidora**.
+Rota Doc ajuda **produtores independentes e realizadores estreantes** a praticar e organizar a inscrição de um filme em festival **sem distribuidora**.
 
-A premissa do produto é simples e deve aparecer em toda a interface:
+Nesta versão o workspace é alimentado pelo **Fictional Film Archive** (180 filmes, 40 festivais, honrarias e prêmios fictícios) e usa um visual inspirado no marketing da Apple (home em unidades, nav global, acento verde `#00FF7D`).
+
+A premissa do produto permanece:
 
 1. O filme chega ao festival por uma **inscrição**.
 2. Depois disso há **seleção curatorial**. A inscrição **não garante** participação.
-3. Cada festival tem **regulamento próprio**. O app cruza o filme com regras típicas; o **edital vigente** manda.
+3. Cada casa tem **regulamento próprio**. O app cruza o filme com regras de ensino; o **edital vigente** (quando for festival real) manda. Neste branch o catálogo é **fictício**.
 
-O workspace cobre o processo completo até o termo de exibição:
+O fluxo visível na navegação:
 
-| Etapa | O que o app faz |
-| --- | --- |
-| Ficha | Cadastra título, logline, duração, conclusão, estreia, screener e quem inscreve |
-| Escolha | Cruza o filme com um catálogo de festivais de documentário |
-| Pacote | Checklist dos materiais que os festivais pedem |
-| Direitos | Checklist de autorizações (entrevistas, música, arquivo, E&O) |
-| Acompanhamento | Sete passos por festival, do “escolher” ao “termo e cópia final” |
-| Desenvolvimento | Rota paralela para laboratórios, mercados e pitching |
+| Nav (rótulo na UI) | Rota | Função |
+| --- | --- | --- |
+| Guia | `#/guia` | Requisitos comuns de edital |
+| **Start** | `#/filme` | Ficha **Take Action** |
+| Festivais | `#/festivais` | Escolher casas do arquivo |
+| Pacote | `#/pacote` | Festival package |
+| Direitos | `#/direitos` | Autorizações |
+| Inscrições | `#/inscricoes` | Sete passos por festival |
+| Labs | `#/laboratorios` | Mercados e pitching |
+| **Search** | `#/arquivo` | 180 filmes fictícios |
+| Prêmios | `#/premios` | Seleção → indicação → vitória |
 
-Os dados ficam só no **navegador** (`localStorage`). Não há conta, servidor de negócio nem envio da inscrição.
+Todas as secções têm **Seguinte / Next** e, quando há página anterior, **Anterior / Back**. Dá para **baixar um PDF** da rota (Start, Festivals, Package, Rights, Submissions).
 
 ---
 
 ## 2. Problema
 
-Inscrever um documentário independente é um trabalho de regulamento, não de networking com distribuidora. Quem estreia ou produz sem equipe de festival costuma errar em pontos caros:
+Inscrever um filme independente é trabalho de regulamento, não de networking com distribuidora. Quem estreia ou produz sem equipe de festival costuma errar em pontos caros:
 
 - **Estreia.** Publicar o filme inteiro no YouTube ou em streaming queima a janela de world / international premiere.
-- **Janela de conclusão.** Muitos festivais pedem filme concluído nos últimos 12–24 meses, ou depois de uma data da edição.
-- **Duração.** Curta, média e longa mudam taxa, categoria e às vezes a seção.
+- **Janela de conclusão.** Muitos festivais pedem filme concluído nos últimos 12–24 meses.
+- **Duração e forma.** Curta/média/longa e documentário/ficção/animação/experimental mudam categoria e seção.
 - **Screener e legendas.** Link privado, sem geo-block, com legendas em inglês quando o áudio não é inglês.
-- **Direitos.** Música, arquivo e entrevistas precisam estar licenciados antes de alguém assinar o termo de exibição.
-- **Processo.** Cada casa tem site ou FilmFreeway próprio. Sem um quadro, a pessoa paga taxa cedo demais, perde prazo ou mistura rota de filme **finalizado** com rota de **projeto em desenvolvimento**.
+- **Direitos.** Música, arquivo e entrevistas precisam estar licenciados antes do termo de exibição.
+- **Processo.** Cada casa tem site ou FilmFreeway. Sem um quadro, a pessoa paga taxa cedo demais ou mistura filme **finalizado** com **projeto em desenvolvimento**.
+- **Aprendizado.** É preciso praticar a rota (incluindo a jornada de prêmios) sem republicar dados reais de um arquivo cliente.
 
-Ferramentas genéricas (planilha, FilmFreeway isolado, notas) não cruzam a ficha do filme com as regras de cada casa nem separam as duas rotas.
+Ferramentas genéricas não cruzam a ficha com as regras de cada casa, não separam as duas rotas e não ensinam seleção → indicação → vitória.
 
 ---
 
@@ -57,33 +66,36 @@ Ferramentas genéricas (planilha, FilmFreeway isolado, notas) não cruzam a fich
 
 ### 3.1 Objetivos de produto
 
-- Deixar um independente ou estreante **apto a inscrever** com clareza do que falta.
+- Deixar um independente ou estreante **apto a inscrever** (ou a praticar a inscrição) com clareza do que falta.
 - Evitar inscrições **inúteis ou prejudiciais** (filme público, estreia já gasta, WIP na seleção oficial, conclusão fora da janela).
-- Reunir **uma vez** o festival package e a checagem de direitos, e reutilizar nas casas.
-- Acompanhar cada inscrição nos **sete passos reais**, até o termo de exibição.
+- Reunir **uma vez** o festival package e a checagem de direitos.
+- Acompanhar cada inscrição nos **sete passos**, até o termo de exibição.
 - Ensinar, com linguagem de ofício, que **inscrição ≠ seleção**.
+- Usar o arquivo fictício para **Search**, **Prêmios** e para preencher a ficha Take Action sem copiar obras reais.
+- Entregar a rota em **PT e EN** e num visual de produto (Apple), não de exercício.
+- Permitir **levar a rota para fora do browser** (PDF).
 
-### 3.2 Não-objetivos (explícitos)
+### 3.2 Não-objetivos
 
 O Rota Doc **não**:
 
 - envia a inscrição, paga taxa ou preenche FilmFreeway;
 - substitui o edital, a curadoria ou um parecer jurídico;
 - garante vaga, prêmio ou distribuição;
-- é uma distribuidora, um festival ou uma plataforma de discovery para o público;
-- sincroniza dados entre dispositivos na versão atual.
-
-Os resumos de regulamento são **referência de edição**. O site oficial confirma prazo, taxa, categoria e estreia.
+- é uma distribuidora ou uma plataforma de discovery para o público final;
+- sincroniza dados entre dispositivos nesta versão;
+- usa festivais, filmes ou prêmios **reais** no catálogo deste branch (são de ensino).
 
 ### 3.3 Princípios
 
-1. **Regulamento primeiro.** Toda recomendação aponta de volta ao edital.
-2. **Não tratar inscrição como resultado.** Copy, status e passos separam envio de seleção.
+1. **Regulamento primeiro.** Toda recomendação aponta de volta ao edital (ou deixa claro que o catálogo é de ensino).
+2. **Inscrição ≠ resultado.** Copy, status e passos separam envio de seleção.
 3. **Duas rotas.** Filme fechado → seleção oficial. Projeto aberto → labs, mercados, pitching.
-4. **Estreia é ativo estratégico.** O app alerta contra publicação integral pública.
-5. **Independentes e estreantes cabem**, desde que o filme caiba na regra — não o contrário.
+4. **Estreia é ativo estratégico.** Alertar contra publicação integral pública.
+5. **Independentes e estreantes cabem**, desde que o filme caiba na regra.
 6. **Orientação, não veredito.** “Elegível” nunca significa “vai entrar”.
 7. **Preparar uma vez, reutilizar.** Pacote e direitos não se redesenham a cada festival.
+8. **Arquivo fictício é infraestrutura de ensino**, não um catálogo editorial a publicar como real.
 
 ---
 
@@ -91,147 +103,162 @@ Os resumos de regulamento são **referência de edição**. O site oficial confi
 
 ### 4.1 Persona principal — produtora independente / primeira direção
 
-- Tem um documentário (muitas vezes em português, produzido no Brasil ou na América Latina).
-- Não tem distribuidora nem equipe de festival.
-- Precisa decidir **onde** inscrever, **quando** gastar a estreia e **o que** juntar antes de pagar taxa.
-- Usa o app no computador, com o Vimeo e o edital abertos em outras abas.
+- Tem um filme (muitas vezes em português) e não tem distribuidora.
+- Precisa decidir onde inscrever, quando gastar a estreia e o que juntar antes de pagar taxa.
+- Nesta versão também **pratica** a rota com títulos do arquivo.
 
-### 4.2 Persona secundária — filme ainda em desenvolvimento
+### 4.2 Persona secundária — filme em desenvolvimento
 
 - Imagem e som não estão fechados.
-- Busca coprodutor, fundo, lab ou mercado (MeetMarket, IDFA Forum, CPH:FORUM, Hot Docs Forum).
+- Busca coprodutor, fundo, lab ou mercado.
 - Não deve ser empurrada para a seleção oficial de filme finalizado.
 
-### 4.3 Fora do público nesta versão
+### 4.3 Persona de curso — learner do bootcamp
 
-- Programadores e curadores de festival (não há fila de screener nem ferramenta de seleção).
-- Espectadores / discovery de catálogo.
-- Longas de ficção como foco editorial (o catálogo e o vocabulário são de documentário).
+- Precisa das telas Arquivo e Prêmios, do seletor PT/EN e de um visual de produto para apresentar o trabalho.
+- Não deve republicar o arquivo cliente (Directors Notes); só o dataset fictício.
+
+### 4.4 Fora do público nesta versão
+
+- Programadores de festival (não há fila de screener).
+- Espectadores / discovery tipo Netflix.
+- Quem precisa de um calendário vivo de editais reais (isso estava no recorte do `main`, não neste branch).
 
 ---
 
-## 5. Estado atual (MVP em `main`)
+## 5. Estado atual (branch Apple + visualizações)
 
-O MVP já está implementado como SPA React + Vite, hash routing, persistência local.
+SPA React + Vite, hash routing, `localStorage`, i18n PT/EN, visual Apple, dataset Stage 3.
 
-| Superfície | Rota | Situação |
+### 5.1 Superfícies
+
+| Superfície | Situação |
+| --- | --- |
+| Home Apple | Unidades (Festivais, Package, Arquivo, Prêmios, Labs) + ribbon de disclaimer |
+| Start / Take Action | Ficha completa, busca de título no arquivo, limpar formulário, PDF, medidor colorido |
+| Festivais | 40 casas fictícias; busca por nome; filtros; cruzamento de elegibilidade |
+| Pacote / Direitos | Checklists + pager Seguinte/Anterior |
+| Inscrições | Status, sete passos, notas, PDF |
+| Guia / Labs | Requisitos comuns e rota de desenvolvimento |
+| Search (Arquivo) | 180 filmes; filtro forma/país; “Usar na inscrição” |
+| Prêmios | Honrarias: Official Selection → Longlisted → Shortlisted → Nominated → Special Mention → Winner |
+| Chrome | Nav global, menu mobile, PT/EN, acento `#00FF7D` |
+
+### 5.2 Visual e interação (requisitos de UI deste branch)
+
+- Home em **unidades** ao estilo Apple (títulos curtos, “Saiba mais”, foto de produto).
+- Nav global com marca, idioma e hamburger no mobile.
+- Botões **Seguinte / Next** e **Anterior / Back** em verde `#00FF7D`.
+- Secção ativa, checkboxes concluídos e bullets de Labs no mesmo verde.
+- Medidor de preparação: **vermelho &lt; 50**, **amarelo 50–70**, **verde `#00FF7D` &gt; 70**.
+- Ficha do filme intitulada **Take Action** (nav: **Start**).
+- Arquivo no nav como **Search**.
+
+### 5.3 Relação com `main`
+
+| | `main` | `cursor/apple-on-visualizacoes-3ed7` |
 | --- | --- | --- |
-| Início | `#/` | Entrega a tese, os sete passos e as duas rotas |
-| Filme | `#/filme` | Ficha completa + nota de preparação + filme de exemplo |
-| Festivais | `#/festivais` | Catálogo, filtros, ordenação por compatibilidade |
-| Detalhe do festival | `#/festivais/:id` | Cruzamento, seções de estreia, resumo, link do edital |
-| Pacote | `#/pacote` | 15 itens + lista “se for selecionado” |
-| Direitos | `#/direitos` | 9 itens, E&O marcado como posterior |
-| Inscrições | `#/inscricoes` | Status, sete passos, notas, remoção |
-| Guia | `#/guia` | Requisitos comuns + recortes Sheffield / IDFA |
-| Labs | `#/laboratorios` | Rota de desenvolvimento (conteúdo estático) |
-
-**Catálogo de referência (edição 2026):** Sheffield DocFest, IDFA, É Tudo Verdade, Doclisboa, CPH:DOX, Hot Docs, Visions du Réel, True/False, FIPADOC, Olhar de Cinema, Porto/Post/Doc, Cinéma du Réel.
-
-**Motor de elegibilidade** (`src/app/src/lib/eligibility.js`), coberto por testes: duração, estreia restante, WIP, publicação pública, legendas em inglês, janela / data mínima de conclusão, screener.
-
-**Limitações conhecidas do MVP** (não são bugs se estiverem documentadas):
-
-- um filme por navegador;
-- catálogo fixo no código, sem prazos calendário nem taxas numéricas;
-- labs não entram no tracker de inscrições;
-- sem conta, exportação, reset na UI ou i18n;
-- elegibilidade é heurística da edição de referência, não parser do edital.
+| Catálogo | 12 festivais reais de documentário (ref. 2026) | 40 festivais fictícios do arquivo |
+| Arquivo / Prêmios | não | sim |
+| PT / EN | não | sim |
+| Visual | papel / serif editorial | Apple marketing |
+| PDF | não | sim |
+| Nome da ficha | Filme | Take Action / Start |
+| Formas de filme | só documentário no copy | Documentary, Drama, Animation, Experimental |
 
 ---
 
 ## 6. Jornadas
 
-### J1 — Cadastrar o filme e entender a preparação
+### J1 — Take Action: cadastrar ou puxar do arquivo
 
-1. A pessoa abre o app e lê que inscrição ≠ seleção.
-2. Vai em **Filme** e preenche identidade, ficha técnica, estreia, screener e contato.
-3. Vê a nota 0–100 subir conforme preenche.
-4. Opcionalmente carrega o exemplo *A Casa do Rio* só para explorar, depois substitui.
+1. A pessoa abre Start (**Take Action**).
+2. Ou preenche a ficha, ou busca um título no arquivo, ou carrega o exemplo, ou **limpa o formulário**.
+3. Vê a nota 0–100 mudar de cor conforme a banda.
+4. Segue para Festivais pelo **Seguinte**.
 
-**Sucesso:** o header mostra o título, uma nota e “0 inscrições”. Sem título, Festivais pede cadastro.
+**Sucesso:** header mostra título + nota + contagem de inscrições. Sem título, Festivais pede cadastro.
 
-### J2 — Escolher festivais sem queimar estreia
+### J2 — Escolher festivais
 
-1. Em **Festivais**, filtra por região / elegíveis / labs.
-2. Abre um card (ex.: IDFA) e lê matches, avisos e bloqueios.
-3. Vê quais seções ainda aceitam o grau de estreia disponível.
-4. Abre o regulamento oficial. Só então adiciona às inscrições.
+1. Busca pelo **nome** e/ou filtra região, elegíveis, labs.
+2. Abre a ficha da casa: matches, avisos, bloqueios, seções de estreia.
+3. Adiciona às inscrições só depois de ler o resumo (catálogo de ensino).
 
-**Sucesso:** não paga taxa sem ter visto estreia, conclusão e screener. Filme público ou WIP na casa errada aparece como **provavelmente inelegível**.
+**Sucesso:** filme público, WIP na casa errada ou conclusão fora da janela aparece como **provavelmente inelegível**.
 
-### J3 — Fechar pacote e direitos antes de inscrever
+### J3 — Pacote e direitos
 
-1. Marca textos, stills, screener e legendas em **Pacote**.
-2. Confere entrevistas, menores, música, arquivo, locações e autoridade em **Direitos**.
-3. Entende que E&O é de distribuição posterior, não da inscrição.
+1. Marca textos, stills, screener, legendas.
+2. Confere entrevistas, menores, música, arquivo, locações, autoridade. E&O é pós-inscrição.
 
-**Sucesso:** a nota de preparação sobe; a pessoa sabe o que falta antes do passo “pagar a taxa”.
+### J4 — Acompanhar inscrição e exportar
 
-### J4 — Acompanhar uma inscrição até o resultado
+1. Status inicial *Em análise*, passo 1 marcado.
+2. form + screener + taxa ⇒ *Inscrito*; + espera ⇒ *Aguardando seleção*.
+3. *Selecionado* lembra termo e cópia final.
+4. **Baixar PDF** reúne Start, Festivals, Package, Rights e Submissions.
 
-1. O festival entra em **Inscrições** com status *Em análise* e passo 1 marcado.
-2. A pessoa marca regulamento → formulário → screener → taxa.
-3. Ao marcar formulário + screener + taxa, o status vira *Inscrito*; com “aguardar”, vira *Aguardando seleção*.
-4. Se *Selecionado*, o app lembra termo, DCP/ProRes, press kit, trailer limpo e acessibilidade.
-5. Notas guardam prazo, senha do Vimeo, categoria. Remover tira só o acompanhamento local.
+### J5 — Search e Prêmios (ensino)
 
-**Sucesso:** o quadro reflete o estado real **fora** do app (FilmFreeway / site do festival).
+1. Em Search, filtra 180 filmes e clica **Usar na inscrição**.
+2. Em Prêmios, vê a jornada até Winner e pode abrir o filme na ficha.
+3. Entende que honrarias são fictícias.
 
-### J5 — Filme ainda não fechado
+### J6 — Filme ainda não fechado
 
-1. Estágio = *work in progress*, ou a pessoa vai direto a **Labs**.
-2. Seleção oficial de casas que só aceitam finalizado fica inelegível, com ponte para o lab (ex. MeetMarket).
-3. A inscrição de mercado é tratada como **outra rota**.
+Estágio WIP ou entrada por Labs. Seleção oficial de casas só-finalizado fica inelegível, com ponte para mercado/lab.
 
 ---
 
 ## 7. Requisitos funcionais
 
-Prioridade: **P0** = o MVP não existe sem isso; **P1** = deve entrar na sequência imediata; **P2** = evolução.
+**P0** = o produto deste branch não existe sem isso (já implementado, salvo lacuna explícita).  
+**P1** = próximo corte. **P2** = depois.
 
-Cada requisito P0 abaixo já está atendido no código atual, salvo onde marcado como lacuna.
-
-### 7.1 Ficha do filme
-
-| ID | Requisito | Pri | Critério de aceite |
-| --- | --- | --- | --- |
-| F-01 | Cadastrar título original, título em inglês, logline, sinopse curta e completa | P0 | Campos persistem após recarregar a página |
-| F-02 | Cadastrar duração (min), data de conclusão, país, idiomas, estágio (finalizado / WIP) | P0 | Duração e conclusão alimentam a elegibilidade |
-| F-03 | Registrar a **maior** estreia já realizada: nenhuma, nacional, europeia, internacional, mundial | P0 | O valor entra no cálculo do que o filme ainda pode oferecer |
-| F-04 | Declarar se o filme **inteiro** já está público (YouTube, Vimeo público, streaming) | P0 | Marcar isso gera inelegibilidade típica para competições de estreia e reduz a nota |
-| F-05 | Cadastrar screener (URL privada, senha, legendas em inglês, arquivo `.srt`) | P0 | Sem URL: aviso de revisar; sem legendas e áudio não inglês: bloqueio onde o festival exige inglês |
-| F-06 | Cadastrar direção, bio, declaração, produtor, e-mail e telefone | P0 | E-mail conta na nota de preparação |
-| F-07 | Salvar a cada alteração, sem botão “salvar” | P0 | Digitar e recarregar mantém os dados |
-| F-08 | Oferecer filme de exemplo para exploração | P0 | Preenche ficha + quase todo pacote/direitos; E&O permanece desmarcado |
-| F-09 | Exibir nota de preparação 0–100 no header e na ficha | P0 | Sobe com campos-chave, pacote e direitos; publicação pública reduz |
-
-### 7.2 Catálogo e elegibilidade
+### 7.1 Start / Take Action
 
 | ID | Requisito | Pri | Critério de aceite |
 | --- | --- | --- | --- |
-| E-01 | Listar festivais de documentário com cidade, país, foco, labs e abertura a independentes/estreantes | P0 | Catálogo mínimo: as 12 casas da seção 5 |
-| E-02 | Buscar por nome, cidade ou tema; filtrar por região, só elegíveis, só com lab | P0 | Lista vazia mostra estado vazio, não erro |
-| E-03 | Ordenar pelo score de cruzamento com o filme cadastrado | P0 | Com ficha preenchida, casas compatíveis sobem |
-| E-04 | Classificar cada casa em **Elegível**, **Revisar regulamento** ou **Provavelmente inelegível** | P0 | Selos visíveis no card e no detalhe; copy não promete seleção |
-| E-05 | No detalhe: matches, avisos, bloqueios, seções de estreia possível/bloqueada, resumo (WIP, duração, conclusão, legendas, taxa, screener) | P0 | Sempre há link para o regulamento oficial |
-| E-06 | Sem filme cadastrado, pedir cadastro ou exemplo antes do cruzamento útil | P0 | Hint na lista de festivais |
-| E-07 | Adicionar o festival às inscrições a partir do detalhe, sem duplicar | P0 | Segunda vez aponta para a lista existente |
-| E-08 | Disclaimer visível: resumo ≠ edital | P0 | Home, detalhe, rodapé e guia |
+| F-01 | Cadastrar títulos, logline, sinopses | P0 | Persiste após reload |
+| F-02 | Duração, conclusão, país, idiomas, **forma**, estágio | P0 | Forma: documentário, ficção, animação, experimental |
+| F-03 | Maior estreia já realizada (nenhuma / nacional / europeia / internacional / mundial) | P0 | Alimenta o que o filme ainda pode oferecer |
+| F-04 | Declarar filme integral público | P0 | Inelegibilidade típica + nota cai |
+| F-05 | Screener (URL, senha, legendas EN, `.srt`) | P0 | Sem URL: revisar; sem legendas e áudio não inglês: bloqueio onde exigido |
+| F-06 | Direção, bio, declaração, produtor, e-mail, telefone | P0 | E-mail conta na nota |
+| F-07 | Salvar a cada alteração | P0 | Sem botão salvar |
+| F-08 | Preencher com exemplo **do arquivo** | P0 | Exemplo fictício, não obra real |
+| F-09 | **Limpar formulário** remonta a ficha vazia | P0 | Não deixa placeholder de título EN parecendo valor |
+| F-10 | Busca de título no arquivo, com lista de opções | P0 | Escolher um título carrega a ficha; vazio mostra “nenhum filme” |
+| F-11 | Nota 0–100 com bandas de cor | P0 | &lt;50 vermelho; 50–70 amarelo; &gt;70 verde `#00FF7D` |
+| F-12 | PDF da rota a partir da ficha | P0 | Ficheiro descarrega no browser |
 
-Regras do motor (produto, não só implementação):
+### 7.2 Festivais e elegibilidade
+
+| ID | Requisito | Pri | Critério de aceite |
+| --- | --- | --- | --- |
+| E-01 | Listar festivais do arquivo (cidade, país, foco, labs, independentes/estreantes) | P0 | Proveniente do Stage 3, não hardcoded real |
+| E-02 | Buscar **pelo nome** (lista de opções) e filtrar região / elegíveis / labs | P0 | Estado vazio, não erro |
+| E-03 | Ordenar pelo score de cruzamento | P0 | Com ficha, casas compatíveis sobem |
+| E-04 | Selos Elegível / Revisar regulamento / Provavelmente inelegível | P0 | Copy não promete seleção |
+| E-05 | Detalhe: matches, avisos, bloqueios, estreia por seção, resumo, link | P0 | Disclaimer de ensino visível |
+| E-06 | Sem filme, pedir cadastro / exemplo | P0 | Hint na lista |
+| E-07 | Adicionar às inscrições sem duplicar | P0 | Segunda vez aponta para a lista |
+| E-08 | Disclaimer: catálogo fictício / resumo ≠ edital | P0 | Ribbon, footer, detalhe, PDF |
+
+Regras do motor (iguais em espírito ao recorte de `main`):
 
 | Código | Quando | Efeito |
 | --- | --- | --- |
-| `wip` | Estágio WIP e o festival não aceita WIP na seleção oficial | Inelegível; apontar lab se houver |
-| `too-old-date` / `too-old` | Conclusão antes da data mínima ou fora da janela em meses | Inelegível |
-| `completion-missing` / `duration-missing` / `screener` | Falta dado essencial | Revisar |
+| `wip` | WIP onde a seleção oficial não aceita | Inelegível; apontar lab se houver |
+| `too-old-date` / `too-old` | Fora da data mínima ou da janela em meses | Inelegível |
+| `completion-missing` / `duration-missing` / `screener` | Falta dado | Revisar |
 | `future-date` | Conclusão no futuro | Revisar |
-| `public-release` | Filme integral público | Inelegível para seções que exigem estreia; só seções “sem exigência” restam |
-| `premiere-partial` / `premiere-blocked` | Grau de estreia já usado | Aviso ou inelegível, conforme ainda houver seção possível |
-| `subs` | Festival exige legendas em inglês, áudio não é inglês, screener sem legendas | Inelegível (se idioma informado) ou revisar (se idioma vazio) |
+| `public-release` | Filme integral público | Inelegível para seções com exigência de estreia |
+| `premiere-partial` / `premiere-blocked` | Grau de estreia já usado | Aviso ou inelegível |
+| `subs` | Exige legendas EN, áudio não inglês, sem legendas | Inelegível ou revisar |
 
-Estreia restante (maior status já usado → o que ainda se pode oferecer):
+Estreia restante:
 
 | Já usado | Ainda pode oferecer |
 | --- | --- |
@@ -241,153 +268,155 @@ Estreia restante (maior status já usado → o que ainda se pode oferecer):
 | Internacional | europeia, nacional, nenhuma |
 | Mundial | nacional, nenhuma |
 
-Duração: cada festival define teto de curta (padrão 40 min) e, se houver, de média; acima disso é longa. Isso muda **enquadramento e taxa**, não a inscrição em si.
-
 ### 7.3 Pacote e direitos
 
 | ID | Requisito | Pri | Critério de aceite |
 | --- | --- | --- | --- |
-| P-01 | Checklist de festival package agrupado (textos, direção, imagens, cópia de avaliação, contato) | P0 | 15 itens; progresso “X de 15” |
-| P-02 | Lista do que vem **depois** da seleção (DCP/ProRes, press kit, trailer limpo, acessibilidade, termo) | P0 | Visível em Pacote; ecoa no status Selecionado |
-| D-01 | Checklist de direitos: entrevistas, menores, composição, master, fotos, vídeo/arquivo, locações, autoridade, E&O | P0 | E&O com hint de que é pós-inscrição |
-| D-02 | Não se apresentar como aconselhamento jurídico | P0 | Copy de roteiro, não de parecer |
+| P-01 | Checklist de package (textos, direção, imagens, cópia de avaliação, contato) | P0 | Progresso visível; itens feitos em verde |
+| P-02 | Lista pós-seleção: DCP/ProRes, press kit, trailer limpo, acessibilidade, termo | P0 | Ecoa no status Selecionado |
+| D-01 | Direitos: entrevistas, menores, composição, master, fotos, vídeo, locações, autoridade, E&O | P0 | E&O com hint de distribuição posterior |
+| D-02 | Não se apresentar como parecer jurídico | P0 | Copy de roteiro |
 
 ### 7.4 Inscrições e sete passos
 
 | ID | Requisito | Pri | Critério de aceite |
 | --- | --- | --- | --- |
-| S-01 | Tracker por festival escolhido | P0 | Um registro por festival |
-| S-02 | Status: em análise, inscrito, aguardando seleção, selecionado, não selecionado, retirado | P0 | Edição manual sempre possível |
-| S-03 | Sete passos conferíveis: escolher → regulamento → formulário → screener → taxa → espera → termo/cópia | P0 | Passo 1 já vem marcado ao adicionar |
-| S-04 | Promoção automática: form+screener+taxa ⇒ *Inscrito*; +espera ⇒ *Aguardando* (só a partir de *Em análise* / *Inscrito*) | P0 | Não rebaixa *Selecionado* / *Não selecionado* / *Retirado* |
-| S-05 | Notas livres por inscrição | P0 | Persistem |
-| S-06 | Remover acompanhamento sem implicar cancelamento no festival | P0 | Copy não diz “cancelar inscrição” |
-| S-07 | Com *Selecionado*, lembrar termo e entrega final | P0 | Nota visível no card |
-| S-08 | Adicionar festival também a partir da lista de inscrições | P0 | Só casas ainda não rastreadas |
+| S-01 | Tracker por festival, sem duplicar | P0 | Um registro por casa |
+| S-02 | Status: em análise, inscrito, aguardando, selecionado, não selecionado, retirado | P0 | Edição manual sempre possível |
+| S-03 | Sete passos: escolher → regulamento → formulário → screener → taxa → espera → termo/cópia | P0 | Passo 1 marcado ao adicionar |
+| S-04 | form+screener+taxa ⇒ Inscrito; +espera ⇒ Aguardando (a partir de Em análise / Inscrito) | P0 | Não rebaixa Selecionado / Não selecionado / Retirado |
+| S-05 | Notas livres | P0 | Persistem |
+| S-06 | Remover ≠ cancelar no festival | P0 | Copy de acompanhamento local |
+| S-07 | Selecionado lembra termo e entrega | P0 | Nota no card |
+| S-08 | PDF também a partir de Inscrições | P0 | Mesmo relatório da ficha |
+| S-09 | **Limpar a rota inteira** (ficha + checklists + inscrições) | P0 | Estado volta ao vazio no mesmo browser |
 
-Os sete passos são parte do produto, não só da UI:
+Sete passos (produto):
 
-1. Escolher os festivais (tema, duração, país, estágio)
-2. Verificar o regulamento (estreia, conclusão, categoria)
-3. Preencher a inscrição (site do festival ou FilmFreeway)
-4. Enviar o screener (link privado, sem geo-block)
-5. Pagar a taxa (quando houver; antecipar costuma ser mais barato; há isenções)
-6. Aguardar a seleção (inscrição não garante participação)
-7. Termo e cópia final (se selecionado)
+1. Escolher os festivais  
+2. Verificar o regulamento  
+3. Preencher a inscrição (fora do app)  
+4. Enviar o screener  
+5. Pagar a taxa (quando houver)  
+6. Aguardar a seleção  
+7. Termo e cópia final  
 
-### 7.5 Guia, labs e home
-
-| ID | Requisito | Pri | Critério de aceite |
-| --- | --- | --- | --- |
-| G-01 | Home explica tese, sete passos, duas rotas e alerta de estreia | P0 | CTAs para Filme e Festivais |
-| G-02 | Guia lista requisitos comuns de edital (finalizado, conclusão, duração, estreia, screener, legendas, direitos, taxa, prazo) | P0 | Diz que não substitui o edital |
-| G-03 | Labs explica quando usar mercado/pitching e cita MeetMarket, IDFA Forum, CPH:FORUM, Hot Docs Forum | P0 | Distingue da seleção oficial |
-| G-04 | Navegação persistente com filme atual, nota e contagem de inscrições | P0 | Todas as rotas acima acessíveis |
-| G-05 | Rodapé reitera seleção curatorial + edital próprio | P0 | Presente em todas as páginas |
-
-### 7.6 Persistência
+### 7.5 Search (Arquivo) e Prêmios
 
 | ID | Requisito | Pri | Critério de aceite |
 | --- | --- | --- | --- |
-| ST-01 | Persistir ficha, pacote, direitos e inscrições no `localStorage` (`rota-doc-state-v1`) | P0 | Reload no mesmo origin restaura |
-| ST-02 | JSON inválido ou ausente volta ao estado vazio, sem quebrar a UI | P0 | App abre mesmo com storage corrompido |
-| ST-03 | Documentar que limpar cache / outro perfil / anônimo zera os dados | P0 | README (e manual, quando existir) |
+| A-01 | Listar filmes do Stage 3 com cartaz, forma, país, duração | P0 | Dataset fictício; cartazes em `/archive-images` |
+| A-02 | Filtrar busca / forma / país; paginação “mostrar mais” | P0 | Vazio amigável |
+| A-03 | **Usar na inscrição** preenche Take Action e vai a Start | P0 | Filme em uso fica marcado |
+| AW-01 | Listar honrarias com ano, filme, corpo, seção, resultado | P0 | Ordem de resultado: Official Selection → … → Winner |
+| AW-02 | Filtrar por texto, resultado e tipo (festival vs award) | P0 | Clique no filme carrega a ficha |
+| AW-03 | Deixar explícito que a jornada é de ensino | P0 | Copy não afirma prêmios reais |
+
+### 7.6 Guia, Labs, home, chrome, i18n, PDF
+
+| ID | Requisito | Pri | Critério de aceite |
+| --- | --- | --- | --- |
+| G-01 | Home explica tese, unidades Apple, duas rotas, alerta de estreia | P0 | CTAs para Start, Festivais, Arquivo, Prêmios |
+| G-02 | Guia: finalizado, conclusão, duração, estreia, screener, legendas, direitos, taxa, prazo | P0 | Não substitui edital |
+| G-03 | Labs: quando usar mercado/pitching | P0 | Distinto da seleção oficial |
+| G-04 | Nav com rótulos i18n; Start e Search nos nomes da UI | P0 | Secção atual destacada em verde |
+| G-05 | Ribbon + footer: inscrição ≠ seleção; dataset fictício | P0 | Todas as páginas |
+| G-06 | **Seguinte / Anterior** em todas as secções do `SECTION_FLOW` | P0 | Primeira sem Anterior; última sem Seguinte |
+| I-01 | Seletor PT / EN no topo e no menu | P0 | UI inteira troca de língua; títulos do dataset ficam em inglês |
+| I-02 | Locale persiste no browser | P0 | Reload mantém PT ou EN |
+| R-01 | PDF cobre Start, Festivals, Package, Rights, Submissions | P0 | Inclui disclaimer de ensino e nota de preparação |
+| R-02 | PDF lista festivais rastreados ou ainda não inelegíveis (até um teto) | P0 | Inscrições fora do teto ainda entram |
+
+### 7.7 Persistência
+
+| ID | Requisito | Pri | Critério de aceite |
+| --- | --- | --- | --- |
+| ST-01 | `localStorage` chave `rota-doc-state-v1` | P0 | Ficha, pacote, direitos, inscrições |
+| ST-02 | JSON inválido volta ao vazio sem quebrar | P0 | App abre |
+| ST-03 | Documentar perda ao limpar cache / outro perfil / anônimo | P0 | README + MANUAL |
 
 ---
 
-## 8. Requisitos da sequência imediata (P1)
-
-Não estão no MVP. São o próximo corte honesto do produto, não um roadmap infinito.
+## 8. Sequência imediata (P1)
 
 | ID | Requisito | Por quê |
 | --- | --- | --- |
-| N-01 | **Prazos no calendário** por festival (early / regular / late) e alerta “não pague antes de conferir” | Hoje a taxa é só qualitativa; o erro mais caro é prazo |
-| N-02 | **Vários filmes** (ou pelo menos WIP + finalizado lado a lado) | Produtoras reais não têm um único título |
-| N-03 | **Exportar / imprimir** ficha + pacote + direitos (PDF ou texto) | O dado precisa sair do navegador rumo ao FilmFreeway |
-| N-04 | **Resetar cadastro** na UI, sem DevTools | O exemplo *A Casa do Rio* mistura-se fácil com dados reais |
-| N-05 | **Labs no tracker** (status próprio: pitching, mercado, coprodução) | A segunda rota existe na copy, não no acompanhamento |
-| N-06 | **PT / EN na interface** | Circuito internacional; ficha já pede título em inglês |
-| N-07 | **Jornada pós-seleção (prêmios)** | Seleção → indicação → vitória é a continuação natural do passo 7 e o tema aberto no repositório |
+| N-01 | Unir o catálogo **real** de documentário do `main` com o arquivo de ensino (modo prática vs modo temporada) | Hoje são dois produtos em branches diferentes |
+| N-02 | Prazos calendário (early / regular / late) | Taxa ainda é qualitativa |
+| N-03 | Vários filmes no mesmo browser | Um JSON só não cobre produtora real |
+| N-04 | Labs no tracker (pitching / mercado / coprodução) | Segunda rota existe na copy, pouco no acompanhamento |
+| N-05 | A jornada de prêmios do **filme da pessoa**, não só do arquivo | Prêmios hoje são o dataset de ensino |
+| N-06 | Conta opcional / sync depois da exportação PDF | PDF já tira o dado do browser; sync é o passo seguinte |
 
 ---
 
 ## 9. Fora de escopo nesta fase
 
-- Conta de usuário, nuvem, sync entre aparelhos.
-- Pagamento de taxa, wallet, FilmFreeway API.
-- Parser automático de PDF de edital.
-- Catálogo vivo “sempre atualizado” sem curadoria humana.
-- Discovery para público (home estilo Netflix, busca semântica, gráfico social).
-- Geração de entrevista, clipping ou matching de patrocínio.
-- Ficção / animação como linha editorial principal.
+- Envio real da inscrição / FilmFreeway API / pagamento.
+- Parser de PDF de edital.
+- Catálogo “sempre atualizado” sem curadoria.
+- Discovery para público (busca semântica, homepage Netflix, matching de patrocínio, geração de entrevista).
 - App nativo.
+- Republicar o arquivo cliente Directors Notes.
 
-Esses temas aparecem em briefs paralelos do repositório (plataforma de discovery com IA, arquivo de ensino). **Não entram no Rota Doc** até o workspace de inscrição estar sólido.
+O brief de discovery com IA (`kanban/PRODUCT_BRIEF.md` noutro branch) é **outro produto**.
 
 ---
 
 ## 10. Experiência e conteúdo
 
-### 10.1 Arquitetura da informação
+### 10.1 Fluxo das secções (`SECTION_FLOW`)
 
 ```text
-Início
- ├─ Filme          → ficha + nota
- ├─ Festivais      → lista → detalhe → (edital oficial | adicionar inscrição)
- ├─ Pacote         → checklist inscrição + entrega se selecionado
- ├─ Direitos       → checklist de autorizações
- ├─ Inscrições     → cards por festival
- ├─ Guia           → leitura de edital
- └─ Labs           → rota de desenvolvimento
+Guia → Start → Festivais → Pacote → Direitos → Inscrições → Labs → Search → Prêmios
 ```
 
-Fluxo canônico: **Filme → Pacote / Direitos → Festivais → edital oficial → Inscrições**.
+Fluxo canônico de inscrição: **Start → Pacote / Direitos → Festivais → Inscrições** (+ PDF).  
+Fluxo de ensino: **Search / Prêmios → Start**.
 
-### 10.2 Tom de voz
+### 10.2 Tom
 
-- Português claro, de ofício (edital, screener, estreia mundial, termo de exibição).
-- Direto, sem hype de “sua tão sonhada premiação” como promessa.
-- Alertas de estreia e de publicação pública em destaque, sem alarmismo vazio.
-- Sempre devolver a decisão ao regulamento vigente.
+- Ofício (edital, screener, estreia, termo), em PT e EN.
+- Visual Apple não autoriza copy de “tão sonhada premiação” como **promessa**; a home pode convidar, o disclaimer da ribbon manda.
+- Sempre devolver a decisão ao regulamento (ou deixar claro o caráter fictício).
 
-### 10.3 Acessibilidade e apresentação (NFR de UI)
+### 10.3 Acessibilidade
 
-- Contraste legível no tema papel / tinta já usado.
-- Labels associadas aos campos da ficha.
-- Selos de elegibilidade com texto, não só cor.
-- Uso viável em viewport estreita (nav, ficha, cards).
-- Idioma da página: `pt-BR`.
+- Labels nos campos; selos com texto, não só cor.
+- `aria-current` na secção ativa; menu com Escape e `aria-expanded`.
+- Medidor com `aria-label` da nota.
+- Contraste do verde `#00FF7D` sobre fundo claro precisa continuar legível (texto em botão vs. texto corrido).
 
 ---
 
 ## 11. Dados
 
-### 11.1 Estado do cliente (`rota-doc-state-v1`)
+### 11.1 Estado do cliente
 
 ```text
 {
-  film: { …ficha… },
+  film: { …ficha, form, archiveFilmId?… },
   package: { [itemId]: boolean },
   rights: { [itemId]: boolean },
-  submissions: [{
-    id, festivalId, status, notes,
-    steps: { choose, rules, form, screener, fee, wait, delivery },
-    createdAt
-  }]
+  submissions: [{ id, festivalId, status, notes, steps, createdAt }]
 }
 ```
 
-Não há backend. Qualquer evolução com conta precisa de migração explícita desse JSON.
+Locale de UI é persistido à parte do estado da rota.
 
-### 11.2 Catálogo de festivais (conteúdo)
+### 11.2 Fictional Film Archive
 
-Campos mínimos por casa: identidade, região, plataforma de inscrição, foco, aceita finalizado/WIP, lab associado, tetos de duração, janela ou data de conclusão, exigência de legendas, seções com grau de estreia, nota de taxa, abertura a independentes e estreantes, URL do edital.
+Stage 3 ligado em `src/app/src/data/archive.js`:
 
-Atualização do catálogo é **curadoria de produto**, não feature automática.
+- 180 filmes → Search e preenchimento da ficha  
+- 40 festivais → catálogo de inscrição de ensino  
+- 120 pessoas, 24 empresas, 12 awards, 495 honrarias → Prêmios  
 
-### 11.3 Dataset de ensino
+Não copiar nem transformar registros do cliente. Cartazes abstratos em `datasets/fictional-film-archive/images`.
 
-`datasets/fictional-film-archive/` é material de bootcamp (filmes, pessoas, festivais e honrarias **fictícios**). Não deve ser confundido com o catálogo real do Rota Doc. Integração com o arquivo (páginas Arquivo / Prêmios) é experimento de curso, não requisito P0 deste PRD.
+### 11.3 PDF
+
+Gerado no cliente (`reportModel` + `reportPdf`). Não sobe ficha nem senha de screener para servidor.
 
 ---
 
@@ -395,31 +424,26 @@ Atualização do catálogo é **curadoria de produto**, não feature automática
 
 | Área | Requisito |
 | --- | --- |
-| Stack | React 19 + Vite; app em `src/app`; porta de dev **7363** |
-| Testes | Motor de elegibilidade com testes node (`npm test`). P0 novo no motor exige caso de teste |
-| Lint / build | `npm run lint` e `npm run build` passam |
-| Privacidade | Nenhum dado da ficha sai do navegador nesta versão. Screener URL e senha são locais — não logar |
-| Performance | Catálogo atual (dezenas de casas) avalia no cliente sem espera perceptível |
-| Confiabilidade | Storage corrompido não derruba a SPA |
-| Legal / risco | UI e docs repetem: referência ≠ edital; inscrição ≠ seleção; checklist ≠ parecer jurídico |
-| i18n | MVP só `pt-BR`; strings da UI não devem nascer misturadas a regras de elegibilidade |
+| Stack | React + Vite; `src/app`; dev em **http://localhost:7363** (`npm start` na raiz deste branch) |
+| Testes | Elegibilidade, i18n, secções, PDF (`npm test` em `src/app`) |
+| Lint / build | `npm run lint` e `npm run build` |
+| Privacidade | Ficha e senha do screener só no browser; PDF é download local |
+| Legal | UI, ribbon, footer, MANUAL e PDF: ensino / fictício; inscrição ≠ seleção |
+| i18n | Strings em `src/app/src/i18n/strings.js`; regras de elegibilidade não nascem misturadas a copy |
 
 ---
 
 ## 13. Métricas de sucesso
 
-Não há analytics no MVP. Quando houver, medir o **processo**, não a seleção (que o app não controla).
+Sem analytics no MVP. Quando houver, medir **processo**, não seleção.
 
-**Indicadores de produto (qualitativos agora, quantitativos depois):**
+- Uma sessão: ficha preenchida (ou título do arquivo) + selo por festival.
+- “Quase erros” visíveis: publicação pública, WIP, janela, legendas.
+- PDF gerado com as cinco secções depois de marcar pacote/direitos.
+- Learner consegue alternar PT/EN sem perder a ficha.
+- Testes do motor e do PDF verdes.
 
-- A pessoa consegue cadastrar o filme e obter um selo por festival em uma sessão.
-- Casos de “quase erro” são visíveis: publicação pública, WIP na seleção oficial, conclusão fora da janela, falta de legendas.
-- Há pelo menos uma inscrição com passos 3–5 marcados **depois** de abrir o edital (não o contrário).
-- Nota de preparação > 70 correlaciona com pacote + direitos + screener preenchidos — não com “otimismo”.
-
-**Indicadores que *não* usamos como sucesso:** número de “elegível”, taxas pagas, filmes selecionados.
-
-**Qualidade:** testes de elegibilidade verdes; zero copy que prometa participação.
+Não usamos como sucesso: quantidade de “elegível”, taxas pagas, filmes selecionados.
 
 ---
 
@@ -427,78 +451,74 @@ Não há analytics no MVP. Quando houver, medir o **processo**, não a seleção
 
 | Risco | Mitigação |
 | --- | --- |
-| Catálogo desatualizado vira “verdade” | Disclaimer + link oficial em todo detalhe; edição de referência explícita (hoje 2026) |
-| Heurística de estreia errada para uma seção | Sempre listar seções; “possível / bloqueada” é palpite; edital decide |
-| Usuário envia o filme de exemplo a um festival | Exemplo claramente fictício; reset (N-04) na sequência |
-| Perda de dados no `localStorage` | Documentar; exportação (N-03) na sequência |
-| Confundir Rota Doc com discovery / arquivo de ensino | Este PRD delimita; dataset fictício não substitui o catálogo real |
-| Tom de “garantir prêmio” | Princípio 2; evitar copy de conquista/premiação como promessa |
+| Catálogo fictício lido como edital real | Ribbon, footer, MANUAL, PDF, README |
+| Dois branches (`main` real vs este arquivo) confundem o produto | Este PRD nomeia o branch fonte; P1 N-01 |
+| Copy de premiação vs princípio 2 | Ribbon e selos não prometem vitória |
+| Verde `#00FF7D` ilegível | Usar o verde em botão/acento, não em texto longo sobre branco |
+| Perda de `localStorage` | PDF (já existe) + documentar reset |
+| Dataset cliente vs fictício | Só o arquivo inventado entra no app |
 
 ---
 
 ## 15. Roadmap
 
-### Agora — MVP (entregue)
+### Agora — este branch (entregue no PR #12)
 
-Workspace local: ficha, cruzamento, pacote, direitos, sete passos, guia, labs, 12 festivais de referência, testes do motor.
+Workspace Apple + PT/EN + Take Action + Search + Prêmios + pager + PDF + arquivo fictício.
 
-### Em seguida — P1 (seção 8)
+### Em seguida — P1 (secção 8)
 
-Prazos, múltiplos filmes, exportar, reset, labs no tracker, PT/EN, jornada seleção → indicação → prêmio.
+Modo prática vs temporada real, prazos, vários filmes, labs no tracker, prêmios do filme da pessoa.
 
 ### Depois — P2
 
-- Conta opcional e sync.
-- Mais casas da América Latina e de língua portuguesa.
-- Calendário único de prazos da temporada.
-- Lembrete de screener no ar até o fim da seleção.
-- Acessibilidade mais profunda (audiodescrição do produto, teclado, leitores de tela).
+Conta opcional, calendário de temporada, mais casas de língua portuguesa quando o modo real voltar.
 
-### Explicitamente depois de o núcleo estar sólido
+### Explicitamente outro produto
 
-Ideias de discovery com IA, homepage dinâmica, extração de metadados, matching de patrocínio — outro produto (plataforma de discovery), não uma feature escondida do Rota Doc.
+Discovery com IA, homepage dinâmica, extração de metadados, matching de patrocínio.
 
 ---
 
 ## 16. Questões em aberto
 
-1. O catálogo permanece **só documentário** ou abre para híbridos / ficção de autor (Olhar de Cinema já encosta nisso)?
-2. Quem **cura e versiona** o catálogo a cada temporada (2026 → 2027)?
-3. A jornada de prêmios é um quadro do **filme da pessoa** ou um arquivo editorial separado (dataset de ensino)?
-4. Precisamos de conta antes da exportação, ou a exportação local basta para o público-alvo?
-5. Labs devem ser inscrições no mesmo tracker ou um quadro próprio?
+1. O produto “oficial” passa a ser este branch (arquivo + Apple) ou o `main` (festivais reais de documentário)?
+2. Quem versiona o catálogo a cada temporada, se o modo real voltar?
+3. A jornada de prêmios deve continuar só no dataset de ensino?
+4. O verde Apple é marca permanente ou só desta apresentação?
+5. Labs no mesmo tracker ou quadro próprio?
 
 ---
 
-## 17. Apêndice — inventário do MVP
+## 17. Apêndice
 
-### Telas e CTAs
+### Como abrir o produto desta versão
 
-| Tela | CTA principal |
+```bash
+git fetch origin
+git checkout cursor/apple-on-visualizacoes-3ed7
+git pull origin cursor/apple-on-visualizacoes-3ed7
+npm install --prefix src/app
+npm start
+```
+
+Abre **http://localhost:7363/**. PR: https://github.com/lorenasamuel-rgb/sfdev-3692112/pull/12
+
+### Relação com outros artefatos
+
+| Artefato | Papel |
 | --- | --- |
-| Home | Cadastrar meu filme / Ver festivais / Ir para labs |
-| Filme | Preencher com exemplo |
-| Festivais | Ver regulamento resumido |
-| Detalhe | Adicionar às inscrições / Abrir regulamento oficial / Labs |
-| Pacote / Direitos | Marcar item |
-| Inscrições | Status, passos, notas, remover |
-| Guia | Links Sheffield e IDFA |
-| Labs | Links MeetMarket (e menções Forum) |
+| PR #12 / `cursor/apple-on-visualizacoes-3ed7` | Produto descrito neste PRD |
+| `main` | Recorte anterior, festivais reais, sem arquivo |
+| `src/week2-practice` | Protótipo pedagógico de readiness |
+| `datasets/fictional-film-archive` | Dataset de ensino |
+| PR #11 `apple-website-style` | Experimento Apple anterior, sobre outra base |
+| Brief de discovery com IA | Outro produto |
 
 ### Filme de exemplo
 
-*A Casa do Rio* / *The River House* — longa brasileiro, 78 min, conclusão 2025-11-02, português, finalizado, sem estreia, legendas + `.srt`, screener Vimeo fictício. Serve para demonstrar um perfil **elegível** na maior parte do catálogo, não para envio real.
-
-### Relação com outros artefatos do repo
-
-| Artefato | Papel frente a este PRD |
-| --- | --- |
-| `src/app` | Produto |
-| `src/week2-practice` | Protótipo pedagógico de “festival readiness”; não é o produto |
-| `datasets/fictional-film-archive` | Dataset de ensino; não é o catálogo Rota Doc |
-| Issue de *awards journey* | Entrada de P1 (N-07), a detalhar |
-| Brief de discovery com IA | Outro produto; fora de escopo aqui |
+Título fictício do arquivo (não enviar a festival real). Serve para demonstrar Take Action, cruzamento e PDF.
 
 ---
 
-*Rota Doc organiza o processo de inscrição. A seleção é curatorial. Confirme prazos, taxas e estreia no site oficial.*
+*Rota Doc organiza o processo de inscrição. A seleção é curatorial. Neste branch o catálogo é fictício. Confirme prazos, taxas e estreia no site oficial quando for uma casa real.*
