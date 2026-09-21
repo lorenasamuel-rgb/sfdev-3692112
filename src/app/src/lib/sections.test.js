@@ -14,25 +14,21 @@ test('uma secção no meio tem anterior e seguinte', () => {
   assert.equal(next.id, 'pacote')
 })
 
-test('a última secção só volta', () => {
-  const { prev, next } = sectionNeighbors('premios')
-  assert.equal(prev.id, 'arquivo')
+test('a última secção da rota só volta', () => {
+  const { prev, next } = sectionNeighbors('inscricoes')
+  assert.equal(prev.id, 'direitos')
   assert.equal(next, null)
 })
 
-test('a rota cobre as nove secções', () => {
+test('páginas fora da rota não têm pager', () => {
+  const { prev, next } = sectionNeighbors('premios')
+  assert.equal(prev, null)
+  assert.equal(next, null)
+})
+
+test('a rota de ensino cobre seis secções', () => {
   assert.deepEqual(
     SECTION_FLOW.map((item) => item.id),
-    [
-      'guia',
-      'filme',
-      'festivais',
-      'pacote',
-      'direitos',
-      'inscricoes',
-      'laboratorios',
-      'arquivo',
-      'premios',
-    ],
+    ['guia', 'filme', 'festivais', 'pacote', 'direitos', 'inscricoes'],
   )
 })

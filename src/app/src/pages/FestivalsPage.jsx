@@ -14,7 +14,7 @@ export function FestivalsPage() {
   const [region, setRegion] = useState('all')
   const [country, setCountry] = useState('all')
   const [focus, setFocus] = useState('all')
-  const [filter, setFilter] = useState('all')
+  const [filter, setFilter] = useState(film.originalTitle ? 'eligible' : 'all')
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState(0)
   const searchRef = useRef(null)
@@ -78,7 +78,6 @@ export function FestivalsPage() {
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">{t('festivals.eyebrow')}</p>
           <h1>{t('festivals.title')}</h1>
           <p>{t('festivals.lede', { count: festivals.length })}</p>
         </div>
@@ -90,7 +89,8 @@ export function FestivalsPage() {
       <EmptyFilmHint />
 
       <div className="filters filters-wide">
-        <div className="festival-search" ref={searchRef}>
+        <label className="filter-field festival-search" ref={searchRef}>
+          {t('festivals.search')}
           <input
             type="search"
             role="combobox"
@@ -98,7 +98,6 @@ export function FestivalsPage() {
             aria-autocomplete="list"
             aria-controls="festival-name-results"
             autoComplete="off"
-            placeholder={t('festivals.search')}
             value={query}
             onChange={(event) => {
               setQuery(event.target.value)
@@ -151,14 +150,19 @@ export function FestivalsPage() {
               )}
             </ul>
           ) : null}
-        </div>
-        <select value={region} onChange={(event) => setRegion(event.target.value)}>
+        </label>
+        <label className="filter-field">
+          {t('festivals.allRegions')}
+          <select value={region} onChange={(event) => setRegion(event.target.value)}>
           <option value="all">{t('festivals.allRegions')}</option>
           <option value="europe">{t('region.europe')}</option>
           <option value="northAmerica">{t('region.northAmerica')}</option>
           <option value="africa">{t('region.africa')}</option>
         </select>
-        <select value={country} onChange={(event) => setCountry(event.target.value)}>
+        </label>
+        <label className="filter-field">
+          {t('festivals.allCountries')}
+          <select value={country} onChange={(event) => setCountry(event.target.value)}>
           <option value="all">{t('festivals.allCountries')}</option>
           {countries.map((item) => (
             <option key={item} value={item}>
@@ -166,7 +170,10 @@ export function FestivalsPage() {
             </option>
           ))}
         </select>
-        <select value={focus} onChange={(event) => setFocus(event.target.value)}>
+        </label>
+        <label className="filter-field">
+          {t('festivals.allFocus')}
+          <select value={focus} onChange={(event) => setFocus(event.target.value)}>
           <option value="all">{t('festivals.allFocus')}</option>
           {focusTags.map((item) => (
             <option key={item} value={item}>
@@ -174,11 +181,15 @@ export function FestivalsPage() {
             </option>
           ))}
         </select>
-        <select value={filter} onChange={(event) => setFilter(event.target.value)}>
+        </label>
+        <label className="filter-field">
+          {t('festivals.allStatus')}
+          <select value={filter} onChange={(event) => setFilter(event.target.value)}>
           <option value="all">{t('festivals.allStatus')}</option>
           <option value="eligible">{t('festivals.onlyEligible')}</option>
           <option value="labs">{t('festivals.withLabs')}</option>
         </select>
+        </label>
       </div>
 
       <div className="card-grid">
@@ -193,7 +204,24 @@ export function FestivalsPage() {
           />
         ))}
       </div>
-      {rows.length === 0 ? <p className="muted">{t('festivals.empty')}</p> : null}
+      {rows.length === 0 ? (
+        <div className="empty-film">
+          <p>{t('festivals.empty')}</p>
+          <button
+            type="button"
+            className="btn-ghost"
+            onClick={() => {
+              setQuery('')
+              setRegion('all')
+              setCountry('all')
+              setFocus('all')
+              setFilter('all')
+            }}
+          >
+            {t('festivals.reset')}
+          </button>
+        </div>
+      ) : null}
       <SectionPager current="festivais" />
     </div>
   )

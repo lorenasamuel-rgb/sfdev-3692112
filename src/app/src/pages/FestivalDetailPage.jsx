@@ -4,6 +4,7 @@ import { evaluateFestival } from '../lib/eligibility.js'
 import { EligibilityBadge } from '../components/Widgets.jsx'
 import { SectionPager } from '../components/SectionPager.jsx'
 import { labelCountry, labelHonour, labelMonth } from '../lib/labels.js'
+import { confirmReplaceFilm } from '../lib/replaceFilm.js'
 import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
 
@@ -27,7 +28,7 @@ export function FestivalDetailPage({ id }) {
 
   return (
     <div className="page festival-detail">
-      <p className="eyebrow">
+      <p className="card-meta">
         <a href="#/festivais">{t('nav.festivais')}</a> · {festival.platform} ·{' '}
         {t('festivals.founded', { year: festival.foundedYear })}
       </p>
@@ -163,6 +164,7 @@ export function FestivalDetailPage({ id }) {
                   type="button"
                   className="btn-text"
                   onClick={() => {
+                    if (!confirmReplaceFilm(film, t)) return
                     loadArchiveFilm(item.filmId)
                     window.location.hash = '#/filme'
                   }}

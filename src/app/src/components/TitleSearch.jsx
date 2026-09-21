@@ -1,16 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { searchArchiveFilms } from '../data/archive.js'
 import { labelCountry, labelForm } from '../lib/labels.js'
+import { confirmReplaceFilm } from '../lib/replaceFilm.js'
 import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
 
 export function TitleSearch() {
-  const { film, updateFilm, loadArchiveFilm } = useAppState()
+  const { film, loadArchiveFilm } = useAppState()
   const { t } = useLanguage()
+  const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState(0)
   const wrapRef = useRef(null)
-  const query = film.originalTitle ?? ''
 
   const matches = useMemo(() => searchArchiveFilms(query), [query])
 
@@ -23,29 +24,28 @@ export function TitleSearch() {
   }, [])
 
   function select(item) {
+    if (!confirmReplaceFilm(film, t)) return
     loadArchiveFilm(item.id)
+    setQuery('')
     setOpen(false)
   }
 
   return (
-    <label className="full title-search" ref={wrapRef}>
-      {t('film.originalTitle')}
+    <div className="archive-practice" ref={wrapRef}>
+      <label htmlFor="archive-title-search">{t('film.archivePractice')}</label>
+      <p className="field-hint">{t('film.archivePracticeHint')}</p>
       <input
+        id="archive-title-search"
         type="search"
         role="combobox"
         aria-expanded={open}
         aria-autocomplete="list"
         aria-controls="archive-title-results"
-        required
         autoComplete="off"
         placeholder={t('film.titleSearchPlaceholder')}
         value={query}
         onChange={(event) => {
-          updateFilm({
-            originalTitle: event.target.value,
-            archiveFilmId: '',
-            archiveYear: '',
-          })
+          setQuery(event.target.value)
           setActive(0)
           setOpen(true)
         }}
@@ -67,7 +67,7 @@ export function TitleSearch() {
           if (event.key === 'Escape') setOpen(false)
         }}
       />
-      {open ? (
+      {open && query.trim() ? (
         <ul id="archive-title-results" className="title-search-list" role="listbox">
           {matches.length === 0 ? (
             <li className="is-empty">{t('film.titleSearchEmpty')}</li>
@@ -104,6 +104,6 @@ export function TitleSearch() {
           )}
         </ul>
       ) : null}
-    </label>
+    </div>
   )
 }

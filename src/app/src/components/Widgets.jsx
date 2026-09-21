@@ -16,11 +16,17 @@ export function ReadinessMeter() {
   const { t } = useLanguage()
   const score = readinessScore(film, packageState, rights, packageItems, rightsItems)
   const band = readinessBand(score)
+  const bandLabel = t(`widgets.band.${band}`)
   return (
-    <div className={`meter is-${band}`} aria-label={t('widgets.readinessAria', { score })}>
+    <div
+      className={`meter is-${band}`}
+      aria-label={t('widgets.readinessAria', { score, band: bandLabel })}
+    >
       <div className="meter-head">
         <span>{t('widgets.readiness')}</span>
-        <strong>{score}/100</strong>
+        <strong>
+          {bandLabel} · {score}/100
+        </strong>
       </div>
       <div className="meter-track">
         <div className="meter-fill" style={{ width: `${score}%` }} />
@@ -68,7 +74,7 @@ export function FestivalCard({ festival, film, onOpen }) {
   return (
     <article className="festival-card">
       <header>
-        <p className="eyebrow">
+        <p className="card-meta">
           {festival.city} · {labelCountry(festival.country, t)}
         </p>
         <h3>
@@ -78,8 +84,6 @@ export function FestivalCard({ festival, film, onOpen }) {
       </header>
       <p>{festival.focusTags.map((tag) => labelFocus(tag, t)).join(' · ')}</p>
       <ul className="chip-row">
-        {festival.openToIndependents ? <li>{t('festivals.independents')}</li> : null}
-        {festival.openToFirstTimers ? <li>{t('festivals.firstTimers')}</li> : null}
         {festival.duration?.shortMax ? (
           <li>{t('festivals.shortMax', { max: festival.duration.shortMax })}</li>
         ) : null}

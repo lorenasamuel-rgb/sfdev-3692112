@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { archiveFilms } from '../data/archive.js'
 import { labelCountry, labelForm } from '../lib/labels.js'
-import { SectionPager } from '../components/SectionPager.jsx'
+import { confirmReplaceFilm } from '../lib/replaceFilm.js'
 import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
 
@@ -40,51 +40,55 @@ export function ArchivePage() {
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">{t('archive.eyebrow')}</p>
           <h1>{t('archive.title')}</h1>
           <p>{t('archive.lede', { count: archiveFilms.length })}</p>
-        </div>
-        <div className="page-head-aside">
-          <SectionPager current="arquivo" />
         </div>
       </header>
 
       <div className="filters">
-        <input
-          type="search"
-          placeholder={t('archive.search')}
-          value={query}
-          onChange={(event) => {
-            setQuery(event.target.value)
-            setVisible(PAGE_SIZE)
-          }}
-        />
-        <select
-          value={form}
-          onChange={(event) => {
-            setForm(event.target.value)
-            setVisible(PAGE_SIZE)
-          }}
-        >
-          {forms.map((item) => (
-            <option key={item} value={item}>
-              {item === 'all' ? t('archive.allForms') : labelForm(item, t)}
-            </option>
-          ))}
-        </select>
-        <select
-          value={country}
-          onChange={(event) => {
-            setCountry(event.target.value)
-            setVisible(PAGE_SIZE)
-          }}
-        >
-          {countries.map((item) => (
-            <option key={item} value={item}>
-              {item === 'all' ? t('archive.allCountries') : labelCountry(item, t)}
-            </option>
-          ))}
-        </select>
+        <label className="filter-field">
+          {t('archive.search')}
+          <input
+            type="search"
+            value={query}
+            onChange={(event) => {
+              setQuery(event.target.value)
+              setVisible(PAGE_SIZE)
+            }}
+          />
+        </label>
+        <label className="filter-field">
+          {t('archive.allForms')}
+          <select
+            value={form}
+            onChange={(event) => {
+              setForm(event.target.value)
+              setVisible(PAGE_SIZE)
+            }}
+          >
+            {forms.map((item) => (
+              <option key={item} value={item}>
+                {item === 'all' ? t('archive.allForms') : labelForm(item, t)}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="filter-field">
+          {t('archive.allCountries')}
+          <select
+            value={country}
+            onChange={(event) => {
+              setCountry(event.target.value)
+              setVisible(PAGE_SIZE)
+            }}
+          >
+            {countries.map((item) => (
+              <option key={item} value={item}>
+                {item === 'all' ? t('archive.allCountries') : labelCountry(item, t)}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
 
       <div className="card-grid film-grid">
@@ -98,7 +102,7 @@ export function ArchivePage() {
                 <div className="film-poster is-empty">{t('archive.noPoster')}</div>
               )}
               <header>
-                <p className="eyebrow">
+                <p className="card-meta">
                   {item.year} · {labelForm(item.form, t)} · {labelCountry(item.country, t)}
                 </p>
                 <h3>{item.title}</h3>
@@ -117,6 +121,7 @@ export function ArchivePage() {
                 type="button"
                 className={active ? 'btn' : 'btn-ghost'}
                 onClick={() => {
+                  if (!confirmReplaceFilm(film, t)) return
                   loadArchiveFilm(item.id)
                   window.location.hash = '#/filme'
                 }}
@@ -134,8 +139,22 @@ export function ArchivePage() {
           </button>
         </div>
       ) : null}
-      {rows.length === 0 ? <p className="muted">{t('archive.empty')}</p> : null}
-      <SectionPager current="arquivo" />
+      {rows.length === 0 ? (
+        <div className="empty-film">
+          <p>{t('archive.empty')}</p>
+          <button
+            type="button"
+            className="btn-ghost"
+            onClick={() => {
+              setQuery('')
+              setForm('all')
+              setCountry('all')
+            }}
+          >
+            {t('archive.reset')}
+          </button>
+        </div>
+      ) : null}
     </div>
   )
 }

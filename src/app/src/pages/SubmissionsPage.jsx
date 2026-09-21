@@ -28,7 +28,6 @@ export function SubmissionsPage() {
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">{t('submissions.eyebrow')}</p>
           <h1>{t('submissions.title')}</h1>
           <p>{t('submissions.lede')}</p>
         </div>

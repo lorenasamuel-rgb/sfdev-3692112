@@ -5,6 +5,18 @@ export const SECTION_FLOW = [
   { href: '#/pacote', id: 'pacote' },
   { href: '#/direitos', id: 'direitos' },
   { href: '#/inscricoes', id: 'inscricoes' },
+]
+
+export const PRIMARY_NAV = [
+  { href: '#/filme', id: 'filme' },
+  { href: '#/festivais', id: 'festivais' },
+  { href: '#/pacote', id: 'pacote' },
+  { href: '#/direitos', id: 'direitos' },
+  { href: '#/inscricoes', id: 'inscricoes' },
+]
+
+export const MORE_NAV = [
+  { href: '#/guia', id: 'guia' },
   { href: '#/laboratorios', id: 'laboratorios' },
   { href: '#/arquivo', id: 'arquivo' },
   { href: '#/premios', id: 'premios' },
