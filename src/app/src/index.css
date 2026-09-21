@@ -1428,6 +1428,7 @@ input[type='checkbox'] {
 
 .title-search {
   position: relative;
+  min-width: 0;
 }
 
 .title-search-list {

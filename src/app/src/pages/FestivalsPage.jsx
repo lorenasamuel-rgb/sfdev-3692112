@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { festivals } from '../data/festivals.js'
 import { evaluateFestival } from '../lib/eligibility.js'
-import { EmptyFilmHint, FestivalCard } from '../components/Widgets.jsx'
+import { FestivalCard } from '../components/Widgets.jsx'
 import { SectionPager } from '../components/SectionPager.jsx'
 import { labelCountry, labelFocus } from '../lib/labels.js'
 import { useAppState } from '../state/context.js'
@@ -85,8 +85,6 @@ export function FestivalsPage() {
           <SectionPager current="festivais" />
         </div>
       </header>
-
-      <EmptyFilmHint />
 
       <div className="filters filters-wide">
         <label className="filter-field festival-search" ref={searchRef}>

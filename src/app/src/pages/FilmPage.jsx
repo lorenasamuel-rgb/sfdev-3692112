@@ -103,7 +103,13 @@ export function FilmPage() {
           </label>
           <label>
             {t('film.englishTitle')}
-            <input {...field('englishTitle')} placeholder={t('film.englishTitlePlaceholder')} />
+            <TitleSearch
+              id="film-english-title"
+              value={film.englishTitle ?? ''}
+              onChange={(next) => updateFilm({ englishTitle: next })}
+              placeholder={t('film.englishTitlePlaceholder')}
+            />
+            <span className="field-hint">{t('film.archivePracticeHint')}</span>
           </label>
           <label>
             {t('film.duration')}
@@ -223,8 +229,6 @@ export function FilmPage() {
             </label>
           </fieldset>
         </details>
-
-        <TitleSearch />
 
         <div className="btn-row film-clear">
           <button type="button" className="btn-ghost danger" onClick={onClear}>

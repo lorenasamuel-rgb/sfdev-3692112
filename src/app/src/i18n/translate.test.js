@@ -14,6 +14,11 @@ test('traduz a mesma chave em inglês', () => {
   assert.equal(translate('en', 'nav.submissions', { score: 80, count: 2 }), '80/100 · 2 submissions')
 })
 
+test('o título em inglês aponta para o arquivo', () => {
+  assert.match(translate('pt', 'film.englishTitlePlaceholder'), /arquivo/i)
+  assert.match(translate('en', 'film.englishTitlePlaceholder'), /archive/i)
+})
+
 test('traduz avançar e voltar nas secções', () => {
   assert.equal(translate('pt', 'chrome.next'), 'Seguinte')
   assert.equal(translate('pt', 'chrome.back'), 'Anterior')
