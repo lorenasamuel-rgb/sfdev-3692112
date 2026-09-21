@@ -2,6 +2,8 @@
 
 Aplicação para produtores independentes e estreantes inscreverem filmes em festivais, agora alimentada pelo **Fictional Film Archive** (180 filmes, 40 festivais, honrarias e prêmios fictícios).
 
+O produto está especificado no [PRD](../../PRD.md).
+
 A interface está em português e inglês. O seletor PT/EN fica no topo da página.
 
 As telas **Arquivo** e **Prêmios**, o seletor PT/EN e o visual Apple estão neste branch. Guia de uso: [MANUAL.md](MANUAL.md).
