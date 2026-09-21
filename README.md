@@ -1,12 +1,12 @@
 # Rota Doc
 
-Workspace para produtores independentes e estreantes organizarem a inscrição de um filme em festival. O catálogo é o **Fictional Film Archive** (180 filmes, 40 festivais, honrarias fictícias): serve para praticar a rota, não como edital real.
+A workspace for independent producers and first-time filmmakers to organise a festival submission. The catalogue is the **Fictional Film Archive** (180 films, 40 festivals, fictional honours): use it to practise the route, not as a real call.
 
-A inscrição não garante participação. A seleção é curatorial.
+Submitting does not guarantee a place in the programme. Selection is curatorial.
 
-O [PRD](PRD.md) descreve o produto no `main`: ficha Take Action, Search, jornada de prêmios, PT/EN, PDF da rota e visual Apple. Guia de uso: [`src/practice/MANUAL.md`](src/practice/MANUAL.md).
+The [PRD](PRD.md) (English) describes the product on `main`: Take Action file, Search, awards journey, PT/EN, route PDF, and Apple visual. User guide: [`src/practice/MANUAL.md`](src/practice/MANUAL.md).
 
-## Como rodar
+## Run
 
 ```bash
 cd src/app
@@ -15,11 +15,11 @@ npm test
 npm run dev
 ```
 
-Abre em `http://localhost:7363`. A ficha, os checklists e as inscrições ficam no `localStorage` do navegador (`rota-doc-state-v2`). Cartazes vêm de `datasets/fictional-film-archive/images`.
+Opens at `http://localhost:7363`. The film file, checklists, and submissions live in the browser `localStorage` (`rota-doc-state-v2`). Posters come from `datasets/fictional-film-archive/images`.
 
 ```bash
 npm run build
 npm run preview
 ```
 
-Preview em `http://localhost:7364`.
+Preview at `http://localhost:7364`.
