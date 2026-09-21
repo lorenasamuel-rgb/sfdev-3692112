@@ -5,6 +5,7 @@ import {
   evaluateFestival,
   filmHasEnglishAudio,
   premiereCovers,
+  readinessBand,
   readinessScore,
 } from './eligibility.js'
 
@@ -106,4 +107,28 @@ test('readiness sobe com pacote e direitos marcados', () => {
     rightsItems,
   )
   assert.ok(high > low)
+})
+
+test('faixa de prontidão: vermelho abaixo de 50, amarelo até 70, verde acima', () => {
+  assert.equal(readinessBand(0), 'low')
+  assert.equal(readinessBand(49), 'low')
+  assert.equal(readinessBand(50), 'mid')
+  assert.equal(readinessBand(70), 'mid')
+  assert.equal(readinessBand(71), 'high')
+  assert.equal(readinessBand(100), 'high')
+})
+
+test('festival de curtas rejeita longa', () => {
+  const result = evaluateFestival(baseFilm, {
+    ...baseFestival,
+    duration: { shortMax: 40, shortOnly: true },
+  })
+  assert.equal(result.status, 'ineligible')
+  assert.ok(result.issues.some((issue) => issue.code === 'too-long'))
+})
+
+test('mensagens de elegibilidade respeitam o idioma', () => {
+  const result = evaluateFestival({ ...baseFilm, stage: 'wip' }, baseFestival, new Date(), 'en')
+  assert.equal(result.status, 'ineligible')
+  assert.match(result.issues[0].message, /finished films/i)
 })

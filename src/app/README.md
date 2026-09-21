@@ -1,6 +1,6 @@
 # Rota Doc
 
-App React + Vite para inscrição de documentários em festivais. Os dados ficam no navegador (`localStorage`).
+App React + Vite para inscrição em festivais, lendo o Fictional Film Archive. Telas Arquivo e Prêmios, PT/EN no topo. Os dados da ficha ficam no navegador (`localStorage`).
 
 ```bash
 npm install

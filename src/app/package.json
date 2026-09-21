@@ -8,9 +8,10 @@
     "build": "vite build",
     "lint": "oxlint src",
     "preview": "vite preview --host",
-    "test": "node --test src/lib/eligibility.test.js"
+    "test": "node --test src/lib/*.test.js src/i18n/*.test.js"
   },
   "dependencies": {
+    "pdf-lib": "^1.17.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
