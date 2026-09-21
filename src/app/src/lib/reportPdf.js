@@ -4,7 +4,7 @@ import { readinessBand } from './eligibility.js'
 const PAGE_WIDTH = 595.28
 const PAGE_HEIGHT = 841.89
 const MARGIN = 48
-const GREEN = rgb(0, 1, 125 / 255)
+const GREEN = rgb(0x11 / 255, 0x40 / 255, 0x22 / 255)
 const INK = rgb(0.114, 0.114, 0.122)
 const MUTED = rgb(0.431, 0.431, 0.451)
 const LINE = rgb(0.824, 0.824, 0.843)
