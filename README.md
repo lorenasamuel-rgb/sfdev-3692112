@@ -54,6 +54,10 @@ One click produces the **Route report**: the film's technical details, festivals
 
 The whole interface switches language from a button in the header. Film and festival names from the dataset stay in English, as they would in a real catalogue.
 
+### Account
+
+**Account** holds a sign-in that matches the rest of the app: no server. Create a local account with a name and email, sign in and out, and the header greets you and copies those details into the film file's production contacts. The account lives in this browser's `localStorage`, only a digest of the password is kept, and the page says as much next to the form. It is there to practise the route, not to protect anything.
+
 ---
 
 ## What it runs on
@@ -88,7 +92,7 @@ Two pages exist purely to explore that archive: **Archive** (180 films filtered 
 src/app/src/
   lib/        eligibility, readiness score, PDF report, route between sections
   data/       Fictional Film Archive mapping and checklists
-  pages/      Home, Film file, Archive, Festivals, Awards, Package, Rights, Submissions, Guide, Labs
+  pages/      Home, Film file, Archive, Festivals, Awards, Package, Rights, Submissions, Guide, Labs, Account
   i18n/       PT and EN
   state/      app state and persistence
 datasets/fictional-film-archive/
