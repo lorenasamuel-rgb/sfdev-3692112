@@ -132,10 +132,17 @@ function RibbonText() {
   return t('chrome.ribbon')
 }
 
+function useAccountLabel() {
+  const { account, signedIn } = useAccount()
+  const { t } = useLanguage()
+  return signedIn ? firstName(account) : t('account.signIn')
+}
+
 function DrawerAccount({ active, onNavigate }) {
-  const { account, signedIn, signOut } = useAccount()
+  const { signedIn, signOut } = useAccount()
   const { t } = useLanguage()
   const item = ACCOUNT_NAV[0]
+  const label = useAccountLabel()
 
   return (
     <>
@@ -145,7 +152,7 @@ function DrawerAccount({ active, onNavigate }) {
         aria-current={active === item.id ? 'page' : undefined}
         onClick={onNavigate}
       >
-        {signedIn ? firstName(account) : t('account.signIn')}
+        {label}
       </a>
       {signedIn ? (
         <button
@@ -274,6 +281,7 @@ function Header({ active, menuOpen, setMenuOpen }) {
 
 function Sitemap({ active }) {
   const { t } = useLanguage()
+  const accountLabel = useAccountLabel()
   const groups = [
     {
       title: t('chrome.footerRota'),
@@ -302,7 +310,7 @@ function Sitemap({ active }) {
                   className={active === item.id ? 'is-active' : ''}
                   aria-current={active === item.id ? 'page' : undefined}
                 >
-                  {t(`nav.${item.id}`)}
+                  {item.id === 'conta' ? accountLabel : t(`nav.${item.id}`)}
                 </a>
               </li>
             ))}
