@@ -4,9 +4,10 @@
 
 Rota Doc is a web app that turns festival submission into a clear seven-step route: put the film on file, cross its data against each festival's rules, build the materials package, clear the rights, and track every entry through to the exhibition agreement.
 
-Link: https://rota-doc-seven.vercel.app/#/
+**[Try the live demo](https://rota-doc-seven.vercel.app/#/)** · **[See the presentation](https://gamma.app/docs/Rota-Doc-or-Award-Journey-bxo3mm0wsgcwhc2?following_id=ueumpxkl3mvmrv5&follow_on_start=true)**
 
-Presentation: https://gamma.app/docs/Rota-Doc-or-Award-Journey-bxo3mm0wsgcwhc2?following_id=ueumpxkl3mvmrv5&follow_on_start=true
+The demo opens in Portuguese, so press **EN** in the header first. It also starts with an empty film file, and the quickest tour fills it: open **Archive**, pick any title and press **Use for submission**, then go to **Festivals** and watch 40 eligibility verdicts appear against that film. Everything you enter stays in your own browser.
+
 ---
 
 ## The problem
@@ -101,7 +102,7 @@ datasets/fictional-film-archive/
 
 ## Running it locally
 
-All you need is Node.js and an up-to-date browser.
+There is nothing to install to just look around: the [live demo](https://rota-doc-seven.vercel.app/#/) is the same app. To run it yourself, all you need is Node.js and an up-to-date browser.
 
 ```bash
 cd src/app
