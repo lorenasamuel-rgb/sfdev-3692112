@@ -1,16 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { searchArchiveFilms } from '../data/archive.js'
 import { labelCountry, labelForm } from '../lib/labels.js'
+import { confirmReplaceFilm } from '../lib/replaceFilm.js'
 import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
 
-export function TitleSearch() {
-  const { film, updateFilm, loadArchiveFilm } = useAppState()
+export function TitleSearch({ id = 'archive-title-search', value, onChange, placeholder }) {
+  const { film, loadArchiveFilm } = useAppState()
   const { t } = useLanguage()
+  const query = value ?? ''
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState(0)
   const wrapRef = useRef(null)
-  const query = film.originalTitle ?? ''
 
   const matches = useMemo(() => searchArchiveFilms(query), [query])
 
@@ -23,33 +24,33 @@ export function TitleSearch() {
   }, [])
 
   function select(item) {
+    if (!confirmReplaceFilm(film, t)) return
     loadArchiveFilm(item.id)
     setOpen(false)
   }
 
   return (
-    <label className="full title-search" ref={wrapRef}>
-      {t('film.originalTitle')}
+    <div className="title-search" ref={wrapRef}>
       <input
-        type="search"
+        id={id}
+        type="text"
         role="combobox"
         aria-expanded={open}
         aria-autocomplete="list"
-        aria-controls="archive-title-results"
-        required
+        aria-controls={`${id}-results`}
+        aria-activedescendant={open && matches[active] ? `${id}-option-${matches[active].id}` : undefined}
         autoComplete="off"
-        placeholder={t('film.titleSearchPlaceholder')}
+        placeholder={placeholder}
         value={query}
         onChange={(event) => {
-          updateFilm({
-            originalTitle: event.target.value,
-            archiveFilmId: '',
-            archiveYear: '',
-          })
+          onChange?.(event.target.value)
           setActive(0)
           setOpen(true)
         }}
-        onFocus={() => setOpen(true)}
+        onFocus={() => {
+          setActive(0)
+          setOpen(true)
+        }}
         onKeyDown={(event) => {
           if (event.key === 'ArrowDown') {
             event.preventDefault()
@@ -68,14 +69,19 @@ export function TitleSearch() {
         }}
       />
       {open ? (
-        <ul id="archive-title-results" className="title-search-list" role="listbox">
+        <ul id={`${id}-results`} className="title-search-list" role="listbox">
           {matches.length === 0 ? (
             <li className="is-empty">{t('film.titleSearchEmpty')}</li>
           ) : (
             matches.map((item, index) => {
               const directors = item.directors.map((person) => person.name).join(', ')
               return (
-                <li key={item.id} role="option" aria-selected={index === active}>
+                <li
+                  key={item.id}
+                  id={`${id}-option-${item.id}`}
+                  role="option"
+                  aria-selected={index === active}
+                >
                   <button
                     type="button"
                     className={index === active ? 'is-active' : ''}
@@ -104,6 +110,6 @@ export function TitleSearch() {
           )}
         </ul>
       ) : null}
-    </label>
+    </div>
   )
 }

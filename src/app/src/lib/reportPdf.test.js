@@ -41,7 +41,7 @@ test('o PDF comeca com o cabecalho e o nome do ficheiro usa o titulo', async () 
   const model = {
     brand: 'Rota Doc',
     title: 'Route report',
-    subtitle: 'Start, Festivals, Package, Rights and Submissions',
+    subtitle: 'Film file, Festivals, Package, Rights and Submissions',
     filmName: 'The Quiet Cartographer',
     generated: 'Generated on 20 September 2026',
     score: 100,
@@ -50,7 +50,7 @@ test('o PDF comeca com o cabecalho e o nome do ficheiro usa o titulo', async () 
     footer: 'Rota Doc',
     sections: {
       start: {
-        title: 'Start',
+        title: 'Film file',
         lede: 'Film file',
         fields: [{ label: 'Original title', value: 'The Quiet Cartographer' }],
       },

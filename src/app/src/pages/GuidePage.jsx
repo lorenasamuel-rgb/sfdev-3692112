@@ -13,7 +13,6 @@ export function GuidePage() {
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">{t('guide.eyebrow')}</p>
           <h1>{t('guide.title')}</h1>
           <p>{t('guide.lede')}</p>
         </div>
@@ -56,7 +55,6 @@ export function LabsPage() {
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">{t('labs.eyebrow')}</p>
           <h1>{t('labs.title')}</h1>
           <p>{t('labs.lede')}</p>
         </div>
@@ -75,12 +73,17 @@ export function LabsPage() {
       </section>
 
       {labFestivals.length === 0 ? (
-        <p className="muted">{t('labs.empty')}</p>
+        <div className="empty-film">
+          <p>{t('labs.empty')}</p>
+          <a className="btn" href="#/festivais">
+            {t('home.ctaFestivals')}
+          </a>
+        </div>
       ) : (
         <div className="card-grid">
           {labFestivals.map((festival) => (
             <article key={festival.id} className="festival-card">
-              <p className="eyebrow">
+              <p className="card-meta">
                 {festival.city} · {labelCountry(festival.country, t)}
               </p>
               <h3>

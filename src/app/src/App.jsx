@@ -13,20 +13,9 @@ import { PackagePage } from './pages/PackagePage.jsx'
 import { RightsPage } from './pages/RightsPage.jsx'
 import { SubmissionsPage } from './pages/SubmissionsPage.jsx'
 import { GuidePage, LabsPage } from './pages/GuidePage.jsx'
-import { readinessScore } from './lib/eligibility.js'
+import { readinessBand, readinessScore } from './lib/eligibility.js'
 import { packageItems, rightsItems } from './data/checklists.js'
-
-const NAV = [
-  { href: '#/guia', id: 'guia' },
-  { href: '#/filme', id: 'filme' },
-  { href: '#/festivais', id: 'festivais' },
-  { href: '#/pacote', id: 'pacote' },
-  { href: '#/direitos', id: 'direitos' },
-  { href: '#/inscricoes', id: 'inscricoes' },
-  { href: '#/laboratorios', id: 'laboratorios' },
-  { href: '#/arquivo', id: 'arquivo' },
-  { href: '#/premios', id: 'premios' },
-]
+import { MORE_NAV, PRIMARY_NAV } from './lib/sections.js'
 
 function parseHash() {
   const raw = window.location.hash.replace(/^#/, '') || '/'
@@ -86,8 +75,24 @@ function Router() {
     <div className={`shell${isHome ? ' is-home' : ''}`}>
       <Header active={active} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <div id="globalnav-menu" className={`nav-drawer${menuOpen ? ' is-open' : ''}`}>
-        <LanguageSwitch />
-        {NAV.map((item) => (
+        <p className="drawer-label">
+          <NavLabel id="route" />
+        </p>
+        {PRIMARY_NAV.map((item) => (
+          <a
+            key={item.id}
+            href={item.href}
+            className={active === item.id ? 'is-active' : ''}
+            aria-current={active === item.id ? 'page' : undefined}
+            onClick={() => setMenuOpen(false)}
+          >
+            <NavLabel id={item.id} />
+          </a>
+        ))}
+        <p className="drawer-label">
+          <NavLabel id="more" />
+        </p>
+        {MORE_NAV.map((item) => (
           <a
             key={item.id}
             href={item.href}
@@ -102,9 +107,8 @@ function Router() {
       <p className="ribbon">
         <RibbonText />
       </p>
-      <Directory active={active} />
       <main className={isHome ? 'main-home' : 'main-app'}>{page}</main>
-      <SiteFooter />
+      <SiteFooter active={active} />
     </div>
   )
 }
@@ -147,6 +151,7 @@ function Header({ active, menuOpen, setMenuOpen }) {
   const { film, package: packageState, rights, submissions } = useAppState()
   const { t } = useLanguage()
   const score = readinessScore(film, packageState, rights, packageItems, rightsItems)
+  const band = readinessBand(score)
 
   return (
     <header className="globalnav">
@@ -160,19 +165,8 @@ function Header({ active, menuOpen, setMenuOpen }) {
           <span className="brand-mark" aria-hidden="true" />
           <span>{t('brand')}</span>
         </a>
-        <LanguageSwitch />
-        <button
-          type="button"
-          className={`nav-toggle${menuOpen ? ' is-open' : ''}`}
-          aria-expanded={menuOpen}
-          aria-controls="globalnav-menu"
-          onClick={() => setMenuOpen((value) => !value)}
-        >
-          <span className="visually-hidden">{menuOpen ? t('chrome.closeMenu') : t('chrome.openMenu')}</span>
-          <span aria-hidden="true" />
-        </button>
-        <nav className="globalnav-links" aria-label={t('nav.sections')}>
-          {NAV.map((item) => {
+        <nav className="globalnav-links" aria-label={t('nav.route')}>
+          {PRIMARY_NAV.map((item) => {
             const isActive = active === item.id
             return (
               <a
@@ -186,24 +180,27 @@ function Header({ active, menuOpen, setMenuOpen }) {
             )
           })}
         </nav>
+        <LanguageSwitch />
+        <button
+          type="button"
+          className={`nav-toggle${menuOpen ? ' is-open' : ''}`}
+          aria-expanded={menuOpen}
+          aria-controls="globalnav-menu"
+          onClick={() => setMenuOpen((value) => !value)}
+        >
+          <span className="visually-hidden">
+            {menuOpen ? t('chrome.closeMenu') : t('chrome.openMenu')}
+          </span>
+          <span aria-hidden="true" />
+        </button>
         <p className="topbar-film">
           {film.originalTitle || t('nav.noFilm')}
-          <span>{t('nav.submissions', { score, count: submissions.length })}</span>
+          <span>
+            {t(`widgets.band.${band}`)} · {t('nav.submissions', { score, count: submissions.length })}
+          </span>
         </p>
       </div>
     </header>
-  )
-}
-
-function Directory({ active }) {
-  const { t } = useLanguage()
-  return (
-    <nav className="directory" aria-label={t('nav.sections')}>
-      <div className="directory-inner">
-        <p className="directory-lead">{t('chrome.footerLead')}</p>
-        <Sitemap active={active} />
-      </div>
-    </nav>
   )
 }
 
@@ -212,27 +209,11 @@ function Sitemap({ active }) {
   const groups = [
     {
       title: t('chrome.footerRota'),
-      items: [
-        { href: '#/guia', id: 'guia' },
-        { href: '#/filme', id: 'filme' },
-        { href: '#/festivais', id: 'festivais' },
-        { href: '#/pacote', id: 'pacote' },
-        { href: '#/direitos', id: 'direitos' },
-      ],
+      items: PRIMARY_NAV,
     },
     {
-      title: t('chrome.footerTrack'),
-      items: [
-        { href: '#/inscricoes', id: 'inscricoes' },
-        { href: '#/laboratorios', id: 'laboratorios' },
-      ],
-    },
-    {
-      title: t('chrome.footerArchive'),
-      items: [
-        { href: '#/arquivo', id: 'arquivo' },
-        { href: '#/premios', id: 'premios' },
-      ],
+      title: t('nav.more'),
+      items: MORE_NAV,
     },
   ]
 
@@ -260,11 +241,13 @@ function Sitemap({ active }) {
   )
 }
 
-function SiteFooter() {
+function SiteFooter({ active }) {
   const { t } = useLanguage()
   return (
     <footer className="site-footer">
       <div className="footer-inner">
+        <p className="directory-lead">{t('chrome.footerLead')}</p>
+        <Sitemap active={active} />
         <p className="footer-copy">{t('footer')}</p>
       </div>
     </footer>

@@ -19,7 +19,6 @@ export function PackagePage() {
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">{t('package.eyebrow')}</p>
           <h1>{t('package.title')}</h1>
           <p>{t('package.lede')}</p>
         </div>

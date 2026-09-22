@@ -6,7 +6,7 @@ import {
   decorateHonour,
 } from '../data/archive.js'
 import { labelHonour } from '../lib/labels.js'
-import { SectionPager } from '../components/SectionPager.jsx'
+import { confirmReplaceFilm } from '../lib/replaceFilm.js'
 import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
 
@@ -22,7 +22,7 @@ const RESULT_ORDER = [
 const PAGE_SIZE = 40
 
 export function AwardsPage() {
-  const { loadArchiveFilm } = useAppState()
+  const { film, loadArchiveFilm } = useAppState()
   const { t } = useLanguage()
   const [query, setQuery] = useState('')
   const [result, setResult] = useState('all')
@@ -47,7 +47,6 @@ export function AwardsPage() {
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">{t('awards.eyebrow')}</p>
           <h1>{t('awards.title')}</h1>
           <p>
             {t('awards.lede', {
@@ -57,46 +56,51 @@ export function AwardsPage() {
             })}
           </p>
         </div>
-        <div className="page-head-aside">
-          <SectionPager current="premios" />
-        </div>
       </header>
 
       <div className="filters">
-        <input
-          type="search"
-          placeholder={t('awards.search')}
-          value={query}
-          onChange={(event) => {
-            setQuery(event.target.value)
-            setVisible(PAGE_SIZE)
-          }}
-        />
-        <select
-          value={result}
-          onChange={(event) => {
-            setResult(event.target.value)
-            setVisible(PAGE_SIZE)
-          }}
-        >
-          <option value="all">{t('awards.allResults')}</option>
-          {RESULT_ORDER.map((item) => (
-            <option key={item} value={item}>
-              {labelHonour(item, t)}
-            </option>
-          ))}
-        </select>
-        <select
-          value={bodyType}
-          onChange={(event) => {
-            setBodyType(event.target.value)
-            setVisible(PAGE_SIZE)
-          }}
-        >
-          <option value="all">{t('awards.allBodies')}</option>
-          <option value="Festival">{t('awards.festivalsOnly')}</option>
-          <option value="Award">{t('awards.awardsOnly')}</option>
-        </select>
+        <label className="filter-field">
+          {t('awards.search')}
+          <input
+            type="search"
+            value={query}
+            onChange={(event) => {
+              setQuery(event.target.value)
+              setVisible(PAGE_SIZE)
+            }}
+          />
+        </label>
+        <label className="filter-field">
+          {t('awards.allResults')}
+          <select
+            value={result}
+            onChange={(event) => {
+              setResult(event.target.value)
+              setVisible(PAGE_SIZE)
+            }}
+          >
+            <option value="all">{t('awards.allResults')}</option>
+            {RESULT_ORDER.map((item) => (
+              <option key={item} value={item}>
+                {labelHonour(item, t)}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="filter-field">
+          {t('awards.allBodies')}
+          <select
+            value={bodyType}
+            onChange={(event) => {
+              setBodyType(event.target.value)
+              setVisible(PAGE_SIZE)
+            }}
+          >
+            <option value="all">{t('awards.allBodies')}</option>
+            <option value="Festival">{t('awards.festivalsOnly')}</option>
+            <option value="Award">{t('awards.awardsOnly')}</option>
+          </select>
+        </label>
       </div>
 
       <div className="honour-table">
@@ -114,6 +118,7 @@ export function AwardsPage() {
               type="button"
               className="btn-text"
               onClick={() => {
+                if (!confirmReplaceFilm(film, t)) return
                 loadArchiveFilm(item.filmId)
                 window.location.hash = '#/filme'
               }}
@@ -138,8 +143,22 @@ export function AwardsPage() {
           </button>
         </div>
       ) : null}
-      {rows.length === 0 ? <p className="muted">{t('awards.empty')}</p> : null}
-      <SectionPager current="premios" />
+      {rows.length === 0 ? (
+        <div className="empty-film">
+          <p>{t('awards.empty')}</p>
+          <button
+            type="button"
+            className="btn-ghost"
+            onClick={() => {
+              setQuery('')
+              setResult('all')
+              setBodyType('all')
+            }}
+          >
+            {t('awards.reset')}
+          </button>
+        </div>
+      ) : null}
     </div>
   )
 }

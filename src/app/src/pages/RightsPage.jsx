@@ -19,7 +19,6 @@ export function RightsPage() {
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">{t('rights.eyebrow')}</p>
           <h1>{t('rights.title')}</h1>
           <p>{t('rights.lede')}</p>
         </div>

@@ -95,6 +95,17 @@ test('filme inédito, legendado e com screener é elegível', () => {
   assert.ok(result.eligiblePrograms.some((program) => program.required === 'world'))
 })
 
+test('ficha vazia soma 38 pelos defaults de estágio finished e estreia none', () => {
+  const empty = {
+    originalTitle: '',
+    englishTitle: '',
+    stage: 'finished',
+    premiereStatus: 'none',
+    publishedPublicly: false,
+  }
+  assert.equal(readinessScore(empty, {}, {}, [{ id: 'a' }], [{ id: 'b' }]), 38)
+})
+
 test('readiness sobe com pacote e direitos marcados', () => {
   const packageItems = [{ id: 'a' }, { id: 'b' }]
   const rightsItems = [{ id: 'c' }]

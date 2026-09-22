@@ -1,4 +1,5 @@
-import { ReadinessMeter } from '../components/Widgets.jsx'
+import { useState } from 'react'
+import { ReadinessMeter, PremiereCallout } from '../components/Widgets.jsx'
 import { TitleSearch } from '../components/TitleSearch.jsx'
 import { SectionPager } from '../components/SectionPager.jsx'
 import { downloadRouteReport } from '../lib/downloadReport.js'
@@ -6,9 +7,10 @@ import { useAppState } from '../state/context.js'
 import { useLanguage } from '../i18n/context.js'
 
 export function FilmPage() {
-  const { film, package: packageState, rights, submissions, updateFilm, loadSample } =
+  const { film, package: packageState, rights, submissions, updateFilm, loadSample, clearFilm } =
     useAppState()
   const { locale, t } = useLanguage()
+  const [titleError, setTitleError] = useState('')
 
   function field(name, kind = 'text') {
     if (kind === 'checkbox') {
@@ -19,15 +21,32 @@ export function FilmPage() {
     }
     return {
       value: film[name] ?? '',
-      onChange: (event) => updateFilm({ [name]: event.target.value }),
+      onChange: (event) => {
+        if (name === 'originalTitle') setTitleError('')
+        updateFilm({ [name]: event.target.value })
+      },
     }
+  }
+
+  function onSubmit(event) {
+    event.preventDefault()
+    if (!film.originalTitle?.trim()) {
+      setTitleError(t('film.titleRequired'))
+      return
+    }
+    setTitleError('')
+  }
+
+  function onClear() {
+    if (!window.confirm(t('film.clearConfirm'))) return
+    clearFilm()
+    setTitleError('')
   }
 
   return (
     <div className="page">
       <header className="page-head">
         <div>
-          <p className="eyebrow">{t('film.eyebrow')}</p>
           <h1>{t('film.title')}</h1>
           <p>{t('film.lede')}</p>
           {film.archiveFilmId ? (
@@ -65,30 +84,33 @@ export function FilmPage() {
         </div>
       </header>
 
-      <form className="dossier" key={film.archiveFilmId || 'blank'} onSubmit={(event) => event.preventDefault()}>
+      <form className="dossier" key={film.archiveFilmId || 'blank'} onSubmit={onSubmit} noValidate>
         <fieldset>
-          <legend>{t('film.identity')}</legend>
-          <TitleSearch />
+          <legend>{t('film.eligibility')}</legend>
+          <label className={titleError ? 'has-error' : ''}>
+            {t('film.originalTitle')}
+            <input
+              {...field('originalTitle')}
+              required
+              aria-invalid={titleError ? 'true' : 'false'}
+              aria-describedby={titleError ? 'title-error' : undefined}
+            />
+            {titleError ? (
+              <span id="title-error" className="field-error">
+                {titleError}
+              </span>
+            ) : null}
+          </label>
           <label>
             {t('film.englishTitle')}
-            <input {...field('englishTitle')} placeholder={t('film.englishTitlePlaceholder')} />
+            <TitleSearch
+              id="film-english-title"
+              value={film.englishTitle ?? ''}
+              onChange={(next) => updateFilm({ englishTitle: next })}
+              placeholder={t('film.englishTitlePlaceholder')}
+            />
+            <span className="field-hint">{t('film.archivePracticeHint')}</span>
           </label>
-          <label className="full">
-            {t('film.logline')}
-            <textarea rows="2" {...field('logline')} />
-          </label>
-          <label className="full">
-            {t('film.shortSynopsis')}
-            <textarea rows="3" {...field('shortSynopsis')} />
-          </label>
-          <label className="full">
-            {t('film.fullSynopsis')}
-            <textarea rows="5" {...field('fullSynopsis')} />
-          </label>
-        </fieldset>
-
-        <fieldset>
-          <legend>{t('film.sheet')}</legend>
           <label>
             {t('film.duration')}
             <input type="number" min="1" {...field('durationMinutes')} />
@@ -96,14 +118,6 @@ export function FilmPage() {
           <label>
             {t('film.completion')}
             <input type="date" {...field('completionDate')} />
-          </label>
-          <label>
-            {t('film.country')}
-            <input {...field('productionCountry')} />
-          </label>
-          <label>
-            {t('film.languages')}
-            <input {...field('languages')} />
           </label>
           <label>
             {t('film.form')}
@@ -121,10 +135,19 @@ export function FilmPage() {
               <option value="wip">{t('film.stageWip')}</option>
             </select>
           </label>
+          <label>
+            {t('film.languages')}
+            <input {...field('languages')} />
+          </label>
+          <label>
+            {t('film.country')}
+            <input {...field('productionCountry')} />
+          </label>
         </fieldset>
 
         <fieldset>
           <legend>{t('film.premiere')}</legend>
+          <PremiereCallout />
           <label>
             {t('film.premiereStatus')}
             <select {...field('premiereStatus')}>
@@ -161,33 +184,57 @@ export function FilmPage() {
           </label>
         </fieldset>
 
-        <fieldset>
-          <legend>{t('film.people')}</legend>
-          <label>
-            {t('film.director')}
-            <input {...field('directorName')} />
-          </label>
-          <label>
-            {t('film.producer')}
-            <input {...field('producerName')} />
-          </label>
-          <label>
-            {t('film.email')}
-            <input type="email" {...field('producerEmail')} />
-          </label>
-          <label>
-            {t('film.phone')}
-            <input {...field('producerPhone')} />
-          </label>
-          <label className="full">
-            {t('film.directorBio')}
-            <textarea rows="3" {...field('directorBio')} />
-          </label>
-          <label className="full">
-            {t('film.directorStatement')}
-            <textarea rows="3" {...field('directorStatement')} />
-          </label>
-        </fieldset>
+        <details className="more-fields">
+          <summary>{t('film.moreCopy')}</summary>
+          <fieldset>
+            <legend>{t('film.identity')}</legend>
+            <label className="full">
+              {t('film.logline')}
+              <textarea rows="2" {...field('logline')} />
+            </label>
+            <label className="full">
+              {t('film.shortSynopsis')}
+              <textarea rows="3" {...field('shortSynopsis')} />
+            </label>
+            <label className="full">
+              {t('film.fullSynopsis')}
+              <textarea rows="5" {...field('fullSynopsis')} />
+            </label>
+          </fieldset>
+          <fieldset>
+            <legend>{t('film.people')}</legend>
+            <label>
+              {t('film.director')}
+              <input {...field('directorName')} />
+            </label>
+            <label>
+              {t('film.producer')}
+              <input {...field('producerName')} />
+            </label>
+            <label>
+              {t('film.email')}
+              <input type="email" {...field('producerEmail')} />
+            </label>
+            <label>
+              {t('film.phone')}
+              <input {...field('producerPhone')} />
+            </label>
+            <label className="full">
+              {t('film.directorBio')}
+              <textarea rows="3" {...field('directorBio')} />
+            </label>
+            <label className="full">
+              {t('film.directorStatement')}
+              <textarea rows="3" {...field('directorStatement')} />
+            </label>
+          </fieldset>
+        </details>
+
+        <div className="btn-row film-clear">
+          <button type="button" className="btn-ghost danger" onClick={onClear}>
+            {t('film.clear')}
+          </button>
+        </div>
         <SectionPager current="filme" />
       </form>
     </div>
