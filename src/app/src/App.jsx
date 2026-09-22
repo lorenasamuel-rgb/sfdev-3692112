@@ -16,6 +16,7 @@ import { RightsPage } from './pages/RightsPage.jsx'
 import { SubmissionsPage } from './pages/SubmissionsPage.jsx'
 import { GuidePage, LabsPage } from './pages/GuidePage.jsx'
 import { LoginPage } from './pages/LoginPage.jsx'
+import { SocialLinks } from './components/SocialLinks.jsx'
 import { readinessBand, readinessScore } from './lib/eligibility.js'
 import { firstName, initials } from './lib/account.js'
 import { packageItems, rightsItems } from './data/checklists.js'
@@ -328,6 +329,7 @@ function SiteFooter({ active }) {
       <div className="footer-inner">
         <p className="directory-lead">{t('chrome.footerLead')}</p>
         <Sitemap active={active} />
+        <SocialLinks />
         <p className="footer-copy">{t('footer')}</p>
       </div>
     </footer>
