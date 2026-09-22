@@ -305,6 +305,24 @@ export const strings = {
     account: {
       title: 'Entrar',
       lede: 'A conta guarda o seu nome e email neste navegador, para o Rota Doc saudá-lo e preencher os contatos da ficha sem redigitar.',
+      ledeCloud: 'A conta guarda a sua rota no Supabase: ficha, pacote, direitos e inscrições seguem consigo em qualquer navegador onde entrar.',
+      connecting: 'A ligar à conta…',
+      working: 'A processar…',
+      route: 'Rota na conta',
+      clearCloud: 'Apagar a rota guardada na conta',
+      clearCloudConfirm: 'Isto apaga a rota guardada na sua conta Supabase e esvazia a ficha, o pacote, os direitos e as inscrições. Continuar?',
+      clearCloudDone: 'Rota apagada da conta.',
+      signedInCloudLede: 'A sessão está aberta. A ficha, o pacote, os direitos e as inscrições são gravados na sua conta Supabase a cada alteração.',
+      sync: {
+        off: 'Só neste navegador',
+        loading: 'A carregar da conta…',
+        saving: 'A gravar…',
+        ready: 'Guardada na conta',
+        error: 'Falhou a gravação. A rota continua neste navegador.',
+      },
+      notice: {
+        confirmEmail: 'Conta criada. Confirme o email na mensagem que o Supabase enviou e depois entre.',
+      },
       tabsLabel: 'Entrar ou criar conta',
       signIn: 'Entrar',
       signUp: 'Criar conta',
@@ -333,7 +351,11 @@ export const strings = {
       forgetConfirm: 'Isto apaga a conta guardada neste navegador. A ficha, o pacote, os direitos e as inscrições continuam. Continuar?',
       local: {
         title: 'Conta local, sem servidor',
-        body: 'O Rota Doc não tem servidor: a conta fica no localStorage deste navegador e nada é enviado para fora da máquina. Da senha guarda-se um resumo, não o texto. Serve para praticar a rota, não para proteger dados reais: use uma senha que não use em mais lado nenhum.',
+        body: 'Sem as chaves do Supabase configuradas, a conta fica no localStorage deste navegador e nada é enviado para fora da máquina. Da senha guarda-se um resumo, não o texto. Serve para praticar a rota, não para proteger dados reais: use uma senha que não use em mais lado nenhum.',
+      },
+      cloud: {
+        title: 'Conta no Supabase',
+        body: 'A autenticação é do Supabase e a senha nunca passa por este código. A sua rota fica numa tabela com Row Level Security, onde só a sua conta lê e escreve as próprias linhas.',
       },
       error: {
         nameRequired: 'Indique o nome que assina o filme.',
@@ -344,6 +366,11 @@ export const strings = {
         confirmMismatch: 'As duas senhas não coincidem.',
         noAccount: 'Este navegador ainda não tem conta. Crie uma primeiro.',
         badCredentials: 'Email ou senha não conferem.',
+        emailTaken: 'Já existe uma conta com este email. Entre em vez de criar.',
+        emailNotConfirmed: 'Confirme o email antes de entrar. Procure a mensagem do Supabase.',
+        rateLimited: 'Demasiadas tentativas seguidas. Espere um pouco e tente de novo.',
+        network: 'Não foi possível falar com o Supabase. Verifique a ligação e tente de novo.',
+        remoteUnknown: 'O Supabase recusou o pedido. Tente de novo dentro de momentos.',
       },
     },
     widgets: {
@@ -827,6 +854,24 @@ export const strings = {
     account: {
       title: 'Sign in',
       lede: 'The account keeps your name and email in this browser, so Rota Doc can greet you and fill the film file contacts without retyping them.',
+      ledeCloud: 'The account keeps your route in Supabase: film file, package, rights and submissions follow you into any browser you sign in from.',
+      connecting: 'Connecting to your account…',
+      working: 'Working…',
+      route: 'Route in the account',
+      clearCloud: 'Delete the route saved in the account',
+      clearCloudConfirm: 'This deletes the route saved in your Supabase account and empties the film file, package, rights and submissions. Continue?',
+      clearCloudDone: 'Route deleted from the account.',
+      signedInCloudLede: 'You are signed in. The film file, package, rights and submissions are written to your Supabase account on every change.',
+      sync: {
+        off: 'This browser only',
+        loading: 'Loading from the account…',
+        saving: 'Saving…',
+        ready: 'Saved to the account',
+        error: 'Saving failed. The route is still in this browser.',
+      },
+      notice: {
+        confirmEmail: 'Account created. Confirm your email in the message Supabase sent, then sign in.',
+      },
       tabsLabel: 'Sign in or create an account',
       signIn: 'Sign in',
       signUp: 'Create account',
@@ -855,7 +900,11 @@ export const strings = {
       forgetConfirm: 'This deletes the account stored in this browser. The film file, package, rights and submissions stay. Continue?',
       local: {
         title: 'Local account, no server',
-        body: 'Rota Doc has no backend: the account lives in this browser localStorage and nothing leaves the machine. Only a digest of the password is stored, never the text. It is here to practise the route, not to protect real data, so pick a password you use nowhere else.',
+        body: 'With no Supabase keys configured, the account lives in this browser localStorage and nothing leaves the machine. Only a digest of the password is stored, never the text. It is here to practise the route, not to protect real data, so pick a password you use nowhere else.',
+      },
+      cloud: {
+        title: 'Supabase account',
+        body: 'Authentication is handled by Supabase and the password never passes through this code. Your route is kept in a table with Row Level Security, where only your account reads and writes its own rows.',
       },
       error: {
         nameRequired: 'Give the name you sign the film with.',
@@ -866,6 +915,11 @@ export const strings = {
         confirmMismatch: 'The two passwords do not match.',
         noAccount: 'This browser has no account yet. Create one first.',
         badCredentials: 'That email and password do not match.',
+        emailTaken: 'An account with this email already exists. Sign in instead.',
+        emailNotConfirmed: 'Confirm your email before signing in. Look for the message from Supabase.',
+        rateLimited: 'Too many attempts in a row. Wait a moment and try again.',
+        network: 'Could not reach Supabase. Check the connection and try again.',
+        remoteUnknown: 'Supabase refused the request. Try again in a moment.',
       },
     },
     widgets: {

@@ -7,21 +7,24 @@ import { useLanguage } from '../i18n/context.js'
 
 const emptyForm = { name: '', email: '', password: '', confirm: '', remember: true }
 
-function LocalNote() {
+function StorageNote() {
+  const { mode } = useAccount()
   const { t } = useLanguage()
+  const key = mode === 'supabase' ? 'cloud' : 'local'
   return (
-    <aside className="callout callout-warn">
-      <h3>{t('account.local.title')}</h3>
-      <p>{t('account.local.body')}</p>
+    <aside className={`callout ${mode === 'supabase' ? 'callout-good' : 'callout-warn'}`}>
+      <h3>{t(`account.${key}.title`)}</h3>
+      <p>{t(`account.${key}.body`)}</p>
     </aside>
   )
 }
 
 function AccountPanel() {
-  const { account, signOut, forgetAccount } = useAccount()
-  const { updateFilm } = useAppState()
+  const { account, mode, pending, signOut, forgetAccount } = useAccount()
+  const { sync, updateFilm, clearCloudRoute } = useAppState()
   const { locale, t } = useLanguage()
   const [notice, setNotice] = useState('')
+  const cloud = mode === 'supabase'
 
   function onUseInFilm() {
     updateFilm({
@@ -36,12 +39,17 @@ function AccountPanel() {
     forgetAccount()
   }
 
+  function onClearCloud() {
+    if (!window.confirm(t('account.clearCloudConfirm'))) return
+    clearCloudRoute().then(() => setNotice(t('account.clearCloudDone')))
+  }
+
   return (
     <div className="page">
       <header className="page-head">
         <div>
           <h1>{t('account.welcome', { name: firstName(account) })}</h1>
-          <p>{t('account.signedInLede')}</p>
+          <p>{t(cloud ? 'account.signedInCloudLede' : 'account.signedInLede')}</p>
         </div>
         <div className="page-head-aside">
           <p className="account-card">
@@ -71,17 +79,29 @@ function AccountPanel() {
             <dt>{t('account.since')}</dt>
             <dd>{formatDate(account.createdAt.slice(0, 10), locale)}</dd>
           </div>
+          {cloud ? (
+            <div>
+              <dt>{t('account.route')}</dt>
+              <dd>{t(`account.sync.${sync.status}`)}</dd>
+            </div>
+          ) : null}
         </dl>
         <div className="btn-row">
           <button type="button" className="btn" onClick={onUseInFilm}>
             {t('account.useInFilm')}
           </button>
-          <button type="button" className="btn-ghost" onClick={signOut}>
+          <button type="button" className="btn-ghost" onClick={signOut} disabled={pending}>
             {t('account.signOut')}
           </button>
-          <button type="button" className="btn-ghost danger" onClick={onForget}>
-            {t('account.forget')}
-          </button>
+          {cloud ? (
+            <button type="button" className="btn-ghost danger" onClick={onClearCloud}>
+              {t('account.clearCloud')}
+            </button>
+          ) : (
+            <button type="button" className="btn-ghost danger" onClick={onForget}>
+              {t('account.forget')}
+            </button>
+          )}
         </div>
         {notice ? (
           <p className="note good" role="status">
@@ -90,21 +110,23 @@ function AccountPanel() {
         ) : null}
       </section>
 
-      <LocalNote />
+      <StorageNote />
     </div>
   )
 }
 
 export function LoginPage() {
-  const { account, signedIn, signIn, signUp } = useAccount()
+  const { account, mode, notice, clearNotice, pending, ready, signedIn, signIn, signUp } =
+    useAccount()
   const { t } = useLanguage()
-  const [mode, setMode] = useState(account ? 'signIn' : 'signUp')
+  const [formMode, setFormMode] = useState(account ? 'signIn' : 'signUp')
   const [form, setForm] = useState(() => ({ ...emptyForm, email: account?.email ?? '' }))
   const [errors, setErrors] = useState({})
 
   if (signedIn && account) return <AccountPanel />
 
-  const creating = mode === 'signUp'
+  const cloud = mode === 'supabase'
+  const creating = formMode === 'signUp'
 
   function field(name) {
     return {
@@ -122,14 +144,16 @@ export function LoginPage() {
   }
 
   function switchMode(next) {
-    setMode(next)
+    setFormMode(next)
     setErrors({})
+    clearNotice()
     setForm((current) => ({ ...current, password: '', confirm: '' }))
   }
 
-  function onSubmit(event) {
+  async function onSubmit(event) {
     event.preventDefault()
-    const result = creating ? signUp(form) : signIn(form)
+    if (pending) return
+    const result = creating ? await signUp(form) : await signIn(form)
     setErrors(result)
     if (Object.keys(result).length === 0) {
       setForm((current) => ({ ...current, password: '', confirm: '' }))
@@ -141,7 +165,7 @@ export function LoginPage() {
       <header className="page-head">
         <div>
           <h1>{t('account.title')}</h1>
-          <p>{t('account.lede')}</p>
+          <p>{t(cloud ? 'account.ledeCloud' : 'account.lede')}</p>
         </div>
         <div className="page-head-aside">
           <div className="auth-tabs" role="group" aria-label={t('account.tabsLabel')}>
@@ -165,8 +189,16 @@ export function LoginPage() {
         </div>
       </header>
 
-      {!account && !creating ? <p className="note warn">{t('account.noAccountYet')}</p> : null}
-      {account && creating ? (
+      {!ready ? <p className="note">{t('account.connecting')}</p> : null}
+      {notice ? (
+        <p className="note good" role="status">
+          {t(`account.notice.${notice}`)}
+        </p>
+      ) : null}
+      {!cloud && !account && !creating ? (
+        <p className="note warn">{t('account.noAccountYet')}</p>
+      ) : null}
+      {!cloud && account && creating ? (
         <p className="note warn">{t('account.existing', { email: account.email })}</p>
       ) : null}
 
@@ -255,21 +287,27 @@ export function LoginPage() {
             </label>
           ) : null}
 
-          <label className="check">
-            <input
-              type="checkbox"
-              checked={form.remember}
-              onChange={(event) => {
-                const { checked } = event.target
-                setForm((current) => ({ ...current, remember: checked }))
-              }}
-            />
-            {t('account.remember')}
-          </label>
+          {cloud ? null : (
+            <label className="check">
+              <input
+                type="checkbox"
+                checked={form.remember}
+                onChange={(event) => {
+                  const { checked } = event.target
+                  setForm((current) => ({ ...current, remember: checked }))
+                }}
+              />
+              {t('account.remember')}
+            </label>
+          )}
 
           <div className="btn-row">
-            <button type="submit" className="btn">
-              {creating ? t('account.submitSignUp') : t('account.submitSignIn')}
+            <button type="submit" className="btn" disabled={pending}>
+              {pending
+                ? t('account.working')
+                : creating
+                  ? t('account.submitSignUp')
+                  : t('account.submitSignIn')}
             </button>
             <button
               type="button"
@@ -282,7 +320,7 @@ export function LoginPage() {
         </fieldset>
       </form>
 
-      <LocalNote />
+      <StorageNote />
     </div>
   )
 }
