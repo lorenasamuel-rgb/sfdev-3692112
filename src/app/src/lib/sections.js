@@ -22,6 +22,8 @@ export const MORE_NAV = [
   { href: '#/premios', id: 'premios' },
 ]
 
+export const ACCOUNT_NAV = [{ href: '#/conta', id: 'conta' }]
+
 export function sectionNeighbors(id) {
   const index = SECTION_FLOW.findIndex((item) => item.id === id)
   if (index < 0) return { prev: null, next: null }
