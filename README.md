@@ -3,7 +3,7 @@
 **Festival submissions rarely fail for lack of talent. They fail for lack of method.**
 
 Rota Doc is a web app that turns festival submission into a clear seven-step route: put the film on file, cross its data against each festival's rules, build the materials package, clear the rights, and track every entry through to the exhibition agreement.
-
+Link: https://rota-doc-seven.vercel.app/#/
 ---
 
 ## The problem
