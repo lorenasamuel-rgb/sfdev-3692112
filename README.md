@@ -1,104 +1,104 @@
 # Rota Doc
 
-**Inscrever um filme em festival não falha por falta de talento. Falha por falta de método.**
+**Festival submissions rarely fail for lack of talent. They fail for lack of method.**
 
-Rota Doc é uma aplicação web que transforma o processo de inscrição em festivais numa rota clara de sete passos: cadastrar a ficha do filme, cruzar os dados com o regulamento de cada festival, montar o pacote de materiais, conferir os direitos e acompanhar cada candidatura até o termo de exibição.
+Rota Doc is a web app that turns festival submission into a clear seven-step route: put the film on file, cross its data against each festival's rules, build the materials package, clear the rights, and track every entry through to the exhibition agreement.
 
 ---
 
-## O problema
+## The problem
 
-Uma produtora independente ou um realizador estreante que quer inscrever um curta enfrenta sempre a mesma parede:
+An independent producer or a first-time director trying to enter a short film hits the same wall every time:
 
-- **O regulamento é longo e o detalhe decisivo está escondido.** Duração máxima, janela de conclusão, status de estreia, obrigatoriedade de legendas em inglês: cada festival combina essas regras de forma diferente.
-- **Um erro custa a inscrição inteira.** Publicar o filme completo no YouTube antes de definir a estratégia elimina o status de estreia e fecha portas que não reabrem.
-- **A taxa é paga antes da leitura atenta.** Muita gente descobre que o filme era inelegível depois de pagar.
-- **Os mesmos materiais são refeitos a cada inscrição.** Logline, sinopses, stills, biografia da direção, screener com senha: tudo recomeça do zero em cada formulário.
-- **O acompanhamento vive em folhas de cálculo.** Prazos, estados e senhas espalhados por ficheiros que ninguém atualiza.
+- **The rules are long and the decisive detail is buried.** Maximum running time, completion window, premiere status, mandatory English subtitles: every festival combines those rules differently.
+- **One mistake costs the whole submission.** Publishing the full film on YouTube before settling on a festival strategy destroys premiere status and closes doors that do not reopen.
+- **The fee gets paid before the rules get read.** Plenty of filmmakers discover the film was ineligible only after paying.
+- **The same materials are rebuilt for every entry.** Logline, synopses, stills, director biography, passworded screener: each form starts from scratch.
+- **Tracking lives in spreadsheets.** Deadlines, statuses and passwords scattered across files nobody keeps current.
 
-## A solução
+## The solution
 
-Rota Doc responde a isso com uma rota única e um motor de elegibilidade que lê a ficha do filme e o perfil de cada festival ao mesmo tempo.
+Rota Doc answers that with a single route and an eligibility engine that reads the film file and each festival's profile at the same time.
 
-| Passo | Na aplicação | O que resolve |
+| Step | In the app | What it solves |
 | --- | --- | --- |
-| 1. Escolher festivais | **Festivais** | Filtra 40 festivais por região, foco editorial, presença de laboratório e elegibilidade real com o seu filme |
-| 2. Verificar o regulamento | **Guia** | Os nove requisitos que aparecem em quase todo edital, explicados em linguagem de produção |
-| 3. Preencher a inscrição | **Ficha** | Um cadastro único que alimenta todos os cruzamentos |
-| 4. Enviar o screener | **Pacote** | 15 materiais do *festival package*, preparados uma vez e reutilizados |
-| 5. Pagar a taxa | **Inscrições** | Só depois de conferir estreia, data de conclusão e screener |
-| 6. Aguardar a seleção | **Inscrições** | Seis estados de acompanhamento por festival |
-| 7. Termo e cópia final | **Direitos** | Música, arquivo, entrevistas, menores, locações, autoridade do produtor e E&O |
+| 1. Choose festivals | **Festivals** | Filters 40 festivals by region, editorial focus, labs strand and real eligibility with your film |
+| 2. Check the rules | **Guide** | The nine requirements that show up in almost every call, explained in production language |
+| 3. Fill in the entry | **Film file** | One record that feeds every cross-check |
+| 4. Send the screener | **Package** | 15 festival-package materials, prepared once and reused |
+| 5. Pay the fee | **Submissions** | Only after premiere status, completion date and screener check out |
+| 6. Wait for selection | **Submissions** | Six tracking statuses per festival |
+| 7. Agreement and final copy | **Rights** | Music, archive, interviews, minors, locations, producer authority and E&O |
 
-### O motor de elegibilidade
+### The eligibility engine
 
-É o coração do produto. Para cada festival, Rota Doc cruza a ficha do filme com o regulamento e devolve um veredito com justificação, não um simples sim ou não:
+This is the heart of the product. For each festival, Rota Doc crosses the film file against the rules and returns a reasoned verdict rather than a bare yes or no:
 
-- **Elegível**, **Rever** ou **Inelegível**, com uma pontuação de 0 a 100
-- **Impedimentos** que bloqueiam a inscrição: filme longo demais para um festival de curtas, conclusão fora da janela de 24 meses, estreia já consumida por outro festival, filme publicado integralmente em acesso aberto
-- **Alertas** para o que ainda dá para resolver: duração em falta, ausência de legendas em inglês, screener sem link, foco editorial que não conversa com a forma do filme
-- **Coincidências** que valem a pena citar na candidatura: secção compatível com o estado de estreia, abertura a independentes e estreantes, faixa de novas vozes
+- **Eligible**, **Check the rules** or **Probably ineligible**, with a score from 0 to 100
+- **Blockers** that stop the entry: film too long for a shorts festival, completion outside the 24-month window, a premiere already spent at another festival, a film already published in full for open viewing
+- **Warnings** for what can still be fixed: missing running time, no English subtitles, no screener link, an editorial focus that does not match the film's form
+- **Matches** worth citing in the application: a section compatible with the current premiere status, openness to independents and first-timers, a new-voices strand
 
-A lógica de estreia é cumulativa e conservadora: um filme que já fez estreia internacional continua a poder oferecer estreia nacional ou europeia, mas não o contrário.
+The premiere logic is cumulative and conservative: a film that has already had its international premiere can still offer a national or European premiere, but not the other way round.
 
-### Nota de preparação
+### Readiness score
 
-Um medidor de 0 a 100 no topo de todas as páginas, em três faixas (baixo, médio, alto), que sobe conforme a ficha, o pacote e os direitos ficam completos e desce quando o filme já está público. É a resposta imediata à pergunta "já posso começar a inscrever?".
+A 0-to-100 meter at the top of every page, banded low, mid and high, that rises as the film file, package and rights fill in and drops when the film is already public. It answers "am I ready to start submitting?" at a glance.
 
-### Relatório em PDF
+### PDF report
 
-Um clique gera o **Relatório da rota**: ficha técnica, festivais ordenados por aderência, estado dos checklists de pacote e direitos e as inscrições em andamento. Gerado no browser com `pdf-lib`, sem servidor e sem enviar dados a lado nenhum.
+One click produces the **Route report**: the film's technical details, festivals ranked by fit, the state of the package and rights checklists, and the submissions in progress. Generated in the browser with `pdf-lib`, with no server and no data leaving the machine.
 
-### Bilingue, PT e EN
+### Bilingual, PT and EN
 
-Toda a interface troca de idioma num botão no topo. Os nomes de filmes e festivais do dataset permanecem em inglês, como num catálogo real.
+The whole interface switches language from a button in the header. Film and festival names from the dataset stay in English, as they would in a real catalogue.
 
 ---
 
-## Sobre o que ele corre
+## What it runs on
 
-Rota Doc é alimentado pelo **Fictional Film Archive**, um dataset de ensino inteiramente inventado que vive neste repositório:
+Rota Doc is powered by the **Fictional Film Archive**, a wholly invented teaching dataset that lives in this repository:
 
 | | |
 | --- | --- |
-| 180 | filmes fictícios, com cartaz, forma, país e sinopse |
-| 40 | festivais fictícios, com cidade, foco editorial e secções |
-| 120 | pessoas e 24 produtoras |
-| 909 | créditos ligando filmes a pessoas |
-| 495 | honrarias, da seleção oficial à vitória |
-| 12 | prémios fictícios |
-| 1.736 | atribuições de taxonomia (género, tema, técnica, forma, país) |
+| 180 | fictional films, with poster, form, country and synopsis |
+| 40 | fictional festivals, with city, editorial focus and sections |
+| 120 | people and 24 production companies |
+| 909 | credits linking films to people |
+| 495 | honours, from official selection through to winning |
+| 12 | fictional awards |
+| 1,736 | taxonomy assignments (genre, theme, technique, form, country) |
 
-O dataset traz lacunas de propósito: filmes sem duração, sem cartaz, sem honrarias. É isso que dá à interface algo real para tratar em renderização condicional, e é isso que torna o cruzamento de elegibilidade interessante.
+The dataset carries gaps on purpose: films with no running time, no poster, no honours. That is what gives the interface something real to handle in conditional rendering, and what makes the eligibility cross-check interesting.
 
-Duas páginas existem só para explorar esse arquivo: **Arquivo** (180 filmes com filtros por forma, país, tema e direção) e **Prémios** (a jornada seleção oficial → lista longa → shortlist → indicação → menção → vitória). Em qualquer uma delas, **Usar na inscrição** carrega o título escolhido na ficha e recalcula tudo.
+Two pages exist purely to explore that archive: **Archive** (180 films filtered by form, country, theme and director) and **Awards** (the journey from official selection through longlist, shortlist, nomination and special mention to winner). In either one, **Use for submission** loads the chosen title into the film file and recalculates everything.
 
 ---
 
-## Sob o capô
+## Under the hood
 
-- **React 19 + Vite 8**, sem biblioteca de routing: a navegação por hash é resolvida na própria aplicação
-- **Zero backend.** A ficha, os checklists e as inscrições ficam no `localStorage` do browser
-- **Dados como módulos.** O dataset é importado via alias `@archive` e mapeado para o modelo da aplicação em `src/data/archive.js`
-- **Lógica isolada da interface.** Elegibilidade, nota de preparação, datas, secções e relatório vivem em `src/lib`, testados com o runner nativo do Node
-- **Traduções centralizadas** em `src/i18n/strings.js`, com interpolação por chave
+- **React 19 + Vite 8**, with no routing library: hash navigation is resolved in the app itself
+- **Zero backend.** The film file, checklists and submissions live in the browser's `localStorage`
+- **Data as modules.** The dataset is imported through the `@archive` alias and mapped to the app's model in `src/data/archive.js`
+- **Logic kept out of the UI.** Eligibility, readiness score, dates, route sections and the report live in `src/lib`, tested with Node's built-in test runner
+- **Translations centralised** in `src/i18n/strings.js`, with per-key interpolation
 
 ```text
 src/app/src/
-  lib/        elegibilidade, nota de preparação, relatório PDF, rota entre secções
-  data/       mapeamento do Fictional Film Archive e checklists
-  pages/      Início, Ficha, Arquivo, Festivais, Prémios, Pacote, Direitos, Inscrições, Guia, Labs
-  i18n/       PT e EN
-  state/      estado da aplicação e persistência
+  lib/        eligibility, readiness score, PDF report, route between sections
+  data/       Fictional Film Archive mapping and checklists
+  pages/      Home, Film file, Archive, Festivals, Awards, Package, Rights, Submissions, Guide, Labs
+  i18n/       PT and EN
+  state/      app state and persistence
 datasets/fictional-film-archive/
-  stage-1-simple-collection/     6 filmes, para começar
-  stage-2-richer-collection/     12 filmes com arrays
-  stage-3-connected-archive/     o arquivo completo que a aplicação usa
+  stage-1-simple-collection/     6 films, to begin with
+  stage-2-richer-collection/     12 films with arrays
+  stage-3-connected-archive/     the full archive the app uses
 ```
 
-## Rodar localmente
+## Running it locally
 
-Precisa apenas de Node.js e um browser atualizado.
+All you need is Node.js and an up-to-date browser.
 
 ```bash
 cd src/app
@@ -106,38 +106,38 @@ npm install
 npm run dev
 ```
 
-Abre em `http://localhost:7363`.
+It opens at `http://localhost:7363`.
 
 ```bash
-npm test     # 26 testes de elegibilidade, relatório e navegação
+npm test     # 26 tests covering eligibility, the report and navigation
 npm run lint # oxlint
-npm run build && npm run preview   # pré-visualização em :7364
+npm run build && npm run preview   # preview on :7364
 ```
 
-Os cartazes são servidos a partir de `datasets/fictional-film-archive/images` por um plugin de Vite, tanto em desenvolvimento como no `build`.
+Posters are served from `datasets/fictional-film-archive/images` by a Vite plugin, in development and in the build alike.
 
 ---
 
-## O que Rota Doc não é
+## What Rota Doc is not
 
-Sendo honesto sobre os limites, porque eles fazem parte da proposta:
+Being straight about the limits, because they are part of the proposition:
 
-- Não envia a inscrição por você, não preenche o FilmFreeway e não paga taxas
-- Não garante vaga na programação: depois da inscrição vem a seleção curatorial
-- Não substitui assessoria jurídica de direitos
-- Não acompanha editais reais. Nesta versão o catálogo é o arquivo fictício de ensino: use-o para praticar a rota, nunca como edital
+- It does not submit for you, does not fill in FilmFreeway and does not pay fees
+- It does not guarantee a slot in the programme: submission is followed by curatorial selection
+- It does not replace legal advice on rights
+- It does not track real calls for entries. In this version the catalogue is the fictional teaching archive: use it to practise the route, never as a call
 
-## Próximos passos
+## Next steps
 
-- Exportar e importar a rota, para trabalhar em mais de um computador
-- Prazos por edição de festival, com alertas antes da data
-- Vários filmes na mesma instalação, hoje limitada a uma ficha
-- Ligar o catálogo a fontes reais de editais, mantendo o dataset fictício como modo de treino
+- Export and import the route, to work across more than one machine
+- Per-edition festival deadlines, with alerts before the date
+- Several films in one installation, today limited to a single film file
+- Connecting the catalogue to real sources of calls, keeping the fictional dataset as a practice mode
 
 ---
 
-## Contexto
+## Context
 
-Projeto do Software Development Bootcamp, edição Directors Notes. O **Fictional Film Archive** foi inventado inteiramente para o curso: nenhum título, pessoa, produtora, festival, prémio ou descrição corresponde a registos reais, e os cartazes são formas geométricas geradas por script, sem fotografias.
+A Software Development Bootcamp project, Directors Notes edition. The **Fictional Film Archive** was invented entirely for the course: no title, person, company, festival, award or description corresponds to a real record, and the posters are script-generated geometric shapes with no photographs.
 
-Os resumos de regulamento na aplicação são material de ensino. Confirme sempre o edital vigente no site oficial do festival.
+The rule summaries in the app are teaching material. Always confirm the current call on the festival's official site.
