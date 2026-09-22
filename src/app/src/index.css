@@ -336,8 +336,13 @@ p {
 .shell.is-home .directory-lead,
 .shell.is-home .footer-copy,
 .shell.is-home .footer-sitemap a,
-.shell.is-home .footer-sitemap h2 {
+.shell.is-home .footer-sitemap h2,
+.shell.is-home .social-label {
   color: #d9cbb3;
+}
+
+.shell.is-home .social {
+  border-top-color: #3a2f24;
 }
 
 .shell.is-home .footer-sitemap a.is-active {
@@ -508,6 +513,7 @@ p {
 .globalnav-links a:focus-visible,
 .lang-switch button:focus-visible,
 .brand:focus-visible,
+.social-link:focus-visible,
 .board-card:focus-visible {
   outline: var(--focus);
   outline-offset: 3px;
@@ -602,6 +608,49 @@ p {
 
 .footer-sitemap a:hover {
   text-decoration: underline;
+}
+
+.social {
+  margin: 0;
+  padding: 1.25rem 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.social-label {
+  margin: 0 0 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+
+.social-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.social-link {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--go);
+  color: var(--black);
+}
+
+.social-link svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.social-link:hover {
+  background: var(--go-ink);
+  color: var(--go);
 }
 
 .page-head {
