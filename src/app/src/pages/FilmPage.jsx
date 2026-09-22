@@ -109,7 +109,6 @@ export function FilmPage() {
               onChange={(next) => updateFilm({ englishTitle: next })}
               placeholder={t('film.englishTitlePlaceholder')}
             />
-            <span className="field-hint">{t('film.archivePracticeHint')}</span>
           </label>
           <label>
             {t('film.duration')}

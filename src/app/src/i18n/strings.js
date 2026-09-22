@@ -112,8 +112,6 @@ export const strings = {
       eligibility: 'Elegibilidade',
       moreCopy: 'Textos, sinopses e créditos',
       archivePractice: 'Praticar com o arquivo',
-      archivePracticeHint:
-        'Foque o campo para ver filmes do arquivo. Digitar filtra; escolher um título preenche a ficha.',
       identity: 'Identidade',
       originalTitle: 'Título original',
       titleSearchPlaceholder: 'Buscar título no arquivo…',
@@ -593,8 +591,6 @@ export const strings = {
       eligibility: 'Eligibility',
       moreCopy: 'Copy, synopses and credits',
       archivePractice: 'Practise with the archive',
-      archivePracticeHint:
-        'Focus the field to see archive films. Typing filters; picking a title fills the file.',
       identity: 'Identity',
       originalTitle: 'Original title',
       titleSearchPlaceholder: 'Search a title in the archive…',

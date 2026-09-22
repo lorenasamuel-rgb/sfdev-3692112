@@ -27,6 +27,8 @@
   --shadow: 0 10px 28px rgba(22, 17, 12, 0.12);
   --sans: 'Figtree', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --serif: 'Fraunces', 'Times New Roman', serif;
+  --display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui,
+    'Helvetica Neue', sans-serif;
   --focus: 2px solid var(--go);
 }
 
@@ -66,8 +68,6 @@ a {
   color: var(--blue);
 }
 
-h1,
-h2,
 .brand {
   font-family: var(--serif);
 }
@@ -77,19 +77,24 @@ h3,
   font-family: var(--sans);
 }
 
+h1,
+h2 {
+  font-family: var(--display);
+}
+
 h1 {
   font-size: clamp(2.1rem, 5vw, 3.2rem);
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-weight: 700;
   margin: 0 0 0.55rem;
 }
 
 h2 {
   font-size: 1.75rem;
-  line-height: 1.14;
-  letter-spacing: -0.016em;
-  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  font-weight: 700;
   margin: 0 0 0.65rem;
 }
 
@@ -377,7 +382,7 @@ p {
 .board h1,
 .board h2 {
   color: inherit;
-  font-family: var(--serif);
+  font-family: var(--display);
 }
 
 .board-lede,
@@ -461,19 +466,13 @@ p {
   color: var(--ink);
 }
 
-.field-hint,
 .field-error {
   display: block;
   margin: 0.25rem 0 0;
   font-size: 0.88rem;
+  color: var(--bad);
 }
 
-.field-hint {
-  color: var(--ink-soft);
-  font-weight: 400;
-}
-
-.field-error,
 .has-error input {
   color: var(--bad);
 }
@@ -1405,7 +1404,10 @@ input[type='checkbox'] {
 }
 
 .home-steps strong {
-  font-family: var(--serif);
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  line-height: 1.1;
 }
 
 .home-steps span {
