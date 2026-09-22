@@ -4,7 +4,7 @@
 
 Rota Doc is a web app that turns festival submission into a clear seven-step route: put the film on file, cross its data against each festival's rules, build the materials package, clear the rights, and track every entry through to the exhibition agreement.
 
-**[Try the live demo](https://rota-doc-seven.vercel.app/#/)** · **[See the presentation](https://gamma.app/docs/Rota-Doc-or-Award-Journey-bxo3mm0wsgcwhc2?following_id=ueumpxkl3mvmrv5&follow_on_start=true)**
+**[Try the live demo](https://rota-doc-seven.vercel.app/#/)** · **[See the presentation](https://gamma.app/docs/Rota-Doc-or-Award-Journey-bxo3mm0wsgcwhc2)**
 
 The demo opens in Portuguese, so press **EN** in the header first. It also starts with an empty film file, and the quickest tour fills it: open **Archive**, pick any title and press **Use for submission**, then go to **Festivals** and watch 40 eligibility verdicts appear against that film. Everything you enter stays in your own browser.
 
