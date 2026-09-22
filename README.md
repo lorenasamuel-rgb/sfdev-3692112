@@ -54,9 +54,13 @@ One click produces the **Route report**: the film's technical details, festivals
 
 The whole interface switches language from a button in the header. Film and festival names from the dataset stay in English, as they would in a real catalogue.
 
-### Account
+### Account, with or without Supabase
 
-**Account** holds a sign-in that matches the rest of the app: no server. Create a local account with a name and email, sign in and out, and the header greets you and copies those details into the film file's production contacts. The account lives in this browser's `localStorage`, only a digest of the password is kept, and the page says as much next to the form. It is there to practise the route, not to protect anything.
+**Account** carries a sign-in that adapts to how the app is deployed.
+
+With `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` set, sign-in is real: Supabase Auth handles the password, and the whole route (film file, package, rights and submissions) is written to a `route_state` table guarded by Row Level Security, so it follows the account into any browser. Without those keys the same page falls back to a local account in `localStorage`, useful for practising offline, and says so plainly in a callout next to the form.
+
+To turn the Supabase mode on: create a project, run [`src/app/supabase/schema.sql`](src/app/supabase/schema.sql) in its SQL editor, then set the project URL and the anon key as environment variables, locally in `src/app/.env.local` and on Vercel under Project Settings → Environment Variables. Both are public client keys; the service role key is never needed and must not be used here.
 
 ---
 
@@ -83,18 +87,20 @@ Two pages exist purely to explore that archive: **Archive** (180 films filtered 
 ## Under the hood
 
 - **React 19 + Vite 8**, with no routing library: hash navigation is resolved in the app itself
-- **Zero backend.** The film file, checklists and submissions live in the browser's `localStorage`
+- **Backend optional.** The film file, checklists and submissions live in the browser's `localStorage`, and are mirrored to Supabase when the account is signed in there. The client library is imported on demand, so an install with no keys never downloads it
 - **Data as modules.** The dataset is imported through the `@archive` alias and mapped to the app's model in `src/data/archive.js`
 - **Logic kept out of the UI.** Eligibility, readiness score, dates, route sections and the report live in `src/lib`, tested with Node's built-in test runner
 - **Translations centralised** in `src/i18n/strings.js`, with per-key interpolation
 
 ```text
 src/app/src/
-  lib/        eligibility, readiness score, PDF report, route between sections
+  lib/        eligibility, readiness score, PDF report, route between sections, account and Supabase
   data/       Fictional Film Archive mapping and checklists
   pages/      Home, Film file, Archive, Festivals, Awards, Package, Rights, Submissions, Guide, Labs, Account
   i18n/       PT and EN
-  state/      app state and persistence
+  state/      app state, account and persistence
+src/app/supabase/
+  schema.sql  route_state table and its Row Level Security policies
 datasets/fictional-film-archive/
   stage-1-simple-collection/     6 films, to begin with
   stage-2-richer-collection/     12 films with arrays
