@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AppStateProvider } from './state/AppState.jsx'
 import { useAppState } from './state/context.js'
+import { AccountProvider } from './state/AccountState.jsx'
+import { useAccount } from './state/accountContext.js'
 import { LanguageProvider } from './i18n/LanguageContext.jsx'
 import { useLanguage } from './i18n/context.js'
 import { HomePage } from './pages/HomePage.jsx'
@@ -13,10 +15,12 @@ import { PackagePage } from './pages/PackagePage.jsx'
 import { RightsPage } from './pages/RightsPage.jsx'
 import { SubmissionsPage } from './pages/SubmissionsPage.jsx'
 import { GuidePage, LabsPage } from './pages/GuidePage.jsx'
+import { LoginPage } from './pages/LoginPage.jsx'
 import { SocialLinks } from './components/SocialLinks.jsx'
 import { readinessBand, readinessScore } from './lib/eligibility.js'
+import { firstName, initials } from './lib/account.js'
 import { packageItems, rightsItems } from './data/checklists.js'
-import { MORE_NAV, PRIMARY_NAV } from './lib/sections.js'
+import { ACCOUNT_NAV, MORE_NAV, PRIMARY_NAV } from './lib/sections.js'
 
 function parseHash() {
   const raw = window.location.hash.replace(/^#/, '') || '/'
@@ -52,6 +56,7 @@ function Router() {
     if (section === 'inscricoes') return <SubmissionsPage />
     if (section === 'guia') return <GuidePage />
     if (section === 'laboratorios') return <LabsPage />
+    if (section === 'conta') return <LoginPage />
     return <HomePage />
   }, [route])
 
@@ -104,6 +109,10 @@ function Router() {
             <NavLabel id={item.id} />
           </a>
         ))}
+        <p className="drawer-label">
+          <NavLabel id="conta" />
+        </p>
+        <DrawerAccount active={active} onNavigate={() => setMenuOpen(false)} />
       </div>
       <p className="ribbon">
         <RibbonText />
@@ -122,6 +131,71 @@ function NavLabel({ id }) {
 function RibbonText() {
   const { t } = useLanguage()
   return t('chrome.ribbon')
+}
+
+function useAccountLabel() {
+  const { account, signedIn } = useAccount()
+  const { t } = useLanguage()
+  return signedIn ? firstName(account) : t('account.signIn')
+}
+
+function DrawerAccount({ active, onNavigate }) {
+  const { signedIn, signOut } = useAccount()
+  const { t } = useLanguage()
+  const item = ACCOUNT_NAV[0]
+  const label = useAccountLabel()
+
+  return (
+    <>
+      <a
+        href={item.href}
+        className={active === item.id ? 'is-active' : ''}
+        aria-current={active === item.id ? 'page' : undefined}
+        onClick={onNavigate}
+      >
+        {label}
+      </a>
+      {signedIn ? (
+        <button
+          type="button"
+          className="drawer-action"
+          onClick={() => {
+            signOut()
+            onNavigate()
+          }}
+        >
+          {t('account.signOut')}
+        </button>
+      ) : null}
+    </>
+  )
+}
+
+function AccountControl() {
+  const { account, signedIn, signOut } = useAccount()
+  const { t } = useLanguage()
+
+  if (!signedIn) {
+    return (
+      <a className="account-link" href="#/conta">
+        {t('account.signIn')}
+      </a>
+    )
+  }
+
+  return (
+    <div className="account-control">
+      <a className="account-link" href="#/conta">
+        <span className="account-initials" aria-hidden="true">
+          {initials(account)}
+        </span>
+        <span className="account-name">{firstName(account)}</span>
+      </a>
+      <button type="button" className="account-out" onClick={signOut}>
+        {t('account.signOut')}
+      </button>
+    </div>
+  )
 }
 
 function LanguageSwitch() {
@@ -182,6 +256,7 @@ function Header({ active, menuOpen, setMenuOpen }) {
           })}
         </nav>
         <LanguageSwitch />
+        <AccountControl />
         <button
           type="button"
           className={`nav-toggle${menuOpen ? ' is-open' : ''}`}
@@ -207,6 +282,7 @@ function Header({ active, menuOpen, setMenuOpen }) {
 
 function Sitemap({ active }) {
   const { t } = useLanguage()
+  const accountLabel = useAccountLabel()
   const groups = [
     {
       title: t('chrome.footerRota'),
@@ -215,6 +291,10 @@ function Sitemap({ active }) {
     {
       title: t('nav.more'),
       items: MORE_NAV,
+    },
+    {
+      title: t('nav.conta'),
+      items: ACCOUNT_NAV,
     },
   ]
 
@@ -231,7 +311,7 @@ function Sitemap({ active }) {
                   className={active === item.id ? 'is-active' : ''}
                   aria-current={active === item.id ? 'page' : undefined}
                 >
-                  {t(`nav.${item.id}`)}
+                  {item.id === 'conta' ? accountLabel : t(`nav.${item.id}`)}
                 </a>
               </li>
             ))}
@@ -259,9 +339,11 @@ function SiteFooter({ active }) {
 export default function App() {
   return (
     <LanguageProvider>
-      <AppStateProvider>
-        <Router />
-      </AppStateProvider>
+      <AccountProvider>
+        <AppStateProvider>
+          <Router />
+        </AppStateProvider>
+      </AccountProvider>
     </LanguageProvider>
   )
 }

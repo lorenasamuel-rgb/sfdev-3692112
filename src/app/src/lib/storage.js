@@ -1,41 +1,9 @@
 import { filmToDossier, getArchiveFilmById, SAMPLE_FILM_ID } from '../data/archive.js'
+import { emptyFilm, emptyState } from './emptyState.js'
 
 const STORAGE_KEY = 'rota-doc-state-v2'
 
-export const emptyFilm = {
-  originalTitle: '',
-  englishTitle: '',
-  logline: '',
-  shortSynopsis: '',
-  fullSynopsis: '',
-  durationMinutes: '',
-  completionDate: '',
-  productionCountry: '',
-  languages: '',
-  form: 'Documentary',
-  stage: 'finished',
-  premiereStatus: 'none',
-  publishedPublicly: false,
-  hasEnglishSubtitles: false,
-  hasSrt: false,
-  screenerUrl: '',
-  screenerPassword: '',
-  directorName: '',
-  directorBio: '',
-  directorStatement: '',
-  producerName: '',
-  producerEmail: '',
-  producerPhone: '',
-  archiveFilmId: '',
-  archiveYear: '',
-}
-
-export const emptyState = {
-  film: { ...emptyFilm },
-  package: {},
-  rights: {},
-  submissions: [],
-}
+export { emptyFilm, emptyState }
 
 export function loadState() {
   try {

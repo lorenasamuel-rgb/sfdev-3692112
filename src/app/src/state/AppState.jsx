@@ -1,11 +1,24 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { emptyFilm, emptyState, loadState, saveState, sampleFilm } from '../lib/storage.js'
 import { packageItems, rightsItems } from '../data/checklists.js'
 import { filmToDossier, getArchiveFilmById } from '../data/archive.js'
+import { chooseState, ROUTE_TABLE, rowToState, stateToRow } from '../lib/remoteState.js'
+import { getSupabase } from '../lib/supabase.js'
 import { AppStateContext } from './context.js'
+import { useAccount } from './accountContext.js'
+
+const SYNC_DELAY = 900
 
 export function AppStateProvider({ children }) {
   const [state, setState] = useState(loadState)
+  const { mode, account } = useAccount()
+  const userId = mode === 'supabase' && account ? account.id : null
+  const [sync, setSync] = useState({ userId: null, status: 'off', at: null })
+  const hydratedFor = useRef(null)
+
+  // Until the account reports back, the status follows the account itself
+  // rather than the last thing a request wrote.
+  const syncStatus = !userId ? 'off' : sync.userId === userId ? sync.status : 'loading'
 
   const persist = useCallback((updater) => {
     setState((current) => {
@@ -14,6 +27,66 @@ export function AppStateProvider({ children }) {
       return next
     })
   }, [])
+
+  // Signing in pulls the route saved on the account; an empty account is filled
+  // with whatever this browser was already holding.
+  useEffect(() => {
+    if (!userId) {
+      hydratedFor.current = null
+      return undefined
+    }
+    if (hydratedFor.current === userId) return undefined
+
+    let active = true
+
+    getSupabase()
+      .then((client) =>
+        client
+          .from(ROUTE_TABLE)
+          .select('film, package, rights, submissions, updated_at')
+          .eq('user_id', userId)
+          .maybeSingle(),
+      )
+      .then(({ data, error }) => {
+        if (!active) return
+        if (error) throw error
+        hydratedFor.current = userId
+        setState((current) => {
+          const { state: next } = chooseState(current, rowToState(data))
+          saveState(next)
+          return next
+        })
+        setSync({ userId, status: 'ready', at: new Date().toISOString() })
+      })
+      .catch(() => {
+        if (active) setSync({ userId, status: 'error', at: null })
+      })
+
+    return () => {
+      active = false
+    }
+  }, [userId])
+
+  // Every change is written back to the account, coalesced so typing in the
+  // film file does not turn into one request per keystroke.
+  useEffect(() => {
+    if (!userId || hydratedFor.current !== userId) return undefined
+
+    const timer = setTimeout(() => {
+      setSync((current) => ({ ...current, userId, status: 'saving' }))
+      getSupabase()
+        .then((client) =>
+          client.from(ROUTE_TABLE).upsert(stateToRow(state, userId), { onConflict: 'user_id' }),
+        )
+        .then(({ error }) => {
+          if (error) throw error
+          setSync({ userId, status: 'ready', at: new Date().toISOString() })
+        })
+        .catch(() => setSync({ userId, status: 'error', at: null }))
+    }, SYNC_DELAY)
+
+    return () => clearTimeout(timer)
+  }, [state, userId])
 
   const updateFilm = useCallback(
     (patch) => {
@@ -146,9 +219,24 @@ export function AppStateProvider({ children }) {
     persist(structuredClone(emptyState))
   }, [persist])
 
+  const clearCloudRoute = useCallback(async () => {
+    if (!userId) return
+    setSync((current) => ({ ...current, userId, status: 'saving' }))
+    try {
+      const client = await getSupabase()
+      const { error } = await client.from(ROUTE_TABLE).delete().eq('user_id', userId)
+      if (error) throw error
+      persist(structuredClone(emptyState))
+      setSync({ userId, status: 'ready', at: new Date().toISOString() })
+    } catch {
+      setSync({ userId, status: 'error', at: null })
+    }
+  }, [persist, userId])
+
   const value = useMemo(
     () => ({
       ...state,
+      sync: { status: syncStatus, at: sync.at },
       updateFilm,
       togglePackage,
       toggleRights,
@@ -159,9 +247,12 @@ export function AppStateProvider({ children }) {
       loadSample,
       loadArchiveFilm,
       clearFilm,
+      clearCloudRoute,
     }),
     [
       state,
+      syncStatus,
+      sync.at,
       updateFilm,
       togglePackage,
       toggleRights,
@@ -172,6 +263,7 @@ export function AppStateProvider({ children }) {
       loadSample,
       loadArchiveFilm,
       clearFilm,
+      clearCloudRoute,
     ],
   )
 
